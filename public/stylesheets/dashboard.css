@@ -1,0 +1,74 @@
+#nav {
+	background-repeat: repeat-x;
+	height: 45px;
+	width: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	text-align: right;
+}
+
+#nav a {
+	font-weight: bold;
+	color: rgb(0, 64, 128);
+	text-decoration: none;
+	border: 1px dotted;
+	padding: 2px;
+	margin: 2px;
+}
+
+#nav a:hover {
+	background-color: rgb(225, 225, 225);
+}
+
+body {
+	background-color: white;
+	margin: 100px 50px;
+	font-family: "Helvetica Neue", "Helvetica", sans-serif;
+}
+
+td {
+    padding: 5px 30px;
+    background-color: rgb(210, 210, 210);
+}
+
+table.horizontal td {
+    text-align: center;
+}
+
+th, #flash {
+    padding: 5px 30px;
+    font-size: 18pt;
+    font-weight: bolder;
+}
+
+th {
+    color: white;
+    background-color: rgb(0, 64, 128);
+    text-transform: lowercase;
+}
+
+input, select {
+    font-size: 14pt;
+}
+
+input[type="submit"] {
+    font-size: 18pt;
+    font-weight: bolder;
+    text-transform: lowercase;
+}
+
+td.submit {
+    text-align: center;
+    background-color: black;
+}
+
+a.button {
+    border: 1px outset;
+    text-transform: lowercase;
+    font-size: 11px;
+    padding: 2px;
+    background-color: rgb(0, 64, 128);
+    color: white;
+    text-decoration: none;
+}

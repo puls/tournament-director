@@ -1,0 +1,4 @@
+<div class="line">
+    <%= text_field_tag "#{thing}_names[]", line.nil? ? "" : line.name, {:size => 50} %>
+    <%= link_to_function('remove', nil, {:class => 'button'}) { |page| page << "Element.remove(this.parentNode)" } %>
+</div>

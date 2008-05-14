@@ -1,0 +1,45 @@
+<% bracketed = false %>
+<h1>Enter a game score</h1>
+<table class="horizontal">
+    <tr>
+        <th>Round</th>
+        <th>Teams</th>
+        <th>Points</th>
+        <% if bracketed -%><th>Bracket</th><% end  %>
+        <th>Tossups</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            <%= text_field_tag 'round_number', nil, {:size => 2, :tabindex => 1, :onblur => remote_function(:update => 'team1', :url => {:action => "teams_for_round"})} %>
+        </td>
+        <td>
+            <%= select_tag 'team1' %>
+        </td>
+        <td>
+            <%= text_field_tag 'score1',nil,{:size => 4,:tabindex => 4} %>
+        </td>
+        <% if bracketed %>
+        <td rowspan="2">
+            <%= select_tag 'bracket' %>
+        </td>
+        <% else %>
+        <%= hidden_field_tag 'bracket' %>
+        <% end %>
+        <td rowspan="2">
+            <%= text_field_tag 'tossups',nil,{:size => 2,:tabindex => 7} %>
+        </td>
+        <td rowspan="2" class="submit">
+            <%= submit_tag 'Save',{:tabindex => 8} %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <%= select_tag 'team2' %>
+        </td>
+        <td>
+            <%= text_field_tag 'score2',nil,{:size => 4,:tabindex => 4} %>
+        </td>
+    </tr>
+</table>
+<h1>Finish stats for a game</h1>

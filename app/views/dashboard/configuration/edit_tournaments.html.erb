@@ -1,0 +1,46 @@
+<% form_tag :action => "save_tournament", :id => @tournament.id do -%>
+    <table>
+        <tr>
+            <th>Tournament name:</th>
+            <td><%= text_field "tournament","name",:size => 50 %></td>
+        </tr>
+        <tr>
+            <th>This tournament:</th>
+            <td>
+                <%= check_box "tournament","power" -%> uses power marks<br />
+                <%= check_box "tournament","timed" -%> is timed<br />
+                <%= check_box "tournament","bracketed",{:onclick => 'toggle_brackets()'} %> uses multiple brackets<br />
+                <%= check_box "tournament","ping_stats" -%> automatically submits to <a href="http://www.quizstats.org">quizstats.org</a><br />
+                <%= check_box "tournament","includes_years" -%> tracks years of players<br />
+                <%= check_box "tournament","ping_contact" -%> automatically submits to <a href="http://www.fraughtmachine.com/efcontact/">Entering Freshman Contact List</a> (high school tournaments)
+            </td>
+        </tr>
+        <tr id="bracket_row">
+            <th>Bracket names:</th>
+            <td>
+                <div id="bracket_cell" style="margin-bottom: 10px;">
+                    <%= render :partial => 'line', :collection => @brackets, :locals => {:thing => 'bracket'} %>
+                </div>
+                <%= link_to_function('add', nil, {:class => 'button'}) { |page|
+                    page.insert_html :bottom, "bracket_cell", :partial => "line", :locals => {:thing => 'bracket'}
+                } %>
+            </td>
+        </tr>
+        <tr>
+            <td class="submit" colspan="2">
+            	<%= submit_tag "Save" %>
+            </td>
+        </tr>
+    </table>
+<% end -%>
+<% javascript_tag do -%>
+    function toggle_brackets() {
+        if ($F('tournament_bracketed') == 1) {
+            Element.show('bracket_row');
+        }
+        else {
+            Element.hide('bracket_row');
+        }
+    }
+    toggle_brackets()
+<% end -%>
