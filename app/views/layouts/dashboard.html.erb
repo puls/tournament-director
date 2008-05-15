@@ -7,17 +7,18 @@
     <%= stylesheet_link_tag "dashboard" %>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title><%= @page_title %></title>
-	
+
 </head>
 
 <body>
 <div id="nav" style="background-image: url('<%= image_path('background.png') %>');">
-	<%= image_tag "tournamentdirector.png", :style => "position: absolute; top: 0px; left: 0px;" %>
-	<div style="padding: 10px;">
+	<div style="padding: 10px; float: right;">
 		<%= link_to "Game Entry", :controller => "/dashboard/entry" %>
-		<%= link_to "Team Entry", :controller => "/dashboard/configuration", :action => "teams" %>
+		<%= link_to "Team Entry", :controller => "/dashboard/configuration", :action => "edit_teams" %>
 		<%= link_to "Configuration", :controller => "/dashboard/configuration" %>
 	</div>
+<%= image_tag "tournamentdirector.png", :style => "position: absolute; top: 0px; left: 0px;" %>
+        <span class="text" style="padding-left: 0px;"><%= @tournament.name unless @tournament.nil? %></span>
 </div>
 
 <% if flash[:notice] %>

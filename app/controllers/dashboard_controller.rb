@@ -1,9 +1,9 @@
 class DashboardController < ApplicationController
-  
+
   def index
     redirect_to :controller => "/dashboard/entry"
   end
-  
+
   protected
   def load_configuration
     if (session[:tournament_id].nil?)
@@ -18,20 +18,20 @@ class DashboardController < ApplicationController
       end
     end
   end
-  
+
   def check_configuration
-    unless (Tournament.count > 0)
-      redirect_to :controller => "/dashboard/configuration", :action => "edit_tournaments"
+    load_configuration
+
+    if @tournament.nil?
+      redirect_to :controller => "/dashboard/configuration", :action => "new_tournament"
       return false
     end
-    
-    load_configuration
-    
-    unless (Team.count > 0)
+
+    unless @tournament.teams.count > 0
       redirect_to :controller => "/dashboard/configuration", :action => "edit_teams"
       return false
     end
   end
-  
+
 
 end

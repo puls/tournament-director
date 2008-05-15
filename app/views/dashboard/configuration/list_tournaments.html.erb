@@ -1,0 +1,6 @@
+<strong>Select Active Tournament</strong>
+<ul style="list-style: none;">
+<% @tournaments.each do |t| -%>
+  <li><%= link_to t.name, :action => "select_tournament", :id => t.id -%></li>
+<% end -%>
+</ul>

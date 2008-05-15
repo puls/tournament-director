@@ -1,0 +1,1531 @@
+# Logfile created on Tue May 13 21:13:10 -0400 2008
+
+Processing ApplicationController#index (for 127.0.0.1 at 2008-05-13 21:14:30) [GET]
+  Session ID: 3a6ec88423db122591c7009e411003ea
+  Parameters: {}
+
+
+ActionController::RoutingError (No route matches "/" with {:method=>:get}):
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/routing.rb:1441:in `recognize_path'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/routing.rb:1424:in `recognize'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:170:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:30:16) [GET]
+  Session ID: e6fde78f5117cd4c6aed4a469c8882b3
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:30:16) [GET]
+  Session ID: e6fde78f5117cd4c6aed4a469c8882b3
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+
+
+MissingSourceFile (no such file to load -- sqlite3):
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:291:in `send'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:291:in `connection='
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:259:in `retrieve_connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:78:in `connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:31:48) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:31:49) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+
+
+MissingSourceFile (no such file to load -- sqlite3):
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:291:in `send'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:291:in `connection='
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:259:in `retrieve_connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:78:in `connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+  [4;36;1mSQL (0.000541)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.006533)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.002555)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000353)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to Initial (1)
+  [4;35;1mSQL (0.004231)[0m   [0mCREATE TABLE brackets ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) DEFAULT NULL, "ordering" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.004299)[0m   [0;1mCREATE TABLE cards ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "number" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.004684)[0m   [0mCREATE TABLE games ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "round_id" integer DEFAULT NULL, "bracket_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL, "tossups" integer DEFAULT NULL, "play_complete" boolean DEFAULT NULL, "entry_complete" boolean DEFAULT NULL, "serial_number" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.031854)[0m   [0;1mCREATE TABLE player_games ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "player_id" integer DEFAULT NULL, "team_game_id" integer DEFAULT NULL, "tossups_heard" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.004631)[0m   [0mCREATE TABLE players ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "team_id" integer DEFAULT NULL, "name" varchar(255) DEFAULT NULL, "future_school" varchar(255) DEFAULT NULL, "year" integer DEFAULT NULL, "qpin" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.004681)[0m   [0;1mCREATE TABLE question_types ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer DEFAULT NULL, "name" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.004486)[0m   [0mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) DEFAULT NULL, "staff" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.003949)[0m   [0;1mCREATE TABLE rounds ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "number" integer DEFAULT NULL, "play_complete" boolean DEFAULT NULL) [0m
+  [4;35;1mSQL (0.004502)[0m   [0mCREATE TABLE schools ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) DEFAULT NULL, "city" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.004961)[0m   [0;1mCREATE TABLE stat_lines ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "question_type_id" integer DEFAULT NULL, "player_game_id" integer DEFAULT NULL, "number" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.006378)[0m   [0mCREATE TABLE team_games ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "team_id" integer DEFAULT NULL, "game_id" integer DEFAULT NULL, "card_id" integer DEFAULT NULL, "points" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.004637)[0m   [0;1mCREATE TABLE teams ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "school_id" integer DEFAULT NULL, "name" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.003709)[0m   [0mCREATE TABLE tournaments ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) DEFAULT NULL, "timed" boolean DEFAULT NULL, "bracketed" boolean DEFAULT NULL, "ping_stats" boolean DEFAULT NULL, "ping_contact" boolean DEFAULT NULL, "includes_years" boolean DEFAULT NULL) [0m
+  [4;36;1mSQL (0.002686)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000366)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.001345)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000103)[0m   [0mPRAGMA index_list(brackets)[0m
+  [4;36;1mSQL (0.000094)[0m   [0;1mPRAGMA index_list(cards)[0m
+  [4;35;1mSQL (0.000100)[0m   [0mPRAGMA index_list(games)[0m
+  [4;36;1mSQL (0.000159)[0m   [0;1mPRAGMA index_list(player_games)[0m
+  [4;35;1mSQL (0.000097)[0m   [0mPRAGMA index_list(players)[0m
+  [4;36;1mSQL (0.000096)[0m   [0;1mPRAGMA index_list(question_types)[0m
+  [4;35;1mSQL (0.000095)[0m   [0mPRAGMA index_list(rooms)[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mPRAGMA index_list(rounds)[0m
+  [4;35;1mSQL (0.000095)[0m   [0mPRAGMA index_list(schools)[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mPRAGMA index_list(stat_lines)[0m
+  [4;35;1mSQL (0.000097)[0m   [0mPRAGMA index_list(team_games)[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mPRAGMA index_list(teams)[0m
+  [4;35;1mSQL (0.000099)[0m   [0mPRAGMA index_list(tournaments)[0m
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:32:20) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:32:20) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+
+
+MissingSourceFile (no such file to load -- sqlite3):
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:291:in `send'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:291:in `connection='
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:259:in `retrieve_connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:78:in `connection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing StatisticsController#index (for 127.0.0.1 at 2008-05-15 13:34:49) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"statistics"}
+Redirected to http://localhost:3000/statistics/standings
+Completed in 0.00427 (234 reqs/sec) | DB: 0.00000 (0%) | 302 Found [http://localhost/]
+
+
+Processing StatisticsController#standings (for 127.0.0.1 at 2008-05-15 13:34:49) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"standings", "controller"=>"statistics"}
+Rendering template within layouts/statistics
+Rendering statistics/standings
+Completed in 0.02102 (47 reqs/sec) | Rendering: 0.01796 (85%) | DB: 0.00000 (0%) | 200 OK [http://localhost/statistics/standings]
+
+
+Processing DashboardController#index (for 127.0.0.1 at 2008-05-15 13:34:55) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"dashboard"}
+Redirected to http://localhost:3000/dashboard/entry
+Completed in 0.00359 (278 reqs/sec) | DB: 0.00000 (0%) | 302 Found [http://localhost/dashboard]
+
+
+Processing EntryController#index (for 127.0.0.1 at 2008-05-15 13:34:55) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"index", "controller"=>"dashboard/entry"}
+  [4;36;1mSQL (0.000326)[0m   [0;1mSELECT count(*) AS count_all FROM tournaments [0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Filter chain halted as [#<ActionController::Filters::ClassMethods::SymbolFilter:0xb5948ad0 @filter=:check_configuration>] rendered_or_redirected.
+Completed in 0.01221 (81 reqs/sec) | DB: 0.00033 (2%) | 302 Found [http://localhost/dashboard/entry]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 13:34:55) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%0ASGFzaHsABjoKQHVzZWR7AA%3D%3D--c2ac1d0b487c1afd06b373499d47441f2f8057e5
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.001006)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+  [4;36;1mSQL (0.000303)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.01020)
+Rendered dashboard/configuration/_line (0.00517)
+Rendered dashboard/configuration/_line (0.00441)
+Completed in 0.07439 (13 reqs/sec) | Rendering: 0.03997 (53%) | DB: 0.00131 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#save_tournament (for 127.0.0.1 at 2008-05-15 13:35:22) [POST]
+  Session ID: BAh7BzoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%0Ac2h7AAY6CkB1c2VkewA%3D--30e22a315d7777b6e07480ad44295327f0f107b9
+  Parameters: {"commit"=>"Save", "authenticity_token"=>"703cd03c96351b7b20c7b2019db90aa5e513930f", "action"=>"save_tournament", "bracket_names"=>["", ""], "controller"=>"dashboard/configuration", "tournament"=>{"name"=>"Test Tournament 1", "timed"=>"1", "includes_years"=>"1", "power"=>"1", "bracketed"=>"0", "ping_stats"=>"0", "ping_contact"=>"0"}}
+  [4;35;1mTournament Load (0.001106)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+  [4;36;1mSQL (0.000298)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+  [4;35;1mTournament Create (0.000630)[0m   [0mINSERT INTO tournaments ("name", "timed", "includes_years", "bracketed", "ping_stats", "ping_contact") VALUES('Test Tournament 1', 't', 't', 'f', 'f', 'f')[0m
+  [4;36;1mQuestionType Load (0.000301)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = 15 AND question_types."value" = 15) LIMIT 1[0m
+  [4;35;1mQuestionType Create (0.000301)[0m   [0mINSERT INTO question_types ("name", "value") VALUES(15, 15)[0m
+  [4;36;1mQuestionType Load (0.000189)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = 10 AND question_types."value" = 10) LIMIT 1[0m
+  [4;35;1mQuestionType Create (0.000233)[0m   [0mINSERT INTO question_types ("name", "value") VALUES(10, 10)[0m
+  [4;36;1mQuestionType Load (0.000207)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = -5 AND question_types."value" = -5) LIMIT 1[0m
+  [4;35;1mQuestionType Create (0.000224)[0m   [0mINSERT INTO question_types ("name", "value") VALUES(-5, -5)[0m
+  [4;36;1mBracket Load (0.000149)[0m   [0;1mSELECT * FROM brackets [0m
+  [4;35;1mSQL (0.000279)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+  [4;36;1mTournament Update (0.000277)[0m   [0;1mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't' WHERE "id" = 1[0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Completed in 0.16281 (6 reqs/sec) | DB: 0.00419 (2%) | 302 Found [http://localhost/dashboard/configuration/save_tournament]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 13:35:22) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%0Ac2h7BjoLbm90aWNlIhZUb3VybmFtZW50IHNhdmVkLgY6CkB1c2VkewY7B1Q%3D--4482bf53898546c76a3b844a556f27e8444d9991
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.001311)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+  [4;36;1mSQL (0.000326)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00570)
+Rendered dashboard/configuration/_line (0.00456)
+Rendered dashboard/configuration/_line (0.00449)
+Completed in 0.05195 (19 reqs/sec) | Rendering: 0.03114 (59%) | DB: 0.00164 (3%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#teams (for 127.0.0.1 at 2008-05-15 13:35:27) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkGOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--4f374318837f0f34ce3c165d3cf82ab124fd6cc9
+  Parameters: {"action"=>"teams", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000452)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 1) [0m
+
+
+ActionController::UnknownAction (No action responded to teams):
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing ConfigurationController#teams (for 127.0.0.1 at 2008-05-15 13:44:50) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpBiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--fcacb9229d9ea42ff87990061f0c5bddff8828a5
+  Parameters: {"action"=>"teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000822)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 1) [0m
+
+
+ActionController::UnknownAction (No action responded to teams):
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 13:44:58) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZDA6DGNzcmZfaWQiJWJmNGUzMWYwMjY2YjI0%0AOTUwM2VkZWFhM2VjNWJkNzJhIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--a03691c479527d901adf9f77758dd8605f58e236
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000991)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Completed in 0.02134 (46 reqs/sec) | DB: 0.00099 (4%) | 302 Found [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 13:44:59) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQwIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--ecb840464331d4ea2693015d41b80ae050fde00e
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.001121)[0m   [0;1mSELECT * FROM tournaments LIMIT 1[0m
+  [4;35;1mSQL (0.025734)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00565)
+Rendered dashboard/configuration/_line (0.00532)
+Rendered dashboard/configuration/_line (0.00451)
+Completed in 0.10787 (9 reqs/sec) | Rendering: 0.03079 (28%) | DB: 0.02685 (24%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#teams (for 127.0.0.1 at 2008-05-15 13:45:09) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZDA6DGNzcmZfaWQiJWJmNGUzMWYwMjY2YjI0%0AOTUwM2VkZWFhM2VjNWJkNzJhIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--a03691c479527d901adf9f77758dd8605f58e236
+  Parameters: {"action"=>"teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.001019)[0m   [0;1mSELECT * FROM tournaments LIMIT 1[0m
+
+
+ActionController::UnknownAction (No action responded to teams):
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (not_found)
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 13:45:14) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQwIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--ecb840464331d4ea2693015d41b80ae050fde00e
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.005896)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+Redirected to http://localhost:3000/dashboard/entry
+Completed in 0.01359 (73 reqs/sec) | DB: 0.00590 (43%) | 302 Found [http://localhost/dashboard/configuration]
+
+
+Processing EntryController#index (for 127.0.0.1 at 2008-05-15 13:45:14) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZDA6DGNzcmZfaWQiJWJmNGUzMWYwMjY2YjI0%0AOTUwM2VkZWFhM2VjNWJkNzJhIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--a03691c479527d901adf9f77758dd8605f58e236
+  Parameters: {"action"=>"index", "controller"=>"dashboard/entry"}
+  [4;36;1mSQL (0.001116)[0m   [0;1mSELECT count(*) AS count_all FROM tournaments [0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Filter chain halted as [#<ActionController::Filters::ClassMethods::SymbolFilter:0xb589ca3c @filter=:check_configuration>] rendered_or_redirected.
+Completed in 0.00784 (127 reqs/sec) | DB: 0.00112 (14%) | 302 Found [http://localhost/dashboard/entry]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 13:45:14) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQwIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--ecb840464331d4ea2693015d41b80ae050fde00e
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.001018)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+  [4;36;1mSQL (0.000322)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00546)
+Rendered dashboard/configuration/_line (0.00464)
+Rendered dashboard/configuration/_line (0.00434)
+Completed in 0.04108 (24 reqs/sec) | Rendering: 0.02564 (62%) | DB: 0.00134 (3%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#save_tournament (for 127.0.0.1 at 2008-05-15 13:52:21) [POST]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZDA6DGNzcmZfaWQiJWJmNGUzMWYwMjY2YjI0%0AOTUwM2VkZWFhM2VjNWJkNzJhIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--a03691c479527d901adf9f77758dd8605f58e236
+  Parameters: {"commit"=>"Save", "authenticity_token"=>"703cd03c96351b7b20c7b2019db90aa5e513930f", "action"=>"save_tournament", "bracket_names"=>["", ""], "controller"=>"dashboard/configuration", "tournament"=>{"name"=>"Test Tournament 1", "timed"=>"1", "includes_years"=>"1", "power"=>"1", "bracketed"=>"0", "ping_stats"=>"0", "ping_contact"=>"0"}}
+  [4;35;1mTournament Load (0.001086)[0m   [0mSELECT * FROM tournaments LIMIT 1[0m
+  [4;36;1mSQL (0.000308)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+  [4;35;1mTournament Create (0.021484)[0m   [0mINSERT INTO tournaments ("name", "timed", "includes_years", "bracketed", "ping_stats", "ping_contact") VALUES('Test Tournament 1', 't', 't', 'f', 'f', 'f')[0m
+  [4;36;1mQuestionType Load (0.000451)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = 15 AND question_types."value" = 15) LIMIT 1[0m
+  [4;35;1mQuestionType Load (0.000339)[0m   [0mSELECT * FROM question_types WHERE (question_types."name" = 10 AND question_types."value" = 10) LIMIT 1[0m
+  [4;36;1mQuestionType Load (0.000337)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = -5 AND question_types."value" = -5) LIMIT 1[0m
+  [4;35;1mBracket Load (0.000147)[0m   [0mSELECT * FROM brackets [0m
+  [4;36;1mSQL (0.000248)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+  [4;35;1mTournament Update (0.000311)[0m   [0mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't' WHERE "id" = 2[0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Completed in 0.08646 (11 reqs/sec) | DB: 0.02471 (28%) | 302 Found [http://localhost/dashboard/configuration/save_tournament]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 13:52:22) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQwIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVy%0AOjpGbGFzaDo6Rmxhc2hIYXNoewY6C25vdGljZSIWVG91cm5hbWVudCBzYXZl%0AZC4GOgpAdXNlZHsGOwhU--72758c3c3911987f8e8587ec499a8f291506e9a2
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.001290)[0m   [0;1mSELECT * FROM tournaments LIMIT 1[0m
+  [4;35;1mSQL (0.000300)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00941)
+Rendered dashboard/configuration/_line (0.00452)
+Rendered dashboard/configuration/_line (0.00460)
+Completed in 0.04992 (20 reqs/sec) | Rendering: 0.03411 (68%) | DB: 0.00159 (3%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+  [4;36;1mSQL (0.000764)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.000385)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000259)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to AddPowers (2)
+  [4;35;1mSQL (0.008294)[0m   [0mALTER TABLE tournaments ADD "powers" boolean[0m
+  [4;36;1mSQL (0.449018)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (0.016172)[0m   [0mUPDATE schema_info SET version = 2[0m
+  [4;36;1mSQL (0.000401)[0m   [0;1mSELECT * FROM schema_info[0m
+  [4;35;1mSQL (0.001334)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.000234)[0m   [0;1mPRAGMA index_list(brackets)[0m
+  [4;35;1mSQL (0.000105)[0m   [0mPRAGMA index_list(cards)[0m
+  [4;36;1mSQL (0.000101)[0m   [0;1mPRAGMA index_list(games)[0m
+  [4;35;1mSQL (0.000097)[0m   [0mPRAGMA index_list(player_games)[0m
+  [4;36;1mSQL (0.000112)[0m   [0;1mPRAGMA index_list(players)[0m
+  [4;35;1mSQL (0.000098)[0m   [0mPRAGMA index_list(question_types)[0m
+  [4;36;1mSQL (0.000098)[0m   [0;1mPRAGMA index_list(rooms)[0m
+  [4;35;1mSQL (0.000094)[0m   [0mPRAGMA index_list(rounds)[0m
+  [4;36;1mSQL (0.000096)[0m   [0;1mPRAGMA index_list(schools)[0m
+  [4;35;1mSQL (0.000099)[0m   [0mPRAGMA index_list(stat_lines)[0m
+  [4;36;1mSQL (0.000096)[0m   [0;1mPRAGMA index_list(team_games)[0m
+  [4;35;1mSQL (0.000103)[0m   [0mPRAGMA index_list(teams)[0m
+  [4;36;1mSQL (0.000104)[0m   [0;1mPRAGMA index_list(tournaments)[0m
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 13:57:28) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000550)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000329)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00600)
+Rendered dashboard/configuration/_line (0.00504)
+Rendered dashboard/configuration/_line (0.00735)
+Completed in 0.20625 (4 reqs/sec) | Rendering: 0.11088 (53%) | DB: 0.00088 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 14:04:16) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000515)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+ERROR: compiling _run_erb_47app47views47dashboard47configuration47index46html46erb RAISED compile error
+/home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:2: syntax error, unexpected ':', expecting ')'
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Tournaments" :action => "edit_tournaments" ).to_s); _erbout.concat "</li>\n"
+                                                                        ^
+/home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:3: syntax error, unexpected ':', expecting ')'
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Teams" :action => "edit_teams" ).to_s); _erbout.concat "</li>\n"
+                                                                  ^
+/home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:4: syntax error, unexpected ':', expecting ')'
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Players" :action => "edit_players" ).to_s); _erbout.concat "</li>\n"
+                                                                    ^
+Function body: def _run_erb_47app47views47dashboard47configuration47index46html46erb(local_assigns)
+_erbout = ''; _erbout.concat "<ul>\n"
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Tournaments" :action => "edit_tournaments" ).to_s); _erbout.concat "</li>\n"
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Teams" :action => "edit_teams" ).to_s); _erbout.concat "</li>\n"
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Players" :action => "edit_players" ).to_s); _erbout.concat "</li>\n"
+_erbout.concat "</ul>"; _erbout
+end
+Backtrace: /home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:6:in `compile_template'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:630:in `compile_and_render_template'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:365:in `render_template'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:316:in `render_file'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1100:in `render_for_file'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:836:in `render_with_no_layout'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/layout.rb:262:in `render_without_benchmark'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+/usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1153:in `default_render'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1159:in `perform_action_without_filters'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+/usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+/usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+/usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+/usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+/usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+/usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+/usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+/usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+/usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+/usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+/usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+/usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+./script/server:3
+
+
+ActionView::TemplateError (compile error
+/home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:2: syntax error, unexpected ':', expecting ')'
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Tournaments" :action => "edit_tournaments" ).to_s); _erbout.concat "</li>\n"
+                                                                        ^
+/home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:3: syntax error, unexpected ':', expecting ')'
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Teams" :action => "edit_teams" ).to_s); _erbout.concat "</li>\n"
+                                                                  ^
+/home/gsm4/Documents/Sources/tournament-director/app/views/dashboard/configuration/index.html.erb:4: syntax error, unexpected ':', expecting ')'
+_erbout.concat "    <li>"; _erbout.concat(( link_to "Edit Players" :action => "edit_players" ).to_s); _erbout.concat "</li>\n"
+                                                                    ^) on line #2 of dashboard/configuration/index.html.erb:
+1: <ul>
+2:     <li><%= link_to "Edit Tournaments" :action => "edit_tournaments" -%></li>
+3:     <li><%= link_to "Edit Teams" :action => "edit_teams" -%></li>
+4:     <li><%= link_to "Edit Players" :action => "edit_players" -%></li>
+5: </ul>
+    app/views/dashboard/configuration/index.html.erb:6:in `compile_template'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:630:in `compile_and_render_template'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:365:in `render_template'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:316:in `render_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1100:in `render_for_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:836:in `render_with_no_layout'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/layout.rb:262:in `render_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1153:in `default_render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1159:in `perform_action_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 14:04:56) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000462)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.02249 (44 reqs/sec) | Rendering: 0.01223 (54%) | DB: 0.00046 (2%) | 200 OK [http://localhost/dashboard/configuration]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 14:05:00) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000469)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000376)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00577)
+Rendered dashboard/configuration/_line (0.00477)
+Rendered dashboard/configuration/_line (0.00917)
+Completed in 0.15667 (6 reqs/sec) | Rendering: 0.03538 (22%) | DB: 0.00085 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 14:06:59) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000479)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000299)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00676)
+Rendered dashboard/configuration/_line (0.00452)
+Rendered dashboard/configuration/_line (0.00437)
+Completed in 0.05023 (19 reqs/sec) | Rendering: 0.03405 (67%) | DB: 0.00078 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#save_tournament (for 127.0.0.1 at 2008-05-15 14:07:04) [POST]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"commit"=>"Save", "authenticity_token"=>"703cd03c96351b7b20c7b2019db90aa5e513930f", "action"=>"save_tournament", "id"=>"2", "bracket_names"=>["", ""], "controller"=>"dashboard/configuration", "tournament"=>{"name"=>"Test Tournament 1", "timed"=>"1", "includes_years"=>"1", "powers"=>"1", "bracketed"=>"0", "ping_stats"=>"0", "ping_contact"=>"0"}}
+  [4;36;1mTournament Load (0.000463)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000292)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+  [4;36;1mTournament Update (0.000315)[0m   [0;1mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "powers" = 't', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't' WHERE "id" = 2[0m
+
+
+NoMethodError (undefined method `power' for #<Tournament:0xb58ad88c>):
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/attribute_methods.rb:205:in `method_missing'
+    /app/controllers/dashboard/configuration_controller.rb:16:in `save_tournament'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1158:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1158:in `perform_action_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ConfigurationController#save_tournament (for 127.0.0.1 at 2008-05-15 14:07:57) [POST]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"commit"=>"Save", "authenticity_token"=>"703cd03c96351b7b20c7b2019db90aa5e513930f", "action"=>"save_tournament", "id"=>"2", "bracket_names"=>["", ""], "controller"=>"dashboard/configuration", "tournament"=>{"name"=>"Test Tournament 1", "timed"=>"1", "includes_years"=>"1", "powers"=>"1", "bracketed"=>"0", "ping_stats"=>"0", "ping_contact"=>"0"}}
+  [4;35;1mTournament Load (0.013466)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000322)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+  [4;35;1mTournament Update (0.000325)[0m   [0mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "powers" = 't', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't' WHERE "id" = 2[0m
+  [4;36;1mQuestionType Load (0.000416)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = 15 AND question_types."value" = 15) LIMIT 1[0m
+  [4;35;1mQuestionType Load (0.000338)[0m   [0mSELECT * FROM question_types WHERE (question_types."name" = 10 AND question_types."value" = 10) LIMIT 1[0m
+  [4;36;1mQuestionType Load (0.000336)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."name" = -5 AND question_types."value" = -5) LIMIT 1[0m
+  [4;35;1mBracket Load (0.000149)[0m   [0mSELECT * FROM brackets [0m
+  [4;36;1mSQL (0.000266)[0m   [0;1mSELECT count(*) AS count_all FROM brackets [0m
+  [4;35;1mTournament Update (0.000273)[0m   [0mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "powers" = 't', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't' WHERE "id" = 2[0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Completed in 0.05257 (19 reqs/sec) | DB: 0.01589 (30%) | 302 Found [http://localhost/dashboard/configuration/save_tournament/2]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 14:07:57) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsGOgtub3RpY2UiFlRvdXJuYW1lbnQgc2F2%0AZWQuBjoKQHVzZWR7BjsIVA%3D%3D--2d0f60761a7b8feaafc886dd8bf8bf795e99c4ee
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000480)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000313)[0m   [0mSELECT count(*) AS count_all FROM brackets [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00560)
+Rendered dashboard/configuration/_line (0.00443)
+Rendered dashboard/configuration/_line (0.00448)
+Completed in 0.05081 (19 reqs/sec) | Rendering: 0.03225 (63%) | DB: 0.00079 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 14:08:07) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000472)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+
+
+ActionController::MissingTemplate (Missing template dashboard/configuration/edit_teams.html.erb in view path /home/gsm4/Documents/Sources/tournament-director/app/views):
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1269:in `assert_existence_of_template_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1098:in `render_for_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:836:in `render_with_no_layout'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/layout.rb:262:in `render_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1153:in `default_render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1159:in `perform_action_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 14:14:30) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.008785)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.30518 (3 reqs/sec) | Rendering: 0.06657 (21%) | DB: 0.00879 (2%) | 200 OK [http://localhost/dashboard/configuration/]
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 14:21:03) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000541)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.04089 (24 reqs/sec) | Rendering: 0.00410 (10%) | DB: 0.00054 (1%) | 200 OK [http://localhost/dashboard/configuration/]
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 14:21:23) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000512)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.01617 (61 reqs/sec) | Rendering: 0.00512 (31%) | DB: 0.00051 (3%) | 200 OK [http://localhost/dashboard/configuration/]
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 14:21:40) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000476)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.01316 (75 reqs/sec) | Rendering: 0.00292 (22%) | DB: 0.00048 (3%) | 200 OK [http://localhost/dashboard/configuration]
+
+
+Processing ConfigurationController#list_tournaments (for 127.0.0.1 at 2008-05-15 14:22:20) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"list_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000485)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mTournament Load (0.000469)[0m   [0;1mSELECT * FROM tournaments [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/list_tournaments
+Completed in 0.02993 (33 reqs/sec) | Rendering: 0.01868 (62%) | DB: 0.00095 (3%) | 200 OK [http://localhost/dashboard/configuration/list_tournaments]
+
+
+Processing ConfigurationController#list_tournaments (for 127.0.0.1 at 2008-05-15 14:22:43) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"list_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.007818)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mTournament Load (0.000488)[0m   [0;1mSELECT * FROM tournaments [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/list_tournaments
+Completed in 0.05368 (18 reqs/sec) | Rendering: 0.00444 (8%) | DB: 0.00831 (15%) | 200 OK [http://localhost/dashboard/configuration/list_tournaments]
+
+
+Processing ConfigurationController#select_tournament (for 127.0.0.1 at 2008-05-15 14:22:47) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"select_tournament", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000648)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+
+
+ActionController::MissingTemplate (Missing template dashboard/configuration/select_tournament.html.erb in view path /home/gsm4/Documents/Sources/tournament-director/app/views):
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1269:in `assert_existence_of_template_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1098:in `render_for_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:836:in `render_with_no_layout'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/layout.rb:262:in `render_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1153:in `default_render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1159:in `perform_action_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ConfigurationController#list_tournaments (for 127.0.0.1 at 2008-05-15 14:27:22) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZGkHOgxjc3JmX2lkIiViZjRlMzFmMDI2NmIy%0ANDk1MDNlZGVhYTNlYzViZDcyYSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--098d88b1998fb12ce8a8d5cbf8665490810d2a56
+  Parameters: {"action"=>"list_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000496)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mTournament Load (0.000500)[0m   [0mSELECT * FROM tournaments [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/list_tournaments
+Completed in 0.09125 (10 reqs/sec) | Rendering: 0.00468 (5%) | DB: 0.00100 (1%) | 200 OK [http://localhost/dashboard/configuration/list_tournaments]
+
+
+Processing ConfigurationController#select_tournament (for 127.0.0.1 at 2008-05-15 14:27:26) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWRpByIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxl%0Acjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--8d7907debc4cf03146ea63caebeeea0e5a67db11
+  Parameters: {"action"=>"select_tournament", "id"=>"2", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000602)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Redirected to http://localhost:3000/dashboard/entry
+Completed in 0.04269 (23 reqs/sec) | DB: 0.00060 (1%) | 302 Found [http://localhost/dashboard/configuration/select_tournament/2]
+
+
+Processing EntryController#index (for 127.0.0.1 at 2008-05-15 14:27:26) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZCIGMjoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZi%0AMjQ5NTAzZWRlYWEzZWM1YmQ3MmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--15ec9de9e0bea21ce127888665d1e77209380c4e
+  Parameters: {"action"=>"index", "controller"=>"dashboard/entry"}
+  [4;35;1mSQL (0.026903)[0m   [0mSELECT count(*) AS count_all FROM tournaments [0m
+  [4;36;1mTournament Load (0.017518)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000301)[0m   [0mSELECT count(*) AS count_all FROM teams [0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_teams
+Filter chain halted as [#<ActionController::Filters::ClassMethods::SymbolFilter:0xb5858b70 @filter=:check_configuration>] rendered_or_redirected.
+Completed in 0.12171 (8 reqs/sec) | DB: 0.04472 (36%) | 302 Found [http://localhost/dashboard/entry]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 14:27:26) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQiBjIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--c1c97fdf032dd77a60df938197fcb4cdb5948dee
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000512)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+
+
+ActionView::TemplateError (undefined method `teams' for #<Tournament:0xb599fb00>) on line #1 of dashboard/configuration/edit_teams.html.erb:
+1: <% @tournament.teams.each do |team| %>
+2: 
+3: <% end %>
+
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/attribute_methods.rb:205:in `method_missing'
+    app/views/dashboard/configuration/edit_teams.html.erb:1:in `_run_erb_47app47views47dashboard47configuration47edit_teams46html46erb'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:637:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:637:in `compile_and_render_template'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:365:in `render_template'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_view/base.rb:316:in `render_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1100:in `render_for_file'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:836:in `render_with_no_layout'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/layout.rb:262:in `render_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1153:in `default_render'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:1159:in `perform_action_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:697:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+  [4;36;1mSQL (0.000997)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.000416)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000257)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000245)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddTournamentAssocs (3)
+  [4;36;1mSQL (0.004830)[0m   [0;1mALTER TABLE brackets ADD "tournament_id" reference[0m
+  [4;35;1mSQL (0.715195)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.004205)[0m   [0;1mALTER TABLE cards ADD "tournament_id" integer[0m
+  [4;35;1mSQL (0.010699)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.004209)[0m   [0;1mALTER TABLE rounds ADD "tournament_id" integer[0m
+  [4;35;1mSQL (0.024276)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.004391)[0m   [0;1mALTER TABLE question_types ADD "tournament_id" integer[0m
+  [4;35;1mSQL (0.015242)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.004259)[0m   [0;1mALTER TABLE teams ADD "tournament_id" integer[0m
+  [4;35;1mSQL (0.010252)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.007510)[0m   [0;1mALTER TABLE rooms ADD "tournament_id" integer[0m
+  [4;35;1mSQL (0.032685)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.003957)[0m   [0;1mUPDATE schema_info SET version = 3[0m
+  [4;35;1mSQL (0.000513)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.001386)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000109)[0m   [0mPRAGMA index_list(cards)[0m
+  [4;36;1mSQL (0.000099)[0m   [0;1mPRAGMA index_list(games)[0m
+  [4;35;1mSQL (0.000095)[0m   [0mPRAGMA index_list(player_games)[0m
+  [4;36;1mSQL (0.000097)[0m   [0;1mPRAGMA index_list(players)[0m
+  [4;35;1mSQL (0.000094)[0m   [0mPRAGMA index_list(question_types)[0m
+  [4;36;1mSQL (0.000097)[0m   [0;1mPRAGMA index_list(rooms)[0m
+  [4;35;1mSQL (0.000093)[0m   [0mPRAGMA index_list(rounds)[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mPRAGMA index_list(schools)[0m
+  [4;35;1mSQL (0.000094)[0m   [0mPRAGMA index_list(stat_lines)[0m
+  [4;36;1mSQL (0.000097)[0m   [0;1mPRAGMA index_list(team_games)[0m
+  [4;35;1mSQL (0.000098)[0m   [0mPRAGMA index_list(teams)[0m
+  [4;36;1mSQL (0.000123)[0m   [0;1mPRAGMA index_list(tournaments)[0m
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 15:56:45) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZCIGMjoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZi%0AMjQ5NTAzZWRlYWEzZWM1YmQ3MmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--15ec9de9e0bea21ce127888665d1e77209380c4e
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+
+
+ArgumentError (Unknown key(s): through):
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/core_ext/hash/keys.rb:49:in `assert_valid_keys'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/associations.rb:1210:in `create_has_and_belongs_to_many_reflection'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/associations.rb:949:in `has_and_belongs_to_many'
+    /app/models/tournament.rb:10
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:203:in `load_without_new_constant_marking'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:203:in `load_file'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:202:in `load_file'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:94:in `require_or_load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:248:in `load_missing_constant'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:453:in `const_missing'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:465:in `const_missing'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:260:in `load_missing_constant'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:469:in `const_missing'
+    /app/controllers/dashboard_controller.rb:14:in `load_configuration'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:469:in `send!'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:469:in `call'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:441:in `run'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:716:in `run_before_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:695:in `call_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:689:in `perform_action_without_benchmark'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/rescue.rb:199:in `perform_action_without_caching'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:678:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/connection_adapters/abstract/query_cache.rb:33:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/activerecord-2.0.2/lib/active_record/query_cache.rb:8:in `cache'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/caching.rb:677:in `perform_action'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `send'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:524:in `process_without_filters'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/filters.rb:685:in `process_without_session_management_support'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/session_management.rb:123:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/base.rb:388:in `process'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:171:in `handle_request'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:115:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:126:in `dispatch_cgi'
+    /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/dispatcher.rb:9:in `dispatch'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:76:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `synchronize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/../lib/mongrel/rails.rb:74:in `process'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:159:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:158:in `process_client'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:285:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `initialize'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `new'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel.rb:268:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:282:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `each'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/configurator.rb:281:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:128:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/lib/mongrel/command.rb:212:in `run'
+    /usr/lib/ruby/gems/1.8/gems/mongrel-1.1.3/bin/mongrel_rails:281
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:489:in `load'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/servers/mongrel.rb:64
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/lib/ruby/gems/1.8/gems/activesupport-2.0.2/lib/active_support/dependencies.rb:496:in `require'
+    /usr/lib/ruby/gems/1.8/gems/rails-2.0.2/lib/commands/server.rb:39
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+    /usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    ./script/server:3
+
+Rendering /usr/lib/ruby/gems/1.8/gems/actionpack-2.0.2/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 16:01:26) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQiBjIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--c1c97fdf032dd77a60df938197fcb4cdb5948dee
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.019079)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.45970 (2 reqs/sec) | Rendering: 0.03851 (8%) | DB: 0.01908 (4%) | 200 OK [http://localhost/dashboard/configuration]
+
+
+Processing ConfigurationController#list_tournaments (for 127.0.0.1 at 2008-05-15 16:01:36) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZCIGMjoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZi%0AMjQ5NTAzZWRlYWEzZWM1YmQ3MmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--15ec9de9e0bea21ce127888665d1e77209380c4e
+  Parameters: {"action"=>"list_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000474)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mTournament Load (0.000521)[0m   [0mSELECT * FROM tournaments [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/list_tournaments
+Completed in 0.10950 (9 reqs/sec) | Rendering: 0.05165 (47%) | DB: 0.00099 (0%) | 200 OK [http://localhost/dashboard/configuration/list_tournaments]
+
+
+Processing ConfigurationController#index (for 127.0.0.1 at 2008-05-15 16:01:45) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQiBjIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--c1c97fdf032dd77a60df938197fcb4cdb5948dee
+  Parameters: {"action"=>"index", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.001220)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/index
+Completed in 0.10078 (9 reqs/sec) | Rendering: 0.00319 (3%) | DB: 0.00122 (1%) | 200 OK [http://localhost/dashboard/configuration]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 16:01:51) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZCIGMjoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZi%0AMjQ5NTAzZWRlYWEzZWM1YmQ3MmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--15ec9de9e0bea21ce127888665d1e77209380c4e
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000527)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000356)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00634)
+Rendered dashboard/configuration/_line (0.00469)
+Rendered dashboard/configuration/_line (0.00518)
+Completed in 1.10311 (0 reqs/sec) | Rendering: 0.03298 (2%) | DB: 0.00088 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 16:04:23) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQiBjIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--c1c97fdf032dd77a60df938197fcb4cdb5948dee
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000504)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000351)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.01054)
+Rendered dashboard/configuration/_line (0.00699)
+Rendered dashboard/configuration/_line (0.00475)
+Completed in 0.44125 (2 reqs/sec) | Rendering: 0.12325 (27%) | DB: 0.00085 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 16:07:09) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZCIGMjoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZi%0AMjQ5NTAzZWRlYWEzZWM1YmQ3MmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--15ec9de9e0bea21ce127888665d1e77209380c4e
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.025792)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.015705)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.15011)
+Rendered dashboard/configuration/_line (0.02155)
+Rendered dashboard/configuration/_line (0.07830)
+Completed in 5.13746 (0 reqs/sec) | Rendering: 0.94465 (18%) | DB: 0.04150 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 16:09:19) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQiBjIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--c1c97fdf032dd77a60df938197fcb4cdb5948dee
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000544)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000350)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00579)
+Rendered dashboard/configuration/_line (0.00455)
+Rendered dashboard/configuration/_line (0.00444)
+Completed in 0.08734 (11 reqs/sec) | Rendering: 0.02904 (33%) | DB: 0.00089 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 16:10:04) [GET]
+  Session ID: BAh7CDoSdG91cm5hbWVudF9pZCIGMjoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZi%0AMjQ5NTAzZWRlYWEzZWM1YmQ3MmEiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--15ec9de9e0bea21ce127888665d1e77209380c4e
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000484)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000333)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00577)
+Rendered dashboard/configuration/_line (0.00451)
+Rendered dashboard/configuration/_line (0.00438)
+Completed in 0.07694 (12 reqs/sec) | Rendering: 0.05514 (71%) | DB: 0.00082 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 16:11:42) [GET]
+  Session ID: BAh7CDoMY3NyZl9pZCIlYmY0ZTMxZjAyNjZiMjQ5NTAzZWRlYWEzZWM1YmQ3%0AMmE6EnRvdXJuYW1lbnRfaWQiBjIiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xs%0AZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA%3D--c1c97fdf032dd77a60df938197fcb4cdb5948dee
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000586)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000382)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.25925)
+Rendered dashboard/configuration/_line (0.22855)
+Rendered dashboard/configuration/_line (0.70538)
+Completed in 4.06964 (0 reqs/sec) | Rendering: 2.68955 (66%) | DB: 0.00097 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
