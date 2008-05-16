@@ -1,29 +1,3 @@
-<table>
-<tr>
-	<th>schools not in tournament</th>
-	<th>schools in tournament</th>
-</tr>
-<tr style="font-size: 19px;">
-	<td style="vertical-align: top;">
-		<ul style="list-style: none;">
-		<% @other_schools.each do |s| -%>
-			<li><%= s.name -%> (<%= s.city -%>) <%= link_to "edit", {:action => 'edit_schools', :id => s.id},{:class => 'button'} -%> <%= link_to image_tag("rarrow.gif", :border => 0), :action => 'add_tournament_school', :id => s.id -%></li>
-		<% end -%>
-		</ul>
-	</td>
-	<td style="vertical-align: top;">
-		<ul style="list-style: none;">
-		<% @tournament.schools.each do |s| -%>
-			<li><%= link_to image_tag("larrow.gif", :border => 0), :action => 'rm_tournament_school', :id => s.id -%> <%= s.name -%> (<%= s.city -%>) <%= link_to "edit", {:action => 'edit_schools', :id => s.id}, {:class => 'button'} -%></li>
-		<% end -%>
-		</ul>
-	</td>
-</tr>
-</table>
-<br />
-<br />
-<br />
-
 <% form_tag :action => "save_school", :id => @school.id do -%>
 <table>
 	<tr>
@@ -45,3 +19,29 @@
 	</tr>
 </table>
 <% end -%>
+<br />
+<br />
+<br />
+
+<table>
+<% count = 0 %>
+<% @schools.each do |school| -%>
+	<% if count == 0 -%>
+	<tr>
+	<% end -%>
+	<% count += 1 -%>
+	<td>
+	<%= school.name -%> (<%= school.city -%>) <%= link_to "edit", {:action => 'edit_schools', :id => school.id}, {:class => 'button'} -%>
+	</td>
+	<% if count == 4 -%>
+	</tr>
+	<% count = 0 -%>
+	<% end -%>
+<% end -%>
+<% if count > 0 -%>
+	<% for i in (count)...4 -%>
+	<td>&nbsp;</td>
+	<% end -%>
+	</tr>
+<% end -%>
+</table>

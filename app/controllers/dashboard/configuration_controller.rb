@@ -26,13 +26,14 @@ class Dashboard::ConfigurationController < DashboardController
 
   def edit_tournament
     @brackets = Bracket.find(:all, :order => "ordering, name")
+    if @brackets.empty? then @brackets = [Bracket.new, Bracket.new] end
     @all_tournaments = Tournament.find(:all, :order => "id desc")
     @all_tournaments.delete(@tournament)
   end
   
   def save_tournament
     @tournament.update_attributes(params['tournament'])
-    QuestionType.configure_for_power(@tournament.power)
+    QuestionType.configure_for_power(@tournament.powers)
     @tournament.bracketed = false if (params['bracket_names'].nil?)
     if @tournament.bracketed?
       brackets_to_delete = Bracket.find(:all)
@@ -52,10 +53,12 @@ class Dashboard::ConfigurationController < DashboardController
   end
   
   def edit_schools
-  	@other_schools = School.find :all
-  	@tournament.schools.each do |s|
-  		@other_schools.delete(s)
-  	end
+  	#@other_schools = School.find :all
+  	#@tournament.schools.each do |s|
+  	#	@other_schools.delete(s)
+  	#end
+  	
+  	@schools = School.find :all, :order => "name"
   	
   	begin
   		@school = School.find(params[:id])
@@ -76,41 +79,23 @@ class Dashboard::ConfigurationController < DashboardController
   	redirect_to :action => "edit_schools"
   end
   
-  def add_tournament_school
-  	begin
-  	  @tournament.schools<< School.find(params[:id])
-  	  flash[:notice] = "School added."
-  	rescue ActiveRecord::RecordNotFound
-  	end
-  	redirect_to :action => "edit_schools"
-  end
-  
-  def rm_tournament_school
-  	begin
-  	  @tournament.schools.delete(School.find(params[:id]))
-  	  flash[:notice] = "School removed."
-  	rescue ActiveRecord::RecordNotFound
-  	end
-  	redirect_to :action => "edit_schools"
-  end
-
   def edit_teams
     if @tournament.nil?
       redirect_to :action => 'edit_tournaments'
     end
     
     begin
-    	@team = @tournament.teams.find(params[:id])
+    	@team = Team.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-    	@team = @tournament.teams.build
+    	@team = Team.new
     end
   end
 
   def save_team
 	begin
-		team = @tournament.teams.find(params[:id])
+		team = Team.find(params[:id])
 	rescue ActiveRecord::RecordNotFound
-		team = @tournament.teams.build
+		team = Team.new
 	end
 	team.update_attributes(params[:team])
 	team.save
@@ -125,7 +110,7 @@ class Dashboard::ConfigurationController < DashboardController
   		name = params[:player_names][i]
 		next if name.nil? or name.empty?
 		player = team.players.find(:first, :conditions => ['name = ?', name]) || team.players.build(:name => name)
-		player.year = params[:player_years][i]
+		player.year = params[:player_years][i] unless not @tournament.includes_years
 		player.future_school = params[:player_schools][i]
 		player.save
 		players_to_delete.delete(player)

@@ -11,7 +11,7 @@
 	padding: 10px;
 }
 
-#nav a {
+#nav a, .nav_buttons a {
 	color: rgb(0, 64, 128);
 	text-decoration: none;
 	border: 1px dotted;

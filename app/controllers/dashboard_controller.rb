@@ -22,7 +22,8 @@ class DashboardController < ApplicationController
     
     unless @tournament.nil?
       begin
-        @tournament.power = !QuestionType.find_by_value(15).nil?
+      	QuestionType.find_by_value(15)
+        #@tournament.power = !QuestionType.find_by_value(15).nil?
       rescue ActiveRecord::StatementInvalid
         load_tournament_database(@tournament)
       end

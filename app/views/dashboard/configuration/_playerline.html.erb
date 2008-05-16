@@ -1,6 +1,6 @@
 <div class="line">
 	<%= text_field_tag "player_names[]",playerline.nil? ? "" : playerline.name, {:size=>13} -%> 
-	<%= text_field_tag "player_years[]",playerline.nil? ? "" : playerline.year, {:size=>2} -%> 
+	<%= text_field_tag "player_years[]",playerline.nil? ? "" : playerline.year, {:size=>2} unless not years-%> 
 	<%= text_field_tag "player_schools[]",playerline.nil? ? "" : playerline.future_school, {:size=>13} -%>
 	<%= link_to_function('remove', nil, {:class => 'button'}) { |page| page << "Element.remove(this.parentNode)" } %>
 </div>

@@ -4,10 +4,10 @@
 	<tr>
 		<td>
 		<div id="players_cell_<%= thing.id -%>">
-			<%= render :partial => 'playerline', :collection => players %>
+			<%= render :partial => 'playerline', :collection => players, :locals => {:years => years} %>
 		</div>
 		<%= link_to_function('add', nil, {:class => 'button'}) { |page|
-                    page.insert_html :bottom, "players_cell_#{thing.id}", :partial => "playerline"
+                    page.insert_html :bottom, "players_cell_#{thing.id}", :partial => "playerline", :locals => {:years => years}
                 } %>
 		</td>
 	</tr>

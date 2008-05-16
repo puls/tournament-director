@@ -2,8 +2,29 @@
 	<%= link_to "Edit Schools", :action => "edit_schools" %>
 </div>
 
+<% form_tag :action => "save_team", :id => @team.id do -%>
 <table>
-<% @tournament.schools.each do |school| -%>
+	<tr>
+		<th>team name:</th>
+		<td><%= text_field "team","name", :size => 50 -%></td>
+	</tr>
+	<tr>
+		<th>team school:</th>
+		<td><%= select "team","school_id", School.find(:all, :order => 'schools.name').collect{|p| ["#{p.name} (#{p.city})", p.id]} -%></td>
+	</tr>
+	<tr>
+		<td class="submit" colspan="2">
+		<%= submit_tag "Save" -%>
+		</td>
+	</tr>
+</table>
+<% end -%>
+<br />
+<br />
+<br />
+
+<table>
+<% School.find(:all, :order => 'schools.name', :include => :teams).each do |school| -%>
 	<tr>
 	<th colspan="3">
 	<%= school.name -%> (<%= school.city -%>)
@@ -13,7 +34,7 @@
 	<tr>
 		<td style="width: 18%; vertical-align: top; font-weight: bold;"><%= team.name -%></td>
 		<td style="text-align: center; vertical-align: top;"><%= link_to "edit", {:action => 'edit_teams', :id => team.id}, {:class => 'button'} -%>
-		<%= link_to_function('players', nil, {:class => 'button', :id => "players_link_#{team.id}"}){|page| page.replace_html( "team_li_#{team.id}", :partial => "players", :locals => {:thing => team, :players => team.players.empty? ? [team.players.build, team.players.build, team.players.build, team.players.build] : team.players.sort{|a, b| a.name <=> b.name}}); page.hide("players_link_#{team.id}"); page.show("team_close_#{ team.id }") } -%>
+		<%= link_to_function('players', nil, {:class => 'button', :id => "players_link_#{team.id}"}){|page| page.replace_html( "team_li_#{team.id}", :partial => "players", :locals => {:thing => team, :years => @tournament.includes_years, :players => team.players.empty? ? [team.players.build, team.players.build, team.players.build, team.players.build] : team.players.sort{|a, b| a.name <=> b.name}}); page.hide("players_link_#{team.id}"); page.show("team_close_#{ team.id }") } -%>
 		</td>
 		<td style="width: 65%;">
 		<div id="team_li_<%= team.id -%>">
@@ -25,24 +46,3 @@
 	<% end -%>
 <% end -%>
 </table>
-<br />
-<br />
-<br />
-
-<% form_tag :action => "save_team", :id => @team.id do -%>
-<table>
-	<tr>
-		<th>team name:</th>
-		<td><%= text_field "team","name", :size => 50 -%></td>
-	</tr>
-	<tr>
-		<th>team school:</th>
-		<td><%= select "team","school_id",@tournament.schools.collect{|p| ["#{p.name} (#{p.city})", p.id]} -%></td>
-	</tr>
-	<tr>
-		<td class="submit" colspan="2">
-		<%= submit_tag "Save" -%>
-		</td>
-	</tr>
-</table>
-<% end -%>
