@@ -10774,3 +10774,83 @@ Rendered dashboard/configuration/_playerline (0.00534)
 Rendered dashboard/configuration/_playerline (0.00466)
 Rendered dashboard/configuration/_players (0.03245)
 Completed in 0.41177 (2 reqs/sec) | Rendering: 0.38030 (92%) | DB: 0.00906 (2%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 20:58:35) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000528)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+  [4;35;1mSchool Load (0.001054)[0m   [0mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+  [4;36;1mTeam Load Including Associations (0.001887)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 3) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00535)
+Rendered dashboard/configuration/_playerline (0.00534)
+Rendered dashboard/configuration/_playerline (0.00497)
+Rendered dashboard/configuration/_playerline (0.00475)
+Rendered dashboard/configuration/_players (0.02819)
+Rendered dashboard/configuration/_playerline (0.00514)
+Rendered dashboard/configuration/_playerline (0.00476)
+Rendered dashboard/configuration/_playerline (0.00845)
+Rendered dashboard/configuration/_players (0.02671)
+Rendered dashboard/configuration/_playerline (0.00486)
+Rendered dashboard/configuration/_playerline (0.00470)
+Rendered dashboard/configuration/_playerline (0.00908)
+Rendered dashboard/configuration/_playerline (0.00479)
+Rendered dashboard/configuration/_playerline (0.00505)
+Rendered dashboard/configuration/_players (0.03671)
+  [4;35;1mTeam Load Including Associations (0.000875)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 2) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00511)
+Rendered dashboard/configuration/_playerline (0.00468)
+Rendered dashboard/configuration/_playerline (0.00464)
+Rendered dashboard/configuration/_playerline (0.00463)
+Rendered dashboard/configuration/_playerline (0.00480)
+Rendered dashboard/configuration/_players (0.03200)
+  [4;36;1mTeam Load Including Associations (0.000847)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 1) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00853)
+Rendered dashboard/configuration/_playerline (0.00529)
+Rendered dashboard/configuration/_playerline (0.00466)
+Rendered dashboard/configuration/_playerline (0.00521)
+Rendered dashboard/configuration/_playerline (0.00493)
+Rendered dashboard/configuration/_players (0.03621)
+Completed in 0.50036 (1 reqs/sec) | Rendering: 0.37552 (75%) | DB: 0.00519 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 20:58:59) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000511)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+  [4;36;1mSchool Load (0.001055)[0m   [0;1mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+  [4;35;1mTeam Load Including Associations (0.001876)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 3) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00486)
+Rendered dashboard/configuration/_playerline (0.00476)
+Rendered dashboard/configuration/_playerline (0.00555)
+Rendered dashboard/configuration/_playerline (0.00469)
+Rendered dashboard/configuration/_players (0.02747)
+Rendered dashboard/configuration/_playerline (0.00516)
+Rendered dashboard/configuration/_playerline (0.00472)
+Rendered dashboard/configuration/_playerline (0.00485)
+Rendered dashboard/configuration/_players (0.02168)
+Rendered dashboard/configuration/_playerline (0.00914)
+Rendered dashboard/configuration/_playerline (0.00474)
+Rendered dashboard/configuration/_playerline (0.00466)
+Rendered dashboard/configuration/_playerline (0.00476)
+Rendered dashboard/configuration/_playerline (0.00490)
+Rendered dashboard/configuration/_players (0.03594)
+  [4;36;1mTeam Load Including Associations (0.000849)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 2) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00475)
+Rendered dashboard/configuration/_playerline (0.00469)
+Rendered dashboard/configuration/_playerline (0.00460)
+Rendered dashboard/configuration/_playerline (0.00462)
+Rendered dashboard/configuration/_playerline (0.00459)
+Rendered dashboard/configuration/_players (0.03104)
+  [4;35;1mTeam Load Including Associations (0.001009)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 1) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00521)
+Rendered dashboard/configuration/_playerline (0.00508)
+Rendered dashboard/configuration/_playerline (0.00509)
+Rendered dashboard/configuration/_playerline (0.00498)
+Rendered dashboard/configuration/_playerline (0.00496)
+Rendered dashboard/configuration/_players (0.03366)
+Completed in 0.40005 (2 reqs/sec) | Rendering: 0.37213 (93%) | DB: 0.00530 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]

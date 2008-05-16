@@ -11,7 +11,7 @@
 	</tr>
 	<% school.teams.each do |team| -%>
 	<tr>
-		<td style="width: 18%; vertical-align: top;"><%= team.name -%></td>
+		<td style="width: 18%; vertical-align: top; font-weight: bold;"><%= team.name -%></td>
 		<td style="text-align: center; vertical-align: top;"><%= link_to "edit", {:action => 'edit_teams', :id => team.id}, {:class => 'button'} -%>
 		<%= link_to_function('players', nil, {:class => 'button', :id => "players_link_#{team.id}"}){|page| page.replace_html( "team_li_#{team.id}", :partial => "players", :locals => {:thing => team, :players => team.players.empty? ? [team.players.build, team.players.build, team.players.build, team.players.build] : team.players.sort{|a, b| a.name <=> b.name}}); page.hide("players_link_#{team.id}"); page.show("team_close_#{ team.id }") } -%>
 		</td>
