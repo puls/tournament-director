@@ -6,22 +6,25 @@ class DashboardController < ApplicationController
 
   protected
   def load_configuration
-    if session[:tournament_id].nil?
-      if session[:new_tournament]
-        @tournament = Tournament.new(:name => "New Tournament")
-        @tournament.save
-        session[:tournament_id] = @tournament.id
-        session[:new_tournament] = nil
-      else
-      	@tournament = Tournament.find(:first)
-      	session[:tournament_id] = @tournament.id unless @tournament.nil?
-      end
-    else
+    unless session[:tournament_id].nil?
       begin
         @tournament = Tournament.find(session[:tournament_id])
       rescue ActiveRecord::RecordNotFound
         @tournament = nil
         session[:tournament_id] = nil
+      end
+    end
+    
+    if @tournament.nil?
+      	@tournament = Tournament.find(:first)
+      	session[:tournament_id] = @tournament.id unless @tournament.nil?
+    end
+    
+    unless @tournament.nil?
+      begin
+        @tournament.power = !QuestionType.find_by_value(15).nil?
+      rescue ActiveRecord::StatementInvalid
+        load_tournament_database(@tournament)
       end
     end
   end
@@ -34,7 +37,7 @@ class DashboardController < ApplicationController
       return false
     end
 
-    unless @tournament.teams.count > 0
+    unless Team.count > 0
       redirect_to :controller => "/dashboard/configuration", :action => "edit_teams"
       return false
     end

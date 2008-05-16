@@ -1,0 +1,17 @@
+<% form_tag :action => "create_tournament" do -%>
+<table>
+    <tr>
+        <th>Tournament name:</th>
+        <td><%= text_field_tag "name", "", :size => 50 %></td>
+    </tr>
+    <tr>
+        <th>Database name:</th>
+        <td><%= text_field_tag "database", "", :size => 50 %></td>
+    </tr>
+    <tr>
+        <td class="submit" colspan="2">
+        	<%= submit_tag "Save" %>
+        </td>
+    </tr>
+</table>
+<% end %>

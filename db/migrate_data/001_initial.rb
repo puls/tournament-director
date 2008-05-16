@@ -47,6 +47,7 @@ class Initial < ActiveRecord::Migration
     create_table :schools do |t|
       t.string :name
       t.string :city
+      t.boolean :small
     end
     
     create_table :stat_lines do |t|
@@ -62,11 +63,6 @@ class Initial < ActiveRecord::Migration
     create_table :teams do |t|
       t.references :school
       t.string :name
-    end
-    
-    create_table :tournaments do |t|
-      t.string :name
-      t.boolean :timed, :bracketed, :ping_stats, :ping_contact, :includes_years
     end
   end
 
