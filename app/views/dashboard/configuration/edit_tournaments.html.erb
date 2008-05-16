@@ -1,3 +1,7 @@
+<div style="width: 100%; text-align: center; padding: 10px;" class="nav_buttons">
+	<%= link_to "Change Tournament", :action => 'list_tournaments' -%>
+	<%= link_to "New Tournament", :action => 'new_tournament' -%>	
+</div>
 <% form_tag :action => "save_tournament", :id => @tournament.id do -%>
     <table>
         <tr>

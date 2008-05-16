@@ -6,9 +6,16 @@ class DashboardController < ApplicationController
 
   protected
   def load_configuration
-    if (session[:tournament_id].nil?)
-      @tournament = Tournament.find(:first)
-      session[:tournament_id] = @tournament.id unless @tournament.nil?
+    if session[:tournament_id].nil?
+      if session[:new_tournament]
+        @tournament = Tournament.new(:name => "New Tournament")
+        @tournament.save
+        session[:tournament_id] = @tournament.id
+        session[:new_tournament] = nil
+      else
+      	@tournament = Tournament.find(:first)
+      	session[:tournament_id] = @tournament.id unless @tournament.nil?
+      end
     else
       begin
         @tournament = Tournament.find(session[:tournament_id])

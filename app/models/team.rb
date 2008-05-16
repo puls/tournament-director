@@ -8,6 +8,6 @@ class Team < ActiveRecord::Base
   has_many :players
   has_many :player_games, :through => :games
 
-  has_and_belongs_to_many :brackets, :through => :games
+  has_many :brackets, :through => :games
 
 end

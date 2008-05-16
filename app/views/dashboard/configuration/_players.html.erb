@@ -1,0 +1,21 @@
+<div id="team_li_<%= thing.id -%>">
+<% form_tag :action => 'save_players', :id => thing.id do -%>
+<table>
+	<tr>
+		<td>
+		<div id="players_cell_<%= thing.id -%>">
+			<%= render :partial => 'playerline', :collection => players %>
+		</div>
+		<%= link_to_function('add', nil, {:class => 'button'}) { |page|
+                    page.insert_html :bottom, "players_cell_#{thing.id}", :partial => "playerline"
+                } %>
+		</td>
+	</tr>
+	<tr>
+		<td class="submit" colspan="2">
+		<%= submit_tag "Save" -%>
+		</td>
+	</tr>
+</table>
+<% end -%>
+</div>

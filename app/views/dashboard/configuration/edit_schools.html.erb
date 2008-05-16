@@ -1,0 +1,47 @@
+<table>
+<tr>
+	<th>schools not in tournament</th>
+	<th>schools in tournament</th>
+</tr>
+<tr style="font-size: 19px;">
+	<td style="vertical-align: top;">
+		<ul style="list-style: none;">
+		<% @other_schools.each do |s| -%>
+			<li><%= s.name -%> (<%= s.city -%>) <%= link_to "edit", {:action => 'edit_schools', :id => s.id},{:class => 'button'} -%> <%= link_to image_tag("rarrow.gif", :border => 0), :action => 'add_tournament_school', :id => s.id -%></li>
+		<% end -%>
+		</ul>
+	</td>
+	<td style="vertical-align: top;">
+		<ul style="list-style: none;">
+		<% @tournament.schools.each do |s| -%>
+			<li><%= link_to image_tag("larrow.gif", :border => 0), :action => 'rm_tournament_school', :id => s.id -%> <%= s.name -%> (<%= s.city -%>) <%= link_to "edit", {:action => 'edit_schools', :id => s.id}, {:class => 'button'} -%></li>
+		<% end -%>
+		</ul>
+	</td>
+</tr>
+</table>
+<br />
+<br />
+<br />
+
+<% form_tag :action => "save_school", :id => @school.id do -%>
+<table>
+	<tr>
+		<th>school name:</th>
+		<td><%= text_field "school","name", :size => 50 -%></td>
+	</tr>
+	<tr>
+		<th>school city:</th>
+		<td><%= text_field "school","city", :size => 50 -%></td>
+	</tr>
+	<tr>
+		<th>school status:</th>
+		<td><%= check_box "school","small" -%> small school</td>
+	</tr>
+	<tr>
+		<td class="submit" colspan="2">
+		<%= submit_tag "Save" %>
+		</td>
+	</tr>
+</table>
+<% end -%>

@@ -8,7 +8,7 @@
 	text-align: left;
 }
 
-#nav a {
+#nav a, .nav_buttons a {
 	font-weight: bold;
 	color: rgb(0, 64, 128);
 	text-decoration: none;
