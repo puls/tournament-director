@@ -27,6 +27,9 @@ class Dashboard::ConfigurationController < DashboardController
   def edit_tournament
     @brackets = Bracket.find(:all, :order => "ordering, name")
     if @brackets.empty? then @brackets = [Bracket.new, Bracket.new] end
+    @rooms = Room.find(:all, :order => "name")
+    if @rooms.empty? then @rooms = [Room.new, Room.new] end
+    
     @all_tournaments = Tournament.find(:all, :order => "id desc")
     @all_tournaments.delete(@tournament)
   end
@@ -47,17 +50,29 @@ class Dashboard::ConfigurationController < DashboardController
       Bracket.destroy_all
     end
     @tournament.bracketed = false if Bracket.count == 0
+    
+    @tournament.tracks_rooms = false if params['room_names'].nil?
+    if @tournament.tracks_rooms?
+      rooms_to_delete = Room.find(:all)
+      for i in 0..params[:room_names].length
+      	name = params[:room_names][i]
+      	next if name.nil? or name.empty?
+      	room = Room.find_or_create_by_name(name)
+      	rooms_to_delete.delete(room)
+      	room.staff = params[:room_staffs][i]
+      	room.save
+      end
+      rooms_to_delete.each { |r| r.destroy }
+    else
+      Room.destroy_all
+    end
+    
     @tournament.save
     flash[:notice] = "Changes saved."
     redirect_to :action => "edit_tournament"
   end
   
   def edit_schools
-  	#@other_schools = School.find :all
-  	#@tournament.schools.each do |s|
-  	#	@other_schools.delete(s)
-  	#end
-  	
   	@schools = School.find :all, :order => "name"
   	
   	begin

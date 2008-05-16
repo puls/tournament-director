@@ -1,45 +1,79 @@
-<% bracketed = false %>
 <h1>Enter a game score</h1>
+<% form_tag :action => "save_game" do -%>
 <table class="horizontal">
     <tr>
         <th>Round</th>
         <th>Teams</th>
+        <% if @tournament.swiss -%><th>Cards</th><% end -%>
         <th>Points</th>
-        <% if bracketed -%><th>Bracket</th><% end  %>
-        <th>Tossups</th>
+        <% if @tournament.bracketed -%><th>Bracket</th><% end -%>
+        <th>TUH</th>
+        <% if @tournament.tracks_rooms -%><th>Room</th><% end -%>
+        <th>Flags</th>
         <th></th>
     </tr>
     <tr>
         <td rowspan="2">
-            <%= text_field_tag 'round_number', nil, {:size => 2, :tabindex => 1, :onblur => remote_function(:update => 'team1', :url => {:action => "teams_for_round"})} %>
+            <%= text_field_tag 'round_number', nil, {:size => 2, :tabindex => 1, :onblur => "update_team_list(1); update_team_list(2);"} %>
         </td>
         <td>
-            <%= select_tag 'team1' %>
+            <%= select_tag 'team1', nil, {:tabindex => 2} %>
         </td>
+        <% if @tournament.swiss -%>
         <td>
-            <%= text_field_tag 'score1',nil,{:size => 4,:tabindex => 4} %>
+            <%= text_field_tag 'card1', nil, {:size => 3, :tabindex => 4} -%>
         </td>
-        <% if bracketed %>
+        <% end -%>
+        <td>
+            <%= text_field_tag 'score1',nil,{:size => 4,:tabindex => 6} -%>
+        </td>
+        <% if @tournament.bracketed -%>
         <td rowspan="2">
-            <%= select_tag 'bracket' %>
+            <%= select_tag 'bracket', options_for_select(Bracket.find(:all).collect{|a| [a.name, a.id]}), {:tabindex => 8} -%>
         </td>
         <% else %>
-        <%= hidden_field_tag 'bracket' %>
+        <%= hidden_field_tag 'bracket' -%>
         <% end %>
         <td rowspan="2">
-            <%= text_field_tag 'tossups',nil,{:size => 2,:tabindex => 7} %>
+            <%= text_field_tag 'tossups',nil,{:size => 2,:tabindex => 9} -%>
+        </td>
+        <% if @tournament.tracks_rooms %>
+        <td rowspan="2">
+            <%= select_tag 'room', options_for_select(Room.find(:all).collect{|a| [a.name, a.id]}), {:tabindex => 10} -%>
+        </td>
+        <% end -%>
+        <td rowspan="2" style="text-align: left; white-space: nowrap;">
+        	<%= check_box_tag 'extragame', "1", false, :tabindex => 11  %> extra<br />
+        	<%= check_box_tag 'overtime', "1", false, :tabindex => 12 %> overtime<br />
+        	<%= check_box_tag 'playoff', "1", false, :tabindex => 13 %> playoffs<br />
+        	<%= check_box_tag 'forfeit', "1", false, :tabindex => 14 %> forfeit<br />
         </td>
         <td rowspan="2" class="submit">
-            <%= submit_tag 'Save',{:tabindex => 8} %>
+            <%= submit_tag 'Save',{:tabindex => 15} -%>
         </td>
     </tr>
     <tr>
         <td>
-            <%= select_tag 'team2' %>
+            <%= select_tag 'team2', nil, :tabindex => 3 %>
         </td>
+        <% if @tournament.swiss -%>
         <td>
-            <%= text_field_tag 'score2',nil,{:size => 4,:tabindex => 4} %>
+        	<%= text_field_tag 'card2', nil, {:size => 3, :tabindex => 5} -%>
+        </td>
+        <% end -%>
+        <td>
+            <%= text_field_tag 'score2',nil,{:size => 4,:tabindex => 7} %>
         </td>
     </tr>
 </table>
+<% end -%>
 <h1>Finish stats for a game</h1>
+
+<%= update_page_tag do |page|
+	page<< "function update_team_list(team_num)"
+	page<< "{"
+	page<< "var round_id = $('round_number').value;"
+	page<< remote_function(:update => "team'+team_num+'", :url => {:action => 'teams_for_round', :id => "'+round_id+'"})
+	page<< "}"
+end -%>
+
