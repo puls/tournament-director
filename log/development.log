@@ -10854,3 +10854,319 @@ Rendered dashboard/configuration/_playerline (0.00498)
 Rendered dashboard/configuration/_playerline (0.00496)
 Rendered dashboard/configuration/_players (0.03366)
 Completed in 0.40005 (2 reqs/sec) | Rendering: 0.37213 (93%) | DB: 0.00530 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing ConfigurationController#edit_schools (for 127.0.0.1 at 2008-05-15 21:04:58) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_schools", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.001153)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSchool Load (0.000788)[0m   [0mSELECT * FROM schools [0m
+  [4;36;1mSchool Load (0.002622)[0m   [0;1mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_schools
+Completed in 0.40208 (2 reqs/sec) | Rendering: 0.11183 (27%) | DB: 0.00456 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_schools]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 21:19:21) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000502)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+  [4;36;1mSchool Load (0.008051)[0m   [0;1mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+  [4;35;1mTeam Load Including Associations (0.002169)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 3) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00609)
+Rendered dashboard/configuration/_playerline (0.00504)
+Rendered dashboard/configuration/_playerline (0.00492)
+Rendered dashboard/configuration/_playerline (0.00620)
+Rendered dashboard/configuration/_players (0.05507)
+Rendered dashboard/configuration/_playerline (0.00502)
+Rendered dashboard/configuration/_playerline (0.00487)
+Rendered dashboard/configuration/_playerline (0.00493)
+Rendered dashboard/configuration/_players (0.08893)
+Rendered dashboard/configuration/_playerline (0.00552)
+Rendered dashboard/configuration/_playerline (0.00485)
+Rendered dashboard/configuration/_playerline (0.00474)
+Rendered dashboard/configuration/_playerline (0.00507)
+Rendered dashboard/configuration/_playerline (0.00473)
+Rendered dashboard/configuration/_players (0.03463)
+  [4;36;1mTeam Load Including Associations (0.000850)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 2) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00486)
+Rendered dashboard/configuration/_playerline (0.00489)
+Rendered dashboard/configuration/_playerline (0.00834)
+Rendered dashboard/configuration/_playerline (0.00525)
+Rendered dashboard/configuration/_playerline (0.00471)
+Rendered dashboard/configuration/_players (0.03665)
+  [4;35;1mTeam Load Including Associations (0.000851)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 1) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00653)
+Rendered dashboard/configuration/_playerline (0.00484)
+Rendered dashboard/configuration/_playerline (0.00535)
+Rendered dashboard/configuration/_playerline (0.00587)
+Rendered dashboard/configuration/_playerline (0.00572)
+Rendered dashboard/configuration/_players (0.03767)
+Completed in 2.13432 (0 reqs/sec) | Rendering: 1.90193 (89%) | DB: 0.01242 (0%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 21:19:25) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000542)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.027080)[0m   [0mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00592)
+Rendered dashboard/configuration/_line (0.00609)
+Rendered dashboard/configuration/_line (0.00647)
+Completed in 0.15234 (6 reqs/sec) | Rendering: 0.03296 (21%) | DB: 0.02762 (18%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing EntryController#index (for 127.0.0.1 at 2008-05-15 21:19:30) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"index", "controller"=>"dashboard/entry"}
+  [4;36;1mTournament Load (0.000498)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000348)[0m   [0mSELECT count(*) AS count_all FROM teams WHERE (teams.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/entry/index
+Completed in 0.02984 (33 reqs/sec) | Rendering: 0.00526 (17%) | DB: 0.00085 (2%) | 200 OK [http://localhost/dashboard/entry]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 21:19:54) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000489)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+  [4;35;1mSchool Load (0.001010)[0m   [0mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+  [4;36;1mTeam Load Including Associations (0.001839)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 3) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00503)
+Rendered dashboard/configuration/_playerline (0.00571)
+Rendered dashboard/configuration/_playerline (0.00485)
+Rendered dashboard/configuration/_playerline (0.00490)
+Rendered dashboard/configuration/_players (0.02780)
+Rendered dashboard/configuration/_playerline (0.00573)
+Rendered dashboard/configuration/_playerline (0.00515)
+Rendered dashboard/configuration/_playerline (0.00500)
+Rendered dashboard/configuration/_players (0.02381)
+Rendered dashboard/configuration/_playerline (0.00528)
+Rendered dashboard/configuration/_playerline (0.00491)
+Rendered dashboard/configuration/_playerline (0.00486)
+Rendered dashboard/configuration/_playerline (0.00482)
+Rendered dashboard/configuration/_playerline (0.00479)
+Rendered dashboard/configuration/_players (0.03298)
+  [4;35;1mTeam Load Including Associations (0.000863)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 2) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00495)
+Rendered dashboard/configuration/_playerline (0.00516)
+Rendered dashboard/configuration/_playerline (0.00479)
+Rendered dashboard/configuration/_playerline (0.00503)
+Rendered dashboard/configuration/_playerline (0.00489)
+Rendered dashboard/configuration/_players (0.03629)
+  [4;36;1mTeam Load Including Associations (0.000833)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 1) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00503)
+Rendered dashboard/configuration/_playerline (0.00479)
+Rendered dashboard/configuration/_playerline (0.00561)
+Rendered dashboard/configuration/_playerline (0.00485)
+Rendered dashboard/configuration/_playerline (0.00470)
+Rendered dashboard/configuration/_players (0.03257)
+Completed in 0.44679 (2 reqs/sec) | Rendering: 0.41592 (93%) | DB: 0.00503 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing EntryController#index (for 127.0.0.1 at 2008-05-15 21:20:50) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"index", "controller"=>"dashboard/entry"}
+  [4;35;1mTournament Load (0.000473)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000339)[0m   [0;1mSELECT count(*) AS count_all FROM teams WHERE (teams.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/entry/index
+Completed in 0.03944 (25 reqs/sec) | Rendering: 0.00481 (12%) | DB: 0.00081 (2%) | 200 OK [http://localhost/dashboard/entry]
+
+
+Processing EntryController#index (for 127.0.0.1 at 2008-05-15 21:21:37) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"index", "controller"=>"dashboard/entry"}
+  [4;35;1mTournament Load (0.000504)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000365)[0m   [0;1mSELECT count(*) AS count_all FROM teams WHERE (teams.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/entry/index
+Completed in 0.03092 (32 reqs/sec) | Rendering: 0.00498 (16%) | DB: 0.00087 (2%) | 200 OK [http://localhost/dashboard/entry]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 21:21:39) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.000496)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+  [4;36;1mSchool Load (0.001058)[0m   [0;1mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+  [4;35;1mTeam Load Including Associations (0.001842)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 3) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00484)
+Rendered dashboard/configuration/_playerline (0.00500)
+Rendered dashboard/configuration/_playerline (0.00914)
+Rendered dashboard/configuration/_playerline (0.00475)
+Rendered dashboard/configuration/_players (0.03120)
+Rendered dashboard/configuration/_playerline (0.00476)
+Rendered dashboard/configuration/_playerline (0.00482)
+Rendered dashboard/configuration/_playerline (0.00462)
+Rendered dashboard/configuration/_players (0.02108)
+Rendered dashboard/configuration/_playerline (0.00504)
+Rendered dashboard/configuration/_playerline (0.00512)
+Rendered dashboard/configuration/_playerline (0.02009)
+Rendered dashboard/configuration/_playerline (0.00594)
+Rendered dashboard/configuration/_playerline (0.00952)
+Rendered dashboard/configuration/_players (0.13502)
+  [4;36;1mTeam Load Including Associations (0.000877)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 2) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00552)
+Rendered dashboard/configuration/_playerline (0.00496)
+Rendered dashboard/configuration/_playerline (0.00482)
+Rendered dashboard/configuration/_playerline (0.00533)
+Rendered dashboard/configuration/_playerline (0.00490)
+Rendered dashboard/configuration/_players (0.03358)
+  [4;35;1mTeam Load Including Associations (0.000850)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 1) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00776)
+Rendered dashboard/configuration/_playerline (0.00488)
+Rendered dashboard/configuration/_playerline (0.00903)
+Rendered dashboard/configuration/_playerline (0.02718)
+Rendered dashboard/configuration/_playerline (0.00492)
+Rendered dashboard/configuration/_players (0.08599)
+Completed in 0.45699 (2 reqs/sec) | Rendering: 0.42888 (93%) | DB: 0.00512 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 21:21:45) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000504)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000496)[0m   [0mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00578)
+Rendered dashboard/configuration/_line (0.00446)
+Rendered dashboard/configuration/_line (0.00442)
+Completed in 0.05041 (19 reqs/sec) | Rendering: 0.02794 (55%) | DB: 0.00100 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 21:27:23) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000527)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000359)[0m   [0mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00588)
+Rendered dashboard/configuration/_line (0.00477)
+Rendered dashboard/configuration/_line (0.00855)
+Completed in 0.05587 (17 reqs/sec) | Rendering: 0.03179 (56%) | DB: 0.00089 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#edit_teams (for 127.0.0.1 at 2008-05-15 21:27:24) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_teams", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000488)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_teams
+  [4;35;1mSchool Load (0.001042)[0m   [0mSELECT * FROM schools INNER JOIN schools_tournaments ON schools.id = schools_tournaments.school_id WHERE (schools_tournaments.tournament_id = 2 ) ORDER BY name[0m
+  [4;36;1mTeam Load Including Associations (0.001857)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 3) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00487)
+Rendered dashboard/configuration/_playerline (0.00535)
+Rendered dashboard/configuration/_playerline (0.00476)
+Rendered dashboard/configuration/_playerline (0.00912)
+Rendered dashboard/configuration/_players (0.03147)
+Rendered dashboard/configuration/_playerline (0.00498)
+Rendered dashboard/configuration/_playerline (0.00519)
+Rendered dashboard/configuration/_playerline (0.00466)
+Rendered dashboard/configuration/_players (0.02194)
+Rendered dashboard/configuration/_playerline (0.00482)
+Rendered dashboard/configuration/_playerline (0.00465)
+Rendered dashboard/configuration/_playerline (0.00491)
+Rendered dashboard/configuration/_playerline (0.00463)
+Rendered dashboard/configuration/_playerline (0.00465)
+Rendered dashboard/configuration/_players (0.03171)
+  [4;35;1mTeam Load Including Associations (0.001025)[0m   [0mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 2) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00535)
+Rendered dashboard/configuration/_playerline (0.00505)
+Rendered dashboard/configuration/_playerline (0.00789)
+Rendered dashboard/configuration/_playerline (0.00513)
+Rendered dashboard/configuration/_playerline (0.00539)
+Rendered dashboard/configuration/_players (0.03760)
+  [4;36;1mTeam Load Including Associations (0.000863)[0m   [0;1mSELECT teams."id" AS t0_r0, teams."school_id" AS t0_r1, teams."name" AS t0_r2, teams."tournament_id" AS t0_r3, players."id" AS t1_r0, players."team_id" AS t1_r1, players."name" AS t1_r2, players."future_school" AS t1_r3, players."year" AS t1_r4, players."qpin" AS t1_r5 FROM teams LEFT OUTER JOIN players ON players.team_id = teams.id WHERE (teams.school_id = 1) ORDER BY teams.name[0m
+Rendered dashboard/configuration/_playerline (0.00504)
+Rendered dashboard/configuration/_playerline (0.00483)
+Rendered dashboard/configuration/_playerline (0.00542)
+Rendered dashboard/configuration/_playerline (0.00908)
+Rendered dashboard/configuration/_playerline (0.00488)
+Rendered dashboard/configuration/_players (0.03741)
+Completed in 0.39887 (2 reqs/sec) | Rendering: 0.37089 (92%) | DB: 0.00528 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_teams]
+  [4;36;1mSQL (0.000523)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.000442)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000247)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000241)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000263)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000241)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000238)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000238)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddSwissPair (7)
+  [4;36;1mSQL (0.102847)[0m   [0;1mALTER TABLE tournaments ADD "swiss" boolean[0m
+  [4;35;1mSQL (0.152241)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.004227)[0m   [0;1mUPDATE schema_info SET version = 7[0m
+  [4;35;1mSQL (0.000346)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.001925)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000105)[0m   [0mPRAGMA index_list(cards)[0m
+  [4;36;1mSQL (0.000098)[0m   [0;1mPRAGMA index_list(games)[0m
+  [4;35;1mSQL (0.000096)[0m   [0mPRAGMA index_list(player_games)[0m
+  [4;36;1mSQL (0.000095)[0m   [0;1mPRAGMA index_list(players)[0m
+  [4;35;1mSQL (0.000106)[0m   [0mPRAGMA index_list(question_types)[0m
+  [4;36;1mSQL (0.000096)[0m   [0;1mPRAGMA index_list(rooms)[0m
+  [4;35;1mSQL (0.000097)[0m   [0mPRAGMA index_list(rounds)[0m
+  [4;36;1mSQL (0.000094)[0m   [0;1mPRAGMA index_list(schools)[0m
+  [4;35;1mSQL (0.000093)[0m   [0mPRAGMA index_list(schools_tournaments)[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mPRAGMA index_list(stat_lines)[0m
+  [4;35;1mSQL (0.000095)[0m   [0mPRAGMA index_list(team_games)[0m
+  [4;36;1mSQL (0.000094)[0m   [0;1mPRAGMA index_list(teams)[0m
+  [4;35;1mSQL (0.000095)[0m   [0mPRAGMA index_list(tournaments)[0m
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 21:33:20) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;35;1mTournament Load (0.016278)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000466)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.06214)
+Rendered dashboard/configuration/_line (0.00457)
+Rendered dashboard/configuration/_line (0.00553)
+Completed in 0.59535 (1 reqs/sec) | Rendering: 0.15038 (25%) | DB: 0.01674 (2%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
+
+
+Processing ConfigurationController#save_tournament (for 127.0.0.1 at 2008-05-15 21:33:27) [POST]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewAGOgpAdXNlZHsA--567016dd588ac09726fb12bbe18c9398aa11d4d8
+  Parameters: {"commit"=>"Save", "authenticity_token"=>"703cd03c96351b7b20c7b2019db90aa5e513930f", "action"=>"save_tournament", "id"=>"2", "bracket_names"=>["", ""], "controller"=>"dashboard/configuration", "tournament"=>{"name"=>"Test Tournament 1", "timed"=>"1", "includes_years"=>"1", "swiss"=>"1", "powers"=>"1", "bracketed"=>"0", "ping_stats"=>"0", "ping_contact"=>"0"}}
+  [4;35;1mTournament Load (0.000532)[0m   [0mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;36;1mSQL (0.000440)[0m   [0;1mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+  [4;35;1mBracket Load (0.000273)[0m   [0mSELECT * FROM brackets WHERE (brackets.tournament_id = 2) [0m
+  [4;36;1mTournament Update (0.000369)[0m   [0;1mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "powers" = 't', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't', "swiss" = 't' WHERE "id" = 2[0m
+  [4;35;1mBracket Create (0.000257)[0m   [0mINSERT INTO brackets ("name", "tournament_id", "ordering") VALUES(NULL, 2, NULL)[0m
+  [4;36;1mBracket Create (0.000154)[0m   [0;1mINSERT INTO brackets ("name", "tournament_id", "ordering") VALUES(NULL, 2, NULL)[0m
+  [4;35;1mQuestionType Load (0.000502)[0m   [0mSELECT * FROM question_types WHERE (question_types."tournament_id" = 2 AND question_types."name" = 15 AND question_types."value" = 15) LIMIT 1[0m
+  [4;36;1mQuestionType Load (0.000395)[0m   [0;1mSELECT * FROM question_types WHERE (question_types."tournament_id" = 2 AND question_types."name" = 10 AND question_types."value" = 10) LIMIT 1[0m
+  [4;35;1mQuestionType Load (0.000713)[0m   [0mSELECT * FROM question_types WHERE (question_types."tournament_id" = 2 AND question_types."name" = -5 AND question_types."value" = -5) LIMIT 1[0m
+  [4;36;1mBracket Update (0.000338)[0m   [0;1mUPDATE brackets SET tournament_id = NULL WHERE (tournament_id = 2 AND id IN (28,29)) [0m
+  [4;35;1mTournament Update (0.000285)[0m   [0mUPDATE tournaments SET "timed" = 't', "name" = 'Test Tournament 1', "ping_contact" = 'f', "powers" = 't', "ping_stats" = 'f', "bracketed" = 'f', "includes_years" = 't', "swiss" = 't' WHERE "id" = 2[0m
+Redirected to http://localhost:3000/dashboard/configuration/edit_tournaments
+Completed in 0.79953 (1 reqs/sec) | DB: 0.00426 (0%) | 302 Found [http://localhost/dashboard/configuration/save_tournament/2]
+
+
+Processing ConfigurationController#edit_tournaments (for 127.0.0.1 at 2008-05-15 21:33:28) [GET]
+  Session ID: BAh7CjoSdG91cm5hbWVudF9pZCIGMjoTbmV3X3RvdXJuYW1lbnQwOgxjc3Jm%0AX2lkIiViZjRlMzFmMDI2NmIyNDk1MDNlZGVhYTNlYzViZDcyYSISdG91cm5h%0AbWVudF9pZGkIIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpGbGFzaDo6%0ARmxhc2hIYXNoewY6C25vdGljZSIWVG91cm5hbWVudCBzYXZlZC4GOgpAdXNl%0AZHsGOwlU--cd588ab183e859b0cd0a8f02ddf8f7fe5de63987
+  Parameters: {"action"=>"edit_tournaments", "controller"=>"dashboard/configuration"}
+  [4;36;1mTournament Load (0.000522)[0m   [0;1mSELECT * FROM tournaments WHERE (tournaments."id" = 2) [0m
+  [4;35;1mSQL (0.000351)[0m   [0mSELECT count(*) AS count_all FROM brackets WHERE (brackets.tournament_id = 2) [0m
+Rendering template within layouts/dashboard
+Rendering dashboard/configuration/edit_tournaments
+Rendered dashboard/configuration/_line (0.00582)
+Rendered dashboard/configuration/_line (0.00454)
+Rendered dashboard/configuration/_line (0.00574)
+Completed in 0.06789 (14 reqs/sec) | Rendering: 0.04504 (66%) | DB: 0.00087 (1%) | 200 OK [http://localhost/dashboard/configuration/edit_tournaments]
