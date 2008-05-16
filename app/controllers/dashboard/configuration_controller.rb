@@ -3,51 +3,52 @@ class Dashboard::ConfigurationController < DashboardController
   before_filter :load_configuration
 
   def index
-    redirect_to :controller => 'dashboard/entry'
+    redirect_to :action => "edit_tournament"
   end
 
-  def list_tournaments
-    @tournaments = Tournament.find(:all, :order => 'id')
-  end
-
-  def select_tournament
+  def load_tournament
     session[:tournament_id] = params['id']
-    flash[:notice] = "Active tournament changed."
-    redirect_to :controller => 'dashboard/entry'
+    @tournament = Tournament.find(params['id'])
+    load_tournament_database(@tournament)
+    redirect_to :action => "edit_tournament"
   end
 
   def new_tournament
-    session[:tournament_id] = nil
-    session[:new_tournament] = true
-    flash[:notice] = "New tournament initialized."
-    redirect_to :action => 'edit_tournaments'
+    render :action => "_new_tournament"
+  end
+  
+  def create_tournament
+    @tournament = Tournament.create(:name => params['name'], :database => params['database'])
+    session[:tournament_id] = @tournament.id
+    load_tournament_database(@tournament)
+    redirect_to :action => "edit_tournament"
   end
 
-  def edit_tournaments
-    add_default_configuration
+  def edit_tournament
+    @brackets = Bracket.find(:all, :order => "ordering, name")
+    @all_tournaments = Tournament.find(:all, :order => "id desc")
+    @all_tournaments.delete(@tournament)
   end
-
+  
   def save_tournament
-    add_default_configuration
     @tournament.update_attributes(params['tournament'])
-    QuestionType.configure_for_power(@tournament.id, @tournament.powers)
+    QuestionType.configure_for_power(@tournament.power)
     @tournament.bracketed = false if (params['bracket_names'].nil?)
     if @tournament.bracketed?
-      brackets_to_delete = @tournament.brackets.dup
+      brackets_to_delete = Bracket.find(:all)
       for name in params['bracket_names']
         next if name.empty?
-        bracket = @tournament.brackets.find(:first, :conditions => ['name = ?', name]) || @tournament.brackets.build(:name => name)
-        bracket.save
+        bracket = Bracket.find_or_create_by_name(name)
         brackets_to_delete.delete(bracket)
       end
       brackets_to_delete.each {|b| b.destroy}
     else
-      @tournament.brackets.clear
+      Bracket.destroy_all
     end
-    @tournament.bracketed = false if @tournament.brackets.empty?
+    @tournament.bracketed = false if Bracket.count == 0
     @tournament.save
-    flash[:notice] = "Tournament saved."
-    redirect_to :action => "edit_tournaments"
+    flash[:notice] = "Changes saved."
+    redirect_to :action => "edit_tournament"
   end
   
   def edit_schools
@@ -132,12 +133,6 @@ class Dashboard::ConfigurationController < DashboardController
   	players_to_delete.each{|p| p.destroy }
   	flash[:notice] = "Player names saved."
   	redirect_to :action => "edit_teams"
-  end
-
-  private
-  def add_default_configuration
-    @tournament ||= Tournament.new
-    @brackets = (@tournament.brackets.count > 0) ? @tournament.brackets : [@tournament.brackets.build, @tournament.brackets.build]
   end
 
 end

@@ -1,28 +1,22 @@
 #nav {
 	background-repeat: repeat-x;
 	height: 45px;
-	width: 100%;
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	text-align: left;
+	right: 0px;
+	text-align: right;
+	font-weight: bold;
+	color: rgb(0, 64, 128);
+	padding: 10px;
 }
 
-#nav a, .nav_buttons a {
-	font-weight: bold;
+#nav a {
 	color: rgb(0, 64, 128);
 	text-decoration: none;
 	border: 1px dotted;
 	padding: 2px;
 	margin: 2px;
-}
-
-#nav .text
-{
-
-	font-weight: bold;
-	color: rgb(0, 64, 128);
-	text-decoration: none;
 }
 
 #nav a:hover {

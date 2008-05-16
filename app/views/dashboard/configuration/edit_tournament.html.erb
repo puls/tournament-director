@@ -1,8 +1,5 @@
-<div style="width: 100%; text-align: center; padding: 10px;" class="nav_buttons">
-	<%= link_to "Change Tournament", :action => 'list_tournaments' -%>
-	<%= link_to "New Tournament", :action => 'new_tournament' -%>	
-</div>
-<% form_tag :action => "save_tournament", :id => @tournament.id do -%>
+<h1>Edit configuration</h1>
+<% form_tag :action => "save_tournament" do -%>
     <table>
         <tr>
             <th>Tournament name:</th>
@@ -11,7 +8,7 @@
         <tr>
             <th>This tournament:</th>
             <td>
-                <%= check_box "tournament","powers" -%> uses power marks<br />
+                <%= check_box "tournament","power" -%> uses power marks<br />
                 <%= check_box "tournament","timed" -%> is timed<br />
                 <%= check_box "tournament","bracketed",{:onclick => 'toggle_brackets()'} %> uses multiple brackets<br />
                 <%= check_box "tournament","ping_stats" -%> automatically submits to <a href="http://www.quizstats.org">quizstats.org</a><br />
@@ -48,3 +45,15 @@
     }
     toggle_brackets()
 <% end -%>
+
+<% if @all_tournaments.empty? %>
+<h1>Create another tournament</h1>
+<% else %>
+<h1>Switch or create tournaments</h1>
+<ul>
+    <% for tournament in @all_tournaments %>
+    <li>Switch to <%= link_to tournament.name, :action => "load_tournament", :id => tournament %></li>
+    <% end %>
+</ul>
+<% end %>
+<%= render :partial => "new_tournament" %>

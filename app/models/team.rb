@@ -1,6 +1,5 @@
 class Team < ActiveRecord::Base
   belongs_to :school
-  belongs_to :tournament
 
   has_many :team_games
   has_many :games, :through => :team_games, :include => :round, :order => "round_num"
