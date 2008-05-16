@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <td rowspan="2">
-            <%= text_field_tag 'round_number', nil, {:size => 2, :tabindex => 1, :onblur => "update_team_list(1); update_team_list(2);"} %>
+            <%= text_field_tag 'round_number', @last_round, {:size => 2, :tabindex => 1, :onblur => "update_team_list(1); update_team_list(2);  #{'update_room_list();' if @tournament.tracks_rooms}"} %>
         </td>
         <td>
             <%= select_tag 'team1', nil, {:tabindex => 2} %>
@@ -39,7 +39,7 @@
         </td>
         <% if @tournament.tracks_rooms %>
         <td rowspan="2">
-            <%= select_tag 'room', options_for_select(Room.find(:all).collect{|a| [a.name, a.id]}), {:tabindex => 10} -%>
+            <%= select_tag 'room', nil, {:tabindex => 10} -%>
         </td>
         <% end -%>
         <td rowspan="2" style="text-align: left; white-space: nowrap;">
@@ -69,11 +69,26 @@
 <% end -%>
 <h1>Finish stats for a game</h1>
 
+<% @teams_to_enter.each do |team| -%>
+<strong><%= team.name -%></strong>
+<ul>
+<% @games_to_enter.select{|g| g.teams.include? team}.sort{|a,b| a.round.number <=> b.round.number}.each do |game| -%>
+	<li>
+	Round <%= game.round.number %>: <%= team.name %> <%= game.team_game_for(team).points -%> vs. <%= game.team_game_for_other(team).team.name %> <%= game.team_game_for_other(team).points -%> in <%= game.tossups -%> tossups
+	</li>
+<% end -%>
+</ul>
+<% end -%>
+
 <%= update_page_tag do |page|
 	page<< "function update_team_list(team_num)"
 	page<< "{"
 	page<< "var round_id = $('round_number').value;"
 	page<< remote_function(:update => "team'+team_num+'", :url => {:action => 'teams_for_round', :id => "'+round_id+'"})
+	page<< "}"
+	page<< "function update_room_list(){"
+	page<< "var round_id = $('round_number').value;"
+	page<< remote_function(:update => "room", :url => {:action => 'rooms_for_round', :id => "'+round_id+'"})
 	page<< "}"
 end -%>
 
