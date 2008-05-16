@@ -43,7 +43,7 @@
         </td>
         <% end -%>
         <td rowspan="2" style="text-align: left; white-space: nowrap;">
-        	<%= check_box_tag 'extragame', "1", false, :tabindex => 11  %> extra<br />
+        	<%= check_box_tag 'extragame', "1", false, :tabindex => 11  %> extra game<br />
         	<%= check_box_tag 'overtime', "1", false, :tabindex => 12 %> overtime<br />
         	<%= check_box_tag 'playoff', "1", false, :tabindex => 13 %> playoffs<br />
         	<%= check_box_tag 'forfeit', "1", false, :tabindex => 14 %> forfeit<br />
@@ -74,7 +74,7 @@
 <ul>
 <% @games_to_enter.select{|g| g.teams.include? team}.sort{|a,b| a.round.number <=> b.round.number}.each do |game| -%>
 	<li>
-	Round <%= game.round.number %>: <%= team.name %> <%= game.team_game_for(team).points -%> vs. <%= game.team_game_for_other(team).team.name %> <%= game.team_game_for_other(team).points -%> in <%= game.tossups -%> tossups
+	<%= link_to "Round #{game.round.number}: #{team.name} #{game.team_game_for(team).points} vs. #{game.team_game_for_other(team).team.name} #{game.team_game_for_other(team).points} in #{game.tossups} tossups [#{(game.team_game_for(team).points > game.team_game_for_other(team).points) ? "W" : "L"}#{" OT" if game.overtime}#{" forfeit" if game.forfeit}#{", #{game.bracket.name}" if @tournament.bracketed}#{", #{game.room.name}" if @tournament.tracks_rooms}]", {} -%>
 	</li>
 <% end -%>
 </ul>
