@@ -12,7 +12,7 @@ class Initial < ActiveRecord::Migration
     create_table :games do |t|
       t.references :round, :bracket, :room
       t.integer :tossups
-      t.boolean :play_complete, :entry_complete, :extragame, :overtime, :playoffs, :forfeit
+      t.boolean :play_complete, :entry_complete, :extragame, :overtime, :playoffs, :forfeit, :ignore_indivs
       t.integer :serial_number
     end
     

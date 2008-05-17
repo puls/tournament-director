@@ -10,7 +10,7 @@ class Dashboard::EntryController < DashboardController
   		@last_round = @last_round.number
   	end
   	
-  	@games_to_enter = Game.find(:all, :conditions => ['entry_complete IS NULL OR entry_complete = ?', 'f'], :include => :team_games)
+  	@games_to_enter = Game.find(:all, :conditions => ['(entry_complete IS NULL OR entry_complete = ?) AND (ignore_indivs IS NULL OR ignore_indivs = ?)', 'f','f'], :include => :team_games)
   	@teams_to_enter = @games_to_enter.collect{|g| g.teams}.flatten.uniq.sort{|a,b| a.name <=> b.name}
   	
   end
@@ -129,12 +129,31 @@ class Dashboard::EntryController < DashboardController
     	redirect_to :action => 'index'
   end
   
+  def ignore_indivs
+  	begin
+  		@game = Game.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		flash[:error] = "Game not found to ignore."
+  		redirect_to :action => 'index'
+  		return false
+  	end
+  	
+  	@game.ignore_indivs = true
+  	@game.save
+  	
+  	if not @game.errors.empty?
+  		@game.errors.each_full {|msg| flash[:error] = msg}
+  	end
+  
+  	redirect_to :action => 'index'
+  end
+  
   def enter_indivs
   	begin
 	  	@teamgame1 = TeamGame.find(params[:id])
 	rescue ActiveRecord::RecordNotFound
 		flash[:error] = "The requested game was not found."
-		redirect_to => 'index'
+		redirect_to :action => 'index'
 		return false
 	end
 	

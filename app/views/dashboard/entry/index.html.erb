@@ -77,7 +77,7 @@
 	tg2 = game.team_game_for_other(team)
 -%>
 	<li>
-	<%= link_to "Round #{game.round.number}: #{team.name} #{tg1.points}#{" (#{tg1.card.nil? ? "--" : tg1.card.number})" if @tournament.swiss} vs. #{tg2.team.name} #{tg2.points}#{" (#{tg2.card.nil? ? "--" : tg2.card.number})" if @tournament.swiss} in #{game.tossups} tossups [#{(game.team_game_for(team).points > game.team_game_for_other(team).points) ? "W" : "L"}#{" OT" if game.overtime}#{" forfeit" if game.forfeit}#{", #{game.bracket.name}" if @tournament.bracketed}#{", #{game.room.name}" if @tournament.tracks_rooms}]", {:action => 'enter_indivs', :id => tg1.id} -%>
+	<%= link_to "Round #{game.round.number}: #{team.name} #{tg1.points}#{" (#{tg1.card.nil? ? "--" : tg1.card.number})" if @tournament.swiss} vs. #{tg2.team.name} #{tg2.points}#{" (#{tg2.card.nil? ? "--" : tg2.card.number})" if @tournament.swiss} in #{game.tossups} tossups [#{(game.team_game_for(team).points > game.team_game_for_other(team).points) ? "W" : "L"}#{" OT" if game.overtime}#{" forfeit" if game.forfeit}#{", #{game.bracket.name}" if @tournament.bracketed}#{", #{game.room.name}" if @tournament.tracks_rooms}]", {:action => 'enter_indivs', :id => tg1.id} -%> (<%= link_to 'ignore', {:action => 'ignore_indivs', :id => game.id } -%>)
 	</li>
 <% end -%>
 </ul>
