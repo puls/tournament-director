@@ -1,6 +1,7 @@
 class QuestionType < ActiveRecord::Base
-  has_many :stat_lines
+  has_many :stat_lines, :dependent => :nullify
   
+  validates_presence_of :value
   validates_numericality_of :value, :only_integer => true
 
   def self.configure_for_power(power = true)

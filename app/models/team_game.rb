@@ -2,11 +2,15 @@ class TeamGame < ActiveRecord::Base
   belongs_to :team
   belongs_to :game
   belongs_to :card
-  has_many :player_games
+  has_many :player_games, :dependent => :destroy
   
   validates_presence_of :team
   validates_presence_of :game
+  validates_presence_of :points
   validates_numericality_of :points, :only_integer => true
+  validates_numericality_of :tossups_correct, :only_integer => true
+  validates_numericality_of :tossup_points, :only_integer => true
+  validates_numericality_of :bonus_points, :only_integer => true
   validate :pts_mod_5
   
   def pts_mod_5

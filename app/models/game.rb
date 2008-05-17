@@ -2,11 +2,12 @@ class Game < ActiveRecord::Base
   belongs_to :round
   belongs_to :bracket
   belongs_to :room
-  has_many :team_games
+  has_many :team_games, :dependent => :destroy
   has_many :teams, :through => :team_games
   has_many :player_games, :through => :team_games
   
   validates_presence_of :round
+  validates_presence_of :tossups
   validates_numericality_of :tossups, :only_integer => true
 
   def team_game_for(team)

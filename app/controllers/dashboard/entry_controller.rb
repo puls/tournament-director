@@ -172,28 +172,125 @@ class Dashboard::EntryController < DashboardController
   
   def save_indivs
   	@types = QuestionType.find(:all, :order => 'value desc')
+  	
+  	# Parse the input
+  	
     	game = Game.find(params[:id])
     	teams = params[:team]
+    	bothteams = []
+    	tgs = {}
+    	pgs = []
     	for index in teams.keys
       		team = game.teams.find(teams[index])
-	      	team_game = game.team_games.clone.find{|tg|tg.team == team}
+	     	team_game = game.team_games.clone.find{|tg|tg.team == team}
+	     	tgs[team.id] = team_game
       		for player_line in params["teamData"][index].values
         		fields = player_line.split(",")
 	        	name = fields.shift
         		player = team.players.find(:first,:conditions => ['name = ?',name]) || team.players.create(:name => name)
         		pgame = player.player_games.create(:team_game => team_game, :tossups_heard => fields.shift)
+        		
+        		if pgame.tossups_heard > game.tossups
+        			#fail
+        			flash[:error] = "Player tossups heard were greater than game tossups heard."
+        			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+        			pgame.destroy
+        			pgs.each{|pg| pg.destroy}
+        			return false;
+        		end
+        		
         		for type in @types
         	  		line = pgame.stat_lines.create(:question_type => type, :number => fields.shift)
         		end
-        		player.save
+        		
+        		if pgame.stat_lines.collect{|sl| sl.number}.sum > pgame.tossups_heard
+        			#fail
+        			flash[:error] = "Player answered more tossups than tossups heard."
+        			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+        			pgame.destroy
+        			pgs.each{|pg| pg.destroy}
+        			return false;        			
+        		end
+        		
+        		pgs.push pgame
       		end
-      		#expire_page :controller => 'statistics',:action => 'team',:id => team
-      		#expire_page :controller => 'statistics',:action => 'ppb',:id => team
-      		#expire_page :controller => 'statistics',:action => 'ppb',:id => team,:bracket => game.bracket
-      		#team.stats = Team.DefaultStats
-      		#team.save
+      		bothteams.push team
     	end
-    	#expire_page :controller => 'statistics',:action => 'personal'
+    	
+    	# Validate the input
+    	
+    	# tossups answered correctly by team
+    	tot_tossups = {}
+    	for team in bothteams
+    		tot_tossups[team.id] =  pgs.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.clone.select{|sl| sl.question_type.value > 0}.collect{|sl| sl.number}}.flatten.sum
+    	end
+    	
+    	# tossups answered correctly and negged on by team
+    	tot_ans = {}
+    	for team in bothteams
+    		tot_ans[team.id] = pgs.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.clone.collect{|sl| sl.number}}.flatten.sum
+	end
+	 
+	tot_tuh = pgs.clone.collect{|pg| pg.tossups_heard}.sum
+	
+	# tossup points and bonus points by team
+	tups = {}
+	bps = {}
+	for team in bothteams
+		tups[team.id] = pgs.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.collect{|sl| sl.question_type.value * sl.number}}.flatten.sum
+		bps[team.id] = tgs[team.id].points - tups[team.id]
+	end
+	
+	if tot_tossups.values.sum > game.tossups
+		# fail		
+		flash[:error] = "More tossups were answered correctly than were asked."
+		redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+		pgs.each{|pg| pg.destroy}
+		return false;
+	end
+	
+	if tot_tuh > (8*game.tossups)
+		#fail
+		flash[:error] = "More tossups were heard by all players than the maximum possible."
+		redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+		pgs.each{|pg| pg.destroy}
+		return false;
+	end
+	
+	for team in bothteams
+		if tot_ans[team.id] > game.tossups
+			#fail
+			flash[:error] = "More tossups were answered by the team than were asked."
+			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+			pgs.each{|pg| pg.destroy}
+			return false;
+		end
+		
+		if tot_tossups[team.id] == 0 and bps[team.id] > 0
+			#fail			
+			flash[:error] = "Team has bonus points without any correct tossups."
+			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+			pgs.each{|pg| pg.destroy}
+			return false;
+		elsif tot_tossups[team.id] > 0
+			bppt = (bps[team.id]/tot_tossups[team.id])
+			if bppt < 0.0 or bppt > 30.0
+				#fail				
+				flash[:error] = "Bonus points per tossup correct is out of range 0-30"
+				redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+				pgs.each{|pg| pg.destroy}
+				return false;
+			end
+		end
+		
+		
+	end
+	
+	game.team_games.each{|tg| 
+		tg.update_attributes(:tossups_correct => tot_tossups[team.id], :tossup_points => tups[team.id], :bonus_points => bps[team.id])
+		tg.save
+	}
+	    	
 	game.entry_complete = true
 	game.save
 	flash[:notice] = "Individual standings saved."
