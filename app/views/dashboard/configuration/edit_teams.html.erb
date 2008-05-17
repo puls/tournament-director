@@ -2,6 +2,8 @@
 	<%= link_to "Edit Schools", :action => "edit_schools" %>
 </div>
 
+<h1>Enter a new team</h1>
+
 <% form_tag :action => "save_team", :id => @team.id do -%>
 <table>
 	<tr>
@@ -23,6 +25,8 @@
 <br />
 <br />
 
+<h1>Manage existing teams</h1>
+
 <table>
 <% School.find(:all, :order => 'schools.name', :include => :teams).each do |school| -%>
 	<tr>
@@ -34,7 +38,10 @@
 	<tr>
 		<td style="width: 18%; vertical-align: top; font-weight: bold;"><%= team.name -%></td>
 		<td style="text-align: center; vertical-align: top;"><%= link_to "edit", {:action => 'edit_teams', :id => team.id}, {:class => 'button'} -%>
-		<%= link_to_function('players', nil, {:class => 'button', :id => "players_link_#{team.id}"}){|page| page.replace_html( "team_li_#{team.id}", :partial => "players", :locals => {:thing => team, :years => @tournament.includes_years, :players => team.players.empty? ? [team.players.build, team.players.build, team.players.build, team.players.build] : team.players.sort{|a, b| a.name <=> b.name}}); page.hide("players_link_#{team.id}"); page.show("team_close_#{ team.id }") } -%>
+		<%= link_to_function('players', nil, {:class => 'button', :id => "players_link_#{team.id}"}){|page| 
+			page<< remote_function(:update => "team_li_#{team.id}", :url => {:action => 'get_players', :id => team.id})
+			page.hide("players_link_#{team.id}")
+			page.show("team_close_#{ team.id }") } -%>
 		</td>
 		<td style="width: 65%;">
 		<div id="team_li_<%= team.id -%>">

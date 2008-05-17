@@ -1,3 +1,9 @@
+<div style="padding: 10px;" class="nav_buttons">
+        <%= link_to "Edit Teams", :action => "edit_teams" %>
+</div>        
+
+<h1>Enter a new school</h1>
+
 <% form_tag :action => "save_school", :id => @school.id do -%>
 <table>
 	<tr>
@@ -22,6 +28,8 @@
 <br />
 <br />
 <br />
+
+<h1>Manage existing schools</h1>
 
 <table>
 <% count = 0 %>

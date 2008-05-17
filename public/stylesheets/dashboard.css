@@ -38,7 +38,7 @@ table.horizontal td {
     text-align: center;
 }
 
-th, #flash {
+th, #flash, #error {
     padding: 5px 30px;
     font-size: 18pt;
     font-weight: bolder;

@@ -24,6 +24,12 @@
         page.visual_effect(:highlight, "flash")
     } %>
 <% end %>
+<% if flash[:error] %>
+    <div id="error"><%= flash[:error] %></div>
+    <%= update_page_tag { |page|
+    	page.visual_effect(:highlight, "error")
+    } %>
+<% end %>
 <%= yield %>
 
 </body>

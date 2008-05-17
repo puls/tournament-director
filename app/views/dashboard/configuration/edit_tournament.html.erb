@@ -40,6 +40,17 @@
             	} %>
             </td>
         </tr>
+        <tr id="card_row">
+        	<th>Swiss pair cards:</th>
+        	<td>
+        		<div id="card_cell" style="margin-bottom: 10px;">
+        			<%= render :partial => 'card', :collection => @cards -%>
+        		</div>
+        		<%= link_to_function('add',nil,{:class => 'button'}) { |page|
+        			page.insert_html :bottom, "card_cell", :partial => 'card', :collection => [Card.new, Card.new, Card.new, Card.new, Card.new]
+        		} %>
+        	</td>
+        </tr>
         <tr>
             <td class="submit" colspan="2">
             	<%= submit_tag "Save" %>
@@ -67,8 +78,19 @@
     	}
     }
     
+    function toggle_cards() {
+    	if ($F('tournament_swiss') == 1) {
+    		Element.show('card_row');
+    	}
+    	else
+    	{
+    		Element.hide('card_row');
+    	}
+    }
+    
     toggle_brackets();
     toggle_rooms();
+    toggle_cards();
 <% end -%>
 
 <% if @all_tournaments.empty? %>

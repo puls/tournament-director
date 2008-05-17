@@ -1,5 +1,7 @@
 class QuestionType < ActiveRecord::Base
   has_many :stat_lines
+  
+  validates_numericality_of :value, :only_integer => true
 
   def self.configure_for_power(power = true)
     if (power)

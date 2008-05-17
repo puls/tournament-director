@@ -5,6 +5,11 @@ class Dashboard::ConfigurationController < DashboardController
   def index
     redirect_to :action => "edit_tournament"
   end
+  
+  def get_players
+  	@team = Team.find(params[:id])
+  	render :partial => 'players', :locals => {:thing => @team, :players => (@team.players.empty?) ? [Player.new, Player.new, Player.new, Player.new] : @team.players.sort{|a,b| a.name <=> b.name}, :years => @tournament.includes_years}
+  end
 
   def load_tournament
     session[:tournament_id] = params['id']
@@ -29,6 +34,8 @@ class Dashboard::ConfigurationController < DashboardController
     if @brackets.empty? then @brackets = [Bracket.new, Bracket.new] end
     @rooms = Room.find(:all, :order => "name")
     if @rooms.empty? then @rooms = [Room.new, Room.new] end
+    @cards = Card.find(:all, :order => "number")
+    if @cards.empty? then @cards = [Card.new,Card.new,Card.new,Card.new,Card.new] end
     
     @all_tournaments = Tournament.find(:all, :order => "id desc")
     @all_tournaments.delete(@tournament)
@@ -65,6 +72,20 @@ class Dashboard::ConfigurationController < DashboardController
       rooms_to_delete.each { |r| r.destroy }
     else
       Room.destroy_all
+    end
+    
+    @tournament.swiss = false if params[:card_numbers].nil?
+    if @tournament.swiss?
+    	cards_to_delete = Card.find(:all)
+    	for number in params[:card_numbers]
+    		next if number.nil? or number.empty?
+    		card = Card.find_or_create_by_number(number)
+    		cards_to_delete.delete(card)
+    		card.save
+    	end
+    	cards_to_delete.each {|c| c.destroy }
+    else
+    	Card.destroy_all
     end
     
     @tournament.save
