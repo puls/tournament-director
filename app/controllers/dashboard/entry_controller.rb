@@ -10,9 +10,8 @@ class Dashboard::EntryController < DashboardController
   		@last_round = @last_round.number
   	end
   	
-  	@games_to_enter = Game.find(:all, :conditions => ['(entry_complete IS NULL OR entry_complete = ?) AND (ignore_indivs IS NULL OR ignore_indivs = ?)', 'f','f'], :include => :team_games)
-  	@teams_to_enter = @games_to_enter.collect{|g| g.teams}.flatten.uniq.sort{|a,b| a.name <=> b.name}
-  	
+  	@games_to_enter = Game.find(:all, :conditions => ['play_complete = ? AND (entry_complete IS NULL OR entry_complete = ?) AND (ignore_indivs IS NULL OR ignore_indivs = ?)', 't','f','f'], :include => :team_games)
+  	@teams_to_enter = @games_to_enter.collect{|g| g.teams}.flatten.uniq.sort{|a,b| a.name <=> b.name}  	
   end
 
   def teams_for_round
@@ -157,12 +156,48 @@ class Dashboard::EntryController < DashboardController
 		return false
 	end
 	
-	@teamgame2 = @teamgame1.game.team_game_for_other(@teamgame1.team)
+	@game = @teamgame1.game
 	
+	if @game.ignore_indivs
+		flash[:error] = "The selected game has been marked as ignored."
+		redirect_to :action => 'index'
+		return false
+	end
+	
+	@teamgame2 = @game.team_game_for_other(@teamgame1.team)
+	@team1 = @teamgame1.team
+	@team2 = @teamgame2.team
+	@types = QuestionType.find(:all, :order => 'value desc')
   end
   
   def save_indivs
-  
+  	@types = QuestionType.find(:all, :order => 'value desc')
+    	game = Game.find(params[:id])
+    	teams = params[:team]
+    	for index in teams.keys
+      		team = game.teams.find(teams[index])
+	      	team_game = game.team_games.clone.find{|tg|tg.team == team}
+      		for player_line in params["teamData"][index].values
+        		fields = player_line.split(",")
+	        	name = fields.shift
+        		player = team.players.find(:first,:conditions => ['name = ?',name]) || team.players.create(:name => name)
+        		pgame = player.player_games.create(:team_game => team_game, :tossups_heard => fields.shift)
+        		for type in @types
+        	  		line = pgame.stat_lines.create(:question_type => type, :number => fields.shift)
+        		end
+        		player.save
+      		end
+      		#expire_page :controller => 'statistics',:action => 'team',:id => team
+      		#expire_page :controller => 'statistics',:action => 'ppb',:id => team
+      		#expire_page :controller => 'statistics',:action => 'ppb',:id => team,:bracket => game.bracket
+      		#team.stats = Team.DefaultStats
+      		#team.save
+    	end
+    	#expire_page :controller => 'statistics',:action => 'personal'
+	game.entry_complete = true
+	game.save
+	flash[:notice] = "Individual standings saved."
+	redirect_to :action => 'index'  
   end
   
 end

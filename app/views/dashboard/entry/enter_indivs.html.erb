@@ -1,0 +1,338 @@
+<h1>Enter Individual Stats</h1>
+<h2><%= @team1.name %></h2>
+<% form_tag({}, {:onsubmit => 'return false;'}) do -%>
+<table id="players1">
+	<tr>
+		<th>Player</th>
+		<th>TUH</th>
+		<% for type in @types -%>
+		<th><%= type.value %></th>
+		<% end %>
+		<th>Pts</th>
+	</tr>
+	<tr id="entryRow1">
+		<td><%= text_field_tag "name1",nil,:size => 20,
+			:onkeypress => "return autocompleteName(this,event);" %></td>
+		<td><%= text_field_tag "tu1",nil,:size => 3,
+			:onblur => "checkTossups(this);" %></td>
+		<% @types.each_with_index do |type,i| -%>
+		<td><%= text_field_tag "field#{type.value}_1",nil,:size => 3,
+			:onkeypress => "return " + (i > 0 ? "validNumber" : "autocompletePower") + "(this,event)" -%></td>
+		<% end %>
+		<td><%= text_field_tag "fieldpts_1",nil,:size => 3,:onfocus => "checkComplete()" %></td>
+	</tr>
+	<tr>
+		<td colspan="2">Totals</td>
+		<% for type in @types -%>
+		<td id="total<%= type.value %>_1">0</td>
+		<% end -%>
+		<td id="totalpts_1">0</td>
+	</tr>
+</table>
+<p id="confirm1"></p>
+
+<h2><%= @team2.name %></h2>
+<table id="players2">
+	<tr>
+		<th>Player</th>
+		<th>TUH</th>
+		<% for type in @types -%>
+		<th><%= type.value %></th>
+		<% end %>
+		<th>Pts</th>
+	</tr>
+	<tr id="entryRow2">
+		<td><%= text_field_tag "name2",nil,:size => 20,
+			:onkeypress => "return autocompleteName(this,event);" %></td>
+		<td><%= text_field_tag "tu2",nil,:size => 3,
+			:onblur => "checkTossups(this);" %></td>
+		<% @types.each_with_index do |type,i| -%>
+		<td><%= text_field_tag "field#{type.value}_2",nil,:size => 3,
+			:onkeypress => "return " + (i > 0 ? "validNumber" : "autocompletePower") + "(this,event)" -%></td>
+		<% end %>
+		<td><%= text_field_tag "fieldpts_2",nil,:size => 3,:onfocus => "checkComplete()" %></td>
+	</tr>
+	<tr>
+		<td colspan="2">Totals</td>
+		<% for type in @types -%>
+		<td id="total<%= type.value %>_2">0</td>
+		<% end -%>
+		<td id="totalpts_2">0</td>
+	</tr>
+</table>
+<p id="confirm2"></p>
+<div id="submitButton" class="submitter">
+	<input type="button" value="Submit individual scores" onclick="submitNumbers()" />
+</div>
+<% end -%>
+
+
+<script type="text/javascript">
+// <![CDATA[
+var allDone = false;
+var currentPlayer = 0;
+var editMode = false;
+var currentTeam = 1;
+var teamData = new Array(new Array(),new Array());
+var tossupsHeard = <%= @game.tossups.to_s %>;
+var questionTypes = new Array(<%= @types.collect{|t|t.value}.join(',') %>);
+var names = new Array(
+	new Array(<%= @team1.players.collect {|p| '"' + p.name.gsub(/"/,'\\"') + '"'}.join(",") %>),
+	new Array(<%= @team2.players.collect {|p| '"' + p.name.gsub(/"/,'\\"') + '"'}.join(",") %>)
+);
+var teams = new Array("<%= @team1.id %>","<%= @team2.id %>");
+
+Element.hide('entryRow2')
+Element.hide('submitButton')
+
+function validNumber(field,evt)
+{
+	evt = (evt) ? evt : ((window.event) ? window.event : null);
+	code = evt.charCode;
+	return (code < 32 || code == 45 || (code >= 48 && code <= 57));
+}
+function autocompleteName(inputField,evt)
+{
+	evt = (evt) ? evt : ((window.event) ? window.event : null);
+	code = evt.charCode;
+	if (code >= 34 && code <= 126)
+	{
+		var inputChar = String.fromCharCode(evt.charCode);
+		var oldValue = inputField.value;
+		var selectStart = inputField.selectionStart;
+		var selectEnd = inputField.selectionEnd;
+		inputField.value = match(
+			oldValue.substring(0,selectStart) +
+			inputChar +
+			oldValue.substring(selectEnd,oldValue.length)
+		);
+		inputField.setSelectionRange(selectStart + 1,inputField.value.length);
+		return false;
+	}
+	else
+		return true;
+}
+function match(stringToMatch)
+{
+	var ary = names[currentTeam - 1];
+	for (var i = 0;i < ary.length;i++) {
+		if (ary[i].indexOf(stringToMatch) == 0)
+			return ary[i];
+	}
+	return stringToMatch;
+}
+function submitNumbers()
+{
+	var url = "<%= url_for :action => 'save_indivs',:id => @game.id %>?";
+	for (var i = 0;i < teams.length;i++) {
+		url += encodeURIComponent("team[" + i + "]") + "=";
+		url += encodeURIComponent(teams[i]) + "&";
+		for (var j = 0;j < teamData[i].length;j++) {
+			url += encodeURIComponent("teamData[" + i + "][" + j + "]") + "=";
+			url += encodeURIComponent(teamData[i][j].join(",")) + "&";
+		}
+	}
+	window.location = url;
+}
+function autocompletePower(firstBox,evt)
+{
+	if (!validNumber(firstBox,evt))
+		return false;
+	if (firstBox.value != '<%= '0' * (@types.length - 1) %>')
+		return true;
+	evt = (evt) ? evt : ((window.event) ? window.event : null);
+	inputChar = String.fromCharCode(evt.charCode);
+	if (inputChar != '0')
+		return true;
+	var thisBox;
+	<% for type in @types %>
+	thisBox = $('field<%= type.value %>_' + currentTeam)
+	thisBox.value = '0';
+	<% end %>
+	Field.activate(thisBox)
+	return false;
+}
+function checkTossups(inputField)
+{
+	var nameField = $("name" + currentTeam);
+	if (inputField.value == '' && nameField.value != '')
+		inputField.value = tossupsHeard;
+}
+function checkComplete()
+{
+	if (editMode) return false;
+	var name = $F("name" + currentTeam);
+	var tossups = $F("tu" + currentTeam);
+	var allBlank = true;
+	var anyBlank = false;
+	<% for type in @types %>
+	if ($F('field<%= type.value %>_' + currentTeam) == '')
+		anyBlank = true;
+	else
+		allBlank = false;
+	<% end %>
+	if (name == '' && tossups == '' && allBlank) {
+		confirmBonus(currentTeam)
+		if (currentTeam == 1)
+			advanceCurrentTeam();
+/*		else if (confirm('submit?'))*/
+/*			setTimeout("submitNumbers()",500)*/
+		else
+			startEditMode();
+		return true;
+	}
+	if (name == '' || tossups == '' || anyBlank)
+		return true; // Not done editing player
+	
+	// Done editing player
+	advanceCurrentPlayer();
+	return false;
+}
+function advanceCurrentPlayer()
+{
+	var nameField = $("name" + currentTeam);
+	var tossups = $("tu" + currentTeam);
+	var fields = new Array();
+	<% for type in @types %>
+	fields.push($('field<%= type.value %>_' + currentTeam));
+	<% end %>
+	var pts = $("fieldpts_" + currentTeam);
+
+	teamData[currentTeam - 1][currentPlayer] =
+		new Array(nameField.value,1 * tossups.value)
+	var total = 0;
+	<% @types.each_with_index do |type,i| %>
+	teamData[currentTeam - 1][currentPlayer].push(1 * fields[<%= i %>].value)
+	total += <%= type.value %> * fields[<%= i %>].value
+	<% end %>
+	teamData[currentTeam - 1][currentPlayer].push(total)
+
+	var newRow = $("players" + currentTeam).insertRow(currentPlayer + 1);
+	
+	newRow.className = "row" + (currentPlayer % 2);
+	
+	for (var i = 0;i < teamData[currentTeam - 1][currentPlayer].length;i++)
+	{
+		var cell = newRow.insertCell(i);
+		cell.innerHTML = teamData[currentTeam - 1][currentPlayer][i];
+	}
+
+	var ary = names[currentTeam - 1];
+	for (var i = 0;i < ary.length;i++) {
+		/*if (ary[i].indexOf(nameField.value) > -1) // Buggy - consider two names such as "Player 1" and "Player 11" or "1 Player" and "11 Player"*/
+		if (ary[i] == nameField.value)
+			ary.splice(i,1);
+	}
+	
+	computeTotals(currentTeam);
+	nameField.value = tossups.value = pts.value = '';
+	for (var i = 0;i < fields.length;i++)
+		fields[i].value = '';
+	nameField.focus();
+	currentPlayer++;
+	
+}
+function computeTotals(team)
+{
+	var totals = new Array();
+	var count = <%= @types.length + 1 %>;
+	for (var i = 0;i < count;i++)
+		totals.push(0)
+	for (var i = 0;i < teamData[team - 1].length;i++) {
+		for (var j = 0;j < count;j++) {
+			totals[j] += 1 * teamData[team - 1][i][j+2];
+		}
+	}
+	<% @types.each_with_index do |type,i| %>
+	$('total<%= type.value %>_' + team).innerHTML = totals[<%= i %>];
+	<% end %>
+	$("totalpts_" + team).innerHTML = totals[3];
+}
+function confirmBonus(team)
+{
+	var tupoints = $("totalpts_" + team).innerHTML
+	var totalpts = (team == 1 ? <%= @teamgame1.points %> : <%= @teamgame2.points %>)
+	$('confirm' + team).innerHTML = 
+		"<table><tr><th style=\"text-align: right;\">" + totalpts + "</th><td>total points</td></tr>" +
+		"<tr><th style=\"text-align: right;\">&ndash; " + tupoints + "</th><td>points on tossups</td></tr>" +
+		"<tr style=\"font-size: larger;\"><th style=\"text-align: right;\">" + (totalpts-tupoints) +
+		"</th><td>points on bonuses</td></tr></table>"
+}
+function advanceCurrentTeam()
+{
+	Element.show('entryRow2');
+	Element.hide('entryRow1');
+	currentTeam = 2;
+	currentPlayer = 0;
+	Field.activate('name2');
+}
+function startEditMode()
+{
+	editMode = true;
+	var editor = $("entryRow1")
+	var editor2 = $("entryRow2")
+	Element.hide(editor2);
+	currentTeam = -1;
+	currentPlayer = -1;
+	
+	var table = $("players1");
+	for (var i = 1;i < table.rows.length - 1;i++) {
+		var newCell = table.rows[i].insertCell(6);
+		newCell.innerHTML = "<input type=\"button\" onclick=\"edit(1," +
+			(i - 1) + ")\" value=\"edit\" />";
+	}
+	table = $("players2");
+	for (var i = 1;i < table.rows.length - 1;i++) {
+		var newCell = table.rows[i].insertCell(6);
+		newCell.innerHTML = "<input type=\"button\" onclick=\"edit(2," +
+			(i - 1) + ")\" value=\"edit\" />";
+	}
+	Element.show("submitButton");
+}
+function edit(team,player)
+{
+	Element.hide("submitButton");
+	var table = $("players" + team);
+	var editor = $("entryRow" + team);
+	var row = table.rows[player + 1];
+	var count = <%= @types.length %>;
+	editor.cells[count + 2].innerHTML = "";
+	editor.cells[count + 3].innerHTML =
+		"<input type=\"button\" onclick=\"save(" + team + "," + player + ")\" value=\"save\" />";
+	row.innerHTML = editor.innerHTML;
+	currentTeam = team;
+	var nameField = $("name" + team);
+	nameField.value = teamData[team - 1][player][0];
+	var tossups = $("tu" + team);
+	tossups.value = teamData[team - 1][player][1];
+	<% @types.each_with_index do |type,i| %>
+	var field = $('field<%= type.value %>_' + team);
+	field.value = teamData[team - 1][player][<%= i + 2 %>]
+	<% end -%>
+}
+function save(team,player)
+{
+	Element.show("submitButton");
+	var table = $("players" + team);
+	var row = table.rows[player + 1];
+	var count = <%= @types.length %>;
+	row.cells[count + 3].innerHTML = "<input type=\"button\" onclick=\"edit(" +
+		team + "," + player + ")\" value=\"edit\" />";
+	var nameField = $("name" + team);
+	row.cells[0].innerHTML = teamData[team - 1][player][0] = nameField.value;
+	var tossups = $("tu" + team);
+	row.cells[1].innerHTML = teamData[team - 1][player][1] = 1 * tossups.value;
+	var total = 0;
+	<% @types.each_with_index do |type,i| %>
+	var field = $('field<%= type.value %>_' + team);
+	row.cells[<%= i + 2 %>].innerHTML = teamData[team - 1][player][<%= i + 2 %>] = 1 * field.value;
+	total += <%= type.value %> * field.value;
+	<% end %>
+	row.cells[count + 2].innerHTML = teamData[team - 1][player][count + 2] = total
+	computeTotals(team);
+	confirmBonus(team);
+}
+
+
+// ]]>
+</script>
