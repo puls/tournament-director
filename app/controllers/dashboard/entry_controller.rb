@@ -129,4 +129,21 @@ class Dashboard::EntryController < DashboardController
     	redirect_to :action => 'index'
   end
   
+  def enter_indivs
+  	begin
+	  	@teamgame1 = TeamGame.find(params[:id])
+	rescue ActiveRecord::RecordNotFound
+		flash[:error] = "The requested game was not found."
+		redirect_to => 'index'
+		return false
+	end
+	
+	@teamgame2 = @teamgame1.game.team_game_for_other(@teamgame1.team)
+	
+  end
+  
+  def save_indivs
+  
+  end
+  
 end
