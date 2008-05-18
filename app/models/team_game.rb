@@ -8,9 +8,9 @@ class TeamGame < ActiveRecord::Base
   validates_presence_of :game
   validates_presence_of :points
   validates_numericality_of :points, :only_integer => true
-  validates_numericality_of :tossups_correct, :only_integer => true
-  validates_numericality_of :tossup_points, :only_integer => true
-  validates_numericality_of :bonus_points, :only_integer => true
+  validates_numericality_of :tossups_correct, :only_integer => true, :allow_nil => true
+  validates_numericality_of :tossup_points, :only_integer => true, :allow_nil => true
+  validates_numericality_of :bonus_points, :only_integer => true, :allow_nil => true
   validate :pts_mod_5
   
   def pts_mod_5

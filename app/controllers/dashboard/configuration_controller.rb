@@ -120,6 +120,10 @@ class Dashboard::ConfigurationController < DashboardController
       redirect_to :action => 'edit_tournaments'
     end
     
+    if School.find(:all).empty?
+    	redirect_to :action => 'edit_schools'
+    end
+    
     begin
     	@team = Team.find(params[:id])
     rescue ActiveRecord::RecordNotFound

@@ -10,6 +10,8 @@ class Dashboard::EntryController < DashboardController
   		@last_round = @last_round.number
   	end
   	
+  	@rounds_to_enter = Round.find(:all, :conditions => ['entry_complete IS NULL OR entry_complete != ?', 't'])
+  	
   	@games_to_enter = Game.find(:all, :conditions => ['play_complete = ? AND (entry_complete IS NULL OR entry_complete = ?) AND (ignore_indivs IS NULL OR ignore_indivs = ?)', 't','f','f'], :include => :team_games)
   	@teams_to_enter = @games_to_enter.collect{|g| g.teams}.flatten.uniq.sort{|a,b| a.name <=> b.name}  	
   end
@@ -88,13 +90,13 @@ class Dashboard::EntryController < DashboardController
 		return false
 	end
 	
-	if @tournament.swiss and not params[:extragame] and not (cards.include? Card.find(params[:card1]) and cards.include? Card.find(params[:card2]) )
+	if @tournament.swiss and not params[:extragame] and not (cards.include? Card.find_by_number(params[:card1]) and cards.include? Card.find_by_number(params[:card2]) )
 		flash[:error] = "One or both cards has already been used during this round."
 		redirect_to :action => 'index'
 		return false
 	end
 	
-  	game = round.games.build(:round => round, :tossups => params[:tossups], :extragame => params[:extragame], :overtime => params[:overtime], :playoffs => params[:playoffs], :forfeit => params[:forfeit])
+  	game = round.games.build(:round => round, :tossups => params[:tossups], :extragame => params[:extragame], :overtime => params[:overtime], :playoffs => params[:playoffs], :forfeit => params[:forfeit], :play_complete => true)
   	game.room = Room.find(params[:room]) if @tournament.tracks_rooms
   	game.bracket = Bracket.find(params[:bracket]) if @tournament.bracketed
     	
@@ -104,11 +106,11 @@ class Dashboard::EntryController < DashboardController
     		return false
     	end
     	
-	tg1 = game.team_games.build(:team => Team.find(params[:team1]), :points => params[:score1])
-    	tg1.card = Card.find(params[:card1]) if @tournament.swiss
+	tg1 = game.team_games.build(:team => Team.find(params[:team1]), :points => params[:score1], :ordering => 1)
+    	tg1.card = Card.find_by_number(params[:card1]) if @tournament.swiss
     	
-    	tg2 = game.team_games.build(:team => Team.find(params[:team2]), :points => params[:score2])
-    	tg2.card = Card.find(params[:card2]) if @tournament.swiss
+    	tg2 = game.team_games.build(:team => Team.find(params[:team2]), :points => params[:score2], :ordering => 2)
+    	tg2.card = Card.find_by_number(params[:card2]) if @tournament.swiss
     		
     	if not tg1.save
     		tg1.errors.each_full {|msg| flash[:error] = msg }
@@ -149,14 +151,12 @@ class Dashboard::EntryController < DashboardController
   
   def enter_indivs
   	begin
-	  	@teamgame1 = TeamGame.find(params[:id])
+	  	@game = Game.find(params[:id])
 	rescue ActiveRecord::RecordNotFound
 		flash[:error] = "The requested game was not found."
 		redirect_to :action => 'index'
 		return false
 	end
-	
-	@game = @teamgame1.game
 	
 	if @game.ignore_indivs
 		flash[:error] = "The selected game has been marked as ignored."
@@ -164,7 +164,8 @@ class Dashboard::EntryController < DashboardController
 		return false
 	end
 	
-	@teamgame2 = @game.team_game_for_other(@teamgame1.team)
+	@teamgame1 = @game.team_games[0]
+	@teamgame2 = @game.team_games[1]
 	@team1 = @teamgame1.team
 	@team2 = @teamgame2.team
 	@types = QuestionType.find(:all, :order => 'value desc')
@@ -193,7 +194,7 @@ class Dashboard::EntryController < DashboardController
         		if pgame.tossups_heard > game.tossups
         			#fail
         			flash[:error] = "Player tossups heard were greater than game tossups heard."
-        			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+        			redirect_to :action => 'enter_indivs', :id => game.id
         			pgame.destroy
         			pgs.each{|pg| pg.destroy}
         			return false;
@@ -206,7 +207,7 @@ class Dashboard::EntryController < DashboardController
         		if pgame.stat_lines.collect{|sl| sl.number}.sum > pgame.tossups_heard
         			#fail
         			flash[:error] = "Player answered more tossups than tossups heard."
-        			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+        			redirect_to :action => 'enter_indivs', :id => game.id
         			pgame.destroy
         			pgs.each{|pg| pg.destroy}
         			return false;        			
@@ -244,7 +245,7 @@ class Dashboard::EntryController < DashboardController
 	if tot_tossups.values.sum > game.tossups
 		# fail		
 		flash[:error] = "More tossups were answered correctly than were asked."
-		redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+		redirect_to :action => 'enter_indivs', :id => game.id
 		pgs.each{|pg| pg.destroy}
 		return false;
 	end
@@ -252,7 +253,7 @@ class Dashboard::EntryController < DashboardController
 	if tot_tuh > (8*game.tossups)
 		#fail
 		flash[:error] = "More tossups were heard by all players than the maximum possible."
-		redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+		redirect_to :action => 'enter_indivs', :id => game.id
 		pgs.each{|pg| pg.destroy}
 		return false;
 	end
@@ -261,7 +262,7 @@ class Dashboard::EntryController < DashboardController
 		if tot_ans[team.id] > game.tossups
 			#fail
 			flash[:error] = "More tossups were answered by the team than were asked."
-			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+			redirect_to :action => 'enter_indivs', :id => game.id
 			pgs.each{|pg| pg.destroy}
 			return false;
 		end
@@ -269,7 +270,7 @@ class Dashboard::EntryController < DashboardController
 		if tot_tossups[team.id] == 0 and bps[team.id] > 0
 			#fail			
 			flash[:error] = "Team has bonus points without any correct tossups."
-			redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+			redirect_to :action => 'enter_indivs', :id => game.id
 			pgs.each{|pg| pg.destroy}
 			return false;
 		elsif tot_tossups[team.id] > 0
@@ -277,7 +278,7 @@ class Dashboard::EntryController < DashboardController
 			if bppt < 0.0 or bppt > 30.0
 				#fail				
 				flash[:error] = "Bonus points per tossup correct is out of range 0-30"
-				redirect_to :action => 'enter_indivs', :id => game.team_games.first.id
+				redirect_to :action => 'enter_indivs', :id => game.id
 				pgs.each{|pg| pg.destroy}
 				return false;
 			end

@@ -41,7 +41,7 @@ class Initial < ActiveRecord::Migration
     
     create_table :rounds do |t|
       t.integer :number
-      t.boolean :play_complete
+      t.boolean :play_complete, :entry_complete
     end
     
     create_table :schools do |t|
@@ -57,7 +57,7 @@ class Initial < ActiveRecord::Migration
     
     create_table :team_games do |t|
       t.references :team, :game, :card
-      t.integer :points, :tossups_correct, :tossup_points, :bonus_points
+      t.integer :points, :tossups_correct, :tossup_points, :bonus_points, :ordering
     end
     
     create_table :teams do |t|
