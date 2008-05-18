@@ -13,9 +13,10 @@
 <div id="nav" style="background-image: url('<%= image_path('background.png') %>'); vertical-align: middle;">
 	<%= image_tag "tournamentdirector.png", :style => "position: absolute; top: 0px; left: 0px;" %>
     <div style="position: absolute; left: 400px; top: 13px;"><%= @tournament.name unless @tournament.nil? %></div>
-	<%= link_to "Game Entry", :controller => "/dashboard/entry" %>
-	<%= link_to "Team Entry", :controller => "/dashboard/configuration", :action => "edit_teams" %>
-	<%= link_to "Configuration", :controller => "/dashboard/configuration", :action => "edit_tournament" %>
+	<%= link_to "Game Entry", :controller => "dashboard/entry" %>
+	<%= link_to "Game Edits", :controller => "dashboard/entry", :action => "status" -%>
+	<%= link_to "Team Entry", :controller => "dashboard/configuration", :action => "edit_teams" %>
+	<%= link_to "Configuration", :controller => "dashboard/configuration", :action => "edit_tournament" %>
 </div>
 
 <% if flash[:notice] %>

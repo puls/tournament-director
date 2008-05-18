@@ -1,1 +1,1 @@
-<option value="<%= options_for_round.id -%>"><%= options_for_round.name -%></option>
+<option value="<%= options_for_round.id -%>"<%= (eltsel and options_for_round.id == eltsel.to_i) ? " selected='selected'" : "" -%>><%= options_for_round.name -%></option>

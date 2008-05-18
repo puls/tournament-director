@@ -12,30 +12,42 @@ class Dashboard::EntryController < DashboardController
   	
   	@rounds_to_enter = Round.find(:all, :conditions => ['entry_complete IS NULL OR entry_complete != ?', 't'])
   	
-  	@games_to_enter = Game.find(:all, :conditions => ['play_complete = ? AND (entry_complete IS NULL OR entry_complete = ?) AND (ignore_indivs IS NULL OR ignore_indivs = ?)', 't','f','f'], :include => :team_games)
-  	@teams_to_enter = @games_to_enter.collect{|g| g.teams}.flatten.uniq.sort{|a,b| a.name <=> b.name}  	
   end
 
   def teams_for_round
-  	@teams = get_teams_for_round params[:id].to_i
-	render :partial => 'options_for_round', :collection => @teams  
+  	allt = params[:editing] ? true : false
+  	@teams = get_teams_for_round params[:id].to_i, allt
+	render :partial => 'options_for_round', :collection => @teams
   end
   
-  def get_teams_for_round(round)
-    	Team.find(:all, :order => 'name').select{|t| t.games.select{|g| g.round.number == round }.empty? }
+  def get_teams_for_round(round, allt = false)
+  	if allt
+  		Team.find(:all, :order => 'name')
+  	else
+	    	Team.find(:all, :order => 'name').select{|t| t.games.select{|g| g.round.number == round }.empty? }
+	end
   end
   
   def rooms_for_round
-  	@rooms = get_rooms_for_round params[:id].to_i
-  	render :partial => 'options_for_round', :collection => @rooms
+  	allr = params[:editing] ? true : false
+  	@rooms = get_rooms_for_round params[:id].to_i, allr
+	render :partial => 'options_for_round', :collection => @rooms, :locals => {:eltsel => params[:selected].nil? ? false : params[:selected]}
   end
   
-  def get_rooms_for_round(round)
-    	Room.find(:all, :order => 'name').select{|r| r.games.select{|g| g.round.number == round }.empty? }
+  def get_rooms_for_round(round, allr = false)
+  	if allr
+  		Room.find(:all, :order => 'name')
+  	else
+    		Room.find(:all, :order => 'name').select{|r| r.games.select{|g| g.round.number == round }.empty? }
+    	end
   end
   
-  def get_cards_for_round(round)
-  	Card.find(:all, :order => 'number').select{|c| c.team_games.select{|tg| tg.game.round.number == round }.empty? }
+  def get_cards_for_round(round, allc = false)
+  	if allc
+  		Card.find(:all, :order => 'number')
+  	else
+  		Card.find(:all, :order => 'number').select{|c| c.team_games.select{|tg| tg.game.round.number == round }.empty? }
+  	end
   end
   
   def bracket_for_team
@@ -43,9 +55,15 @@ class Dashboard::EntryController < DashboardController
   end
   
   def save_game
+  	begin
+  		@game = Game.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		@game = nil
+  	end
+  
   	if params[:round_number].empty?
   		flash[:error] = "Round number cannot be empty."
-  		redirect_to :action => 'index'
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
   		return false
   	end
   	
@@ -64,70 +82,87 @@ class Dashboard::EntryController < DashboardController
 
 	if params[:team1] == params[:team2]
 		flash[:error] = "You cannot select the same team for both slots."
-		redirect_to :action => 'index'
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
 		return false
 	end	
   	
   	if params[:score1].to_i == params[:score2].to_i and not params[:forfeit]
   		flash[:error] = "Scores cannot be equal in a non-forfeit."
-  		redirect_to :action => 'index'
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
   		return false
   	end
 
-	teams = get_teams_for_round(round.number)
-	rooms = get_rooms_for_round(round.number)
-	cards = get_cards_for_round(round.number)
+	teams = get_teams_for_round(round.number, !@game.nil?)
+	rooms = get_rooms_for_round(round.number, !@game.nil?)
+	cards = get_cards_for_round(round.number, !@game.nil?)
 	
 	if not params[:extragame] and not (teams.include? Team.find(params[:team1]) and teams.include? Team.find(params[:team2]))
 		flash[:error] = "One or both teams has already played a game this round."
-		redirect_to :action => 'index'
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
 		return false
 	end
 	
-	if @tournament.tracks_rooms  and not params[:extragame] and not rooms.include? Room.find(params[:room])
+	if @tournament.tracks_rooms?  and not params[:extragame] and not rooms.include? Room.find(params[:room])
 		flash[:error] = "That room has already been used during this round."
-		redirect_to :action => 'index'
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
 		return false
 	end
 	
-	if @tournament.swiss and not params[:extragame] and not (cards.include? Card.find_by_number(params[:card1]) and cards.include? Card.find_by_number(params[:card2]) )
+	if @tournament.swiss? and not params[:extragame] and not (cards.include? Card.find_by_number(params[:card1]) and cards.include? Card.find_by_number(params[:card2]) )
 		flash[:error] = "One or both cards has already been used during this round."
-		redirect_to :action => 'index'
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
 		return false
 	end
 	
-  	game = round.games.build(:round => round, :tossups => params[:tossups], :extragame => params[:extragame], :overtime => params[:overtime], :playoffs => params[:playoffs], :forfeit => params[:forfeit], :play_complete => true)
-  	game.room = Room.find(params[:room]) if @tournament.tracks_rooms
-  	game.bracket = Bracket.find(params[:bracket]) if @tournament.bracketed
+	if @game.nil?
+	  	game = round.games.build(:round => round, :tossups => params[:tossups], :extragame => params[:extragame], :overtime => params[:overtime], :playoffs => params[:playoffs], :forfeit => params[:forfeit], :play_complete => true)
+  		game.room = Room.find(params[:room]) if @tournament.tracks_rooms?
+	  	game.bracket = Bracket.find(params[:bracket]) if @tournament.bracketed?
+	else
+		game = @game
+		game.update_attributes(:round => round, :tossups => params[:tossups], :extragame => params[:extragame], :overtime => params[:overtime], :playoffs => params[:playoffs], :forfeit => params[:forfeit], :play_complete => true)
+		game.room = Room.find(params[:room]) if @tournament.tracks_rooms?
+		game.bracket = Bracket.find(params[:bracket]) if @tournament.bracketed?
+	end
     	
     	if not game.save
     		game.errors.each_full {|msg| flash[:error] = msg }
-    		redirect_to :action => "index"
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
     		return false
     	end
     	
-	tg1 = game.team_games.build(:team => Team.find(params[:team1]), :points => params[:score1], :ordering => 1)
-    	tg1.card = Card.find_by_number(params[:card1]) if @tournament.swiss
+    	if @game.nil?
+		tg1 = game.team_games.build(:team => Team.find(params[:team1]), :points => params[:score1], :ordering => 1)
+	    	tg1.card = Card.find_by_number(params[:card1]) if @tournament.swiss?
     	
-    	tg2 = game.team_games.build(:team => Team.find(params[:team2]), :points => params[:score2], :ordering => 2)
-    	tg2.card = Card.find_by_number(params[:card2]) if @tournament.swiss
+    		tg2 = game.team_games.build(:team => Team.find(params[:team2]), :points => params[:score2], :ordering => 2)
+	    	tg2.card = Card.find_by_number(params[:card2]) if @tournament.swiss?
+	else
+		tg1 = game.team_games[0]
+		tg1.update_attributes(:points => params[:score1])
+		tg1.card = Card.find_by_number(params[:card1]) if @tournament.swiss?
+		
+		tg2 = game.team_games[1]
+		tg2.update_attributes(:points => params[:score2])
+		tg2.card = Card.find_by_number(params[:card2]) if @tournament.swiss?
+	end
     		
     	if not tg1.save
     		tg1.errors.each_full {|msg| flash[:error] = msg }
-    		game.destroy
-    		redirect_to :action => "index"
+    		game.destroy if @game.nil?
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
     		return false
     	end
     		
     	if not tg2.save
     		tg1.errors.each_full {|msg| flash[:error] = msg }
-    		game.destroy
-    		redirect_to :action => "index"
+    		game.destroy if @game.nil?
+		redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
     		return false
     	end
     		
     	flash[:notice] = "Game saved."
-    	redirect_to :action => 'index'
+	redirect_to @game.nil? ? {:action => 'index'} : {:action => 'status'}
   end
   
   def ignore_indivs
@@ -296,6 +331,23 @@ class Dashboard::EntryController < DashboardController
 	game.save
 	flash[:notice] = "Individual standings saved."
 	redirect_to :action => 'index'  
+  end
+  
+  # Will list all entered games and link for editing
+  def status
+  	@rounds = Round.find(:all, :include => :games, :order => 'number')
+  	
+  end
+  
+  def edit_game
+  	begin
+  		@game = Game.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		flash[:error] = "Game was not found."
+  		redirect_to :action => 'status'
+  	end
+  
+  	@last_round = @game.round.number
   end
   
 end

@@ -1,0 +1,25 @@
+<% @rounds.each do |round| -%>
+<h1>Round <%= round.number -%></h1>
+<table>
+	<tr>
+		<th>Team 1</th>
+		<th>Score 1</th>
+		<th>Team 2</th>
+		<th>Score 2</th>
+		<th>Actions</th>
+	</tr>
+<% round.games.each do |game| -%>
+	<tr class="<%= cycle("game_light", "game_dark") -%>">
+		<td><%= game.team_games[0].team.name -%></td>
+		<td><%= game.team_games[0].points -%></td>
+		<td><%= game.team_games[1].team.name -%></td>
+		<td><%= game.team_games[1].points -%></td>
+		<td style="white-space: nowrap;">
+			<%= link_to "edit game", {:action => 'edit_game', :id => game.id}, {:class => 'button'} -%>
+			<%= link_to "edit indivs", {}, {:class => 'button'} -%>
+			<%= link_to "delete", {}, {:class => 'button'} -%>
+		</td>	
+	</tr>
+<% end -%>
+</table>
+<% end -%>
