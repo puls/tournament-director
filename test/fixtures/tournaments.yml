@@ -5,3 +5,45 @@
 #
 # two:
 #   column: value
+
+plain:
+    id: 1
+    name: Test Tournament 1
+    timed: false
+    bracketed: false
+    ping_stats: false
+    ping_contact: false
+    includes_years: false
+    swiss: false
+    powers: false
+    tracks_rooms: false
+    database: db/test/plain.sqlite3
+    tuh_cutoff: 0
+
+brackets:
+    id: 2
+    name: Test Tournament 2
+    timed: false
+    bracketed: true
+    ping_stats: false
+    ping_contact: false
+    includes_years: false
+    swiss: false
+    powers: false
+    tracks_rooms: false
+    database: db/test/brackets.sqlite3
+    tuh_cutoff: 0
+	
+hsnct:
+    id: 3
+    name: Test Tournament HSNCT
+    timed: true
+    bracketed: false
+    ping_stats: false
+    ping_contact: false
+    includes_years: true
+    swiss: true
+    powers: true
+    tracks_rooms: true
+    database: db/test/hsnct.sqlite3
+    tuh_cutoff: 20

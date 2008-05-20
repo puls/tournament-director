@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     end
     
     if @tournament.nil?
-      	@tournament = Tournament.find(:first)
+      	@tournament = Tournament.find(:first, :order => 'id desc')
       	session[:tournament_id] = @tournament.id unless @tournament.nil?
     end
     
