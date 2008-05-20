@@ -53,8 +53,6 @@ class Dashboard::ConfigurationController < DashboardController
         brackets_to_delete.delete(bracket)
       end
       brackets_to_delete.each {|b| b.destroy}
-    else
-      Bracket.destroy_all
     end
     @tournament.bracketed = false if Bracket.count == 0
     
@@ -70,8 +68,6 @@ class Dashboard::ConfigurationController < DashboardController
       	room.save
       end
       rooms_to_delete.each { |r| r.destroy }
-    else
-      Room.destroy_all
     end
     
     @tournament.swiss = false if params[:card_numbers].nil?
@@ -84,8 +80,6 @@ class Dashboard::ConfigurationController < DashboardController
     		card.save
     	end
     	cards_to_delete.each {|c| c.destroy }
-    else
-    	Card.destroy_all
     end
     
     @tournament.save

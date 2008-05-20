@@ -5,3 +5,13 @@
 #
 # two:
 #   column: value
+
+bracket_one:
+  id: 1
+  name: Bracket 1
+  ordering: 2
+  
+bracket_two:
+  id: 4
+  name: Bracket 2
+  ordering: 1

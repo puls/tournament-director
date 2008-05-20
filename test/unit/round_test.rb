@@ -1,8 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class RoundTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+
+  def setup
+  	load_our_fixtures :tournaments, :rounds
   end
+
 end

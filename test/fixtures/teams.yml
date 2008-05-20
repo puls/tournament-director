@@ -5,3 +5,33 @@
 #
 # two:
 #   column: value
+
+team_1:
+  id: 1
+  school: school_one
+  name: School 1 A
+  
+team_2:
+  id: 3
+  school: school_three
+  name: School 3 A
+  
+team_3:
+  id: 4
+  school: school_two
+  name: School 2 A
+  
+team_4:
+  id: 5
+  school: school_one
+  name: School 1 B
+  
+team_5:
+  id: 7
+  school: school_three
+  name: School 3 B
+
+team_6:
+  id: 8
+  school: school_four
+  name: School 4 A

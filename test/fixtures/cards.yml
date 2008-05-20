@@ -5,3 +5,19 @@
 #
 # two:
 #   column: value
+
+card_one:
+  id: 1
+  number: 1
+  
+card_two:
+  id: 2
+  number: 2
+  
+card_three:
+  id: 4
+  number: 3
+  
+card_four:
+  id: 15
+  number: 4
