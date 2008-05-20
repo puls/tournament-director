@@ -1,0 +1,19 @@
+<table>
+	<tr>
+		<th>Rank</th>
+		<th>Team</th>
+		<th>Wins</th>
+		<th>Losses</th>
+		<th>Pct</th>
+	</tr>
+<% count = 0 -%>
+<% @allteams.each do |team| -%>
+<% count += 1 -%>
+	<tr>
+		<td><%= count -%></td>
+		<td><%= team.name -%></td>
+		<td><%= team.wins -%></td>
+		<td><%= team.losses -%></td>
+		<td><%= team.win_pct -%></td>
+	</tr>
+<% end -%>

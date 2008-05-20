@@ -10,5 +10,23 @@ class Team < ActiveRecord::Base
   validates_presence_of :school
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :school_id
+  
+  def wins
+  	team_games.clone.select{|g| g.won?}.length
+  end
+  
+  def losses
+  	team_games.clone.select{|g| not g.won?}.length
+  end
+  
+  def win_pct
+  	if losses == 0 and wins == 0
+  		0.0
+  	elsif losses == 0
+  		1.0
+  	else
+  		wins / (team_games.length)
+  	end
+  end
 
 end

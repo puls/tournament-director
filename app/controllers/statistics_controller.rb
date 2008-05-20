@@ -8,7 +8,8 @@ class StatisticsController < ApplicationController
   end
   
   def standings
-    
+  	@allteams = Team.find(:all)
+    	@allteams.sort!{|a,b| b.win_pct <=> a.win_pct}
   end
   
   def scoreboard

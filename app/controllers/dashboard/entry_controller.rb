@@ -146,6 +146,14 @@ class Dashboard::EntryController < DashboardController
 		tg2.update_attributes(:points => params[:score2])
 		tg2.card = Card.find_by_number(params[:card2]) if @tournament.swiss?
 	end
+	
+	if tg1.points > tg2.points
+		tg1.won = true
+		tg2.won = false
+	else
+		tg1.won = false
+		tg2.won = true
+	end
     		
     	if not tg1.save
     		tg1.errors.each_full {|msg| flash[:error] = msg }
