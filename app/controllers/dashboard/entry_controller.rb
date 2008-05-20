@@ -17,7 +17,7 @@ class Dashboard::EntryController < DashboardController
   def teams_for_round
   	allt = params[:editing] ? true : false
   	@teams = get_teams_for_round params[:id].to_i, allt
-	render :partial => 'options_for_round', :collection => @teams
+	render :partial => 'options_for_round', :collection => @teams, :locals => {:eltsel => nil}
   end
   
   def get_teams_for_round(round, allt = false)
@@ -348,6 +348,40 @@ class Dashboard::EntryController < DashboardController
   	end
   
   	@last_round = @game.round.number
+  end
+  
+  def delete_game
+  	begin
+  		@game = Game.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		flash[:error] = "Game was not found."
+  		redirect_to :action => 'status'
+  	end
+  	
+  	@game.destroy
+  	flash[:notice] = "Game was deleted successfully."
+  	redirect_to :action => 'status'
+  end
+  
+  def clear_indivs
+  	begin
+  		@game = Game.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		flash[:error] = "Game was not found."
+  		redirect_to :action => 'status'
+  	end
+  	
+  	@game.team_games.each do |tg|
+  		tg.player_games.each do |pg|
+  			pg.destroy
+  		end
+  	end
+  	
+  	@game.update_attributes :entry_complete => false
+  	
+  	flash[:notice] = "Individual stats were cleared for that game."
+  	redirect_to :action => 'status'
+  
   end
   
 end

@@ -1,4 +1,5 @@
 <% @rounds.each do |round| -%>
+<% next if round.games.empty? -%>
 <h1>Round <%= round.number -%></h1>
 <table>
 	<tr>
@@ -16,8 +17,8 @@
 		<td><%= game.team_games[1].points -%></td>
 		<td style="white-space: nowrap;">
 			<%= link_to "edit game", {:action => 'edit_game', :id => game.id}, {:class => 'button'} -%>
-			<%= link_to "edit indivs", {}, {:class => 'button'} -%>
-			<%= link_to "delete", {}, {:class => 'button'} -%>
+			<%= link_to "clear indivs", {}, {:class => 'button', :confirm => "Are you sure you want to clear indivs for that game?"} if game.entry_complete? -%>
+			<%= link_to "delete", {:action => 'delete_game', :id => game.id}, {:confirm => "Are you sure you want to delete this game?", :class => 'button'} -%>
 		</td>	
 	</tr>
 <% end -%>

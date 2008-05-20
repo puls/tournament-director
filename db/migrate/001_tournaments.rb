@@ -4,6 +4,7 @@ class Tournaments < ActiveRecord::Migration
       t.string :name
       t.boolean :timed, :bracketed, :ping_stats, :ping_contact, :includes_years, :swiss, :powers, :tracks_rooms
       t.string :database
+      t.integer :tuh_cutoff
     end
   end
 

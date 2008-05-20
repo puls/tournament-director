@@ -28,7 +28,7 @@
 <% if flash[:error] %>
     <div id="error"><%= flash[:error] %></div>
     <%= update_page_tag { |page|
-    	page.visual_effect(:highlight, "error")
+    	page.visual_effect(:highlight, "error", :startcolor => "#ff0000")
     } %>
 <% end %>
 <%= yield %>
