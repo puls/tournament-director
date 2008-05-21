@@ -10,7 +10,7 @@ class Dashboard::EntryController < DashboardController
   		@last_round = @last_round.number
   	end
   	
-  	@rounds_to_enter = Round.find(:all, :conditions => ['entry_complete IS NULL OR entry_complete != ?', 't'])
+  	@rounds_to_enter = Round.find(:all, :conditions => ['rounds.entry_complete IS NULL OR rounds.entry_complete != ?', 't'], :include => :games)
   	
   end
 
@@ -169,6 +169,10 @@ class Dashboard::EntryController < DashboardController
     		return false
     	end
     		
+    	expire_page :controller => 'statistics', :action => 'standings'
+    	expire_page :controller => 'statistics', :action => 'team', :id => tg1.team.id
+    	expire_page :controller => 'statistics', :action => 'team', :id => tg2.team.id
+    	expire_page :controller => 'statistics', :action => 'scoreboard'
     	flash[:notice] = "Game saved."
 	redirect_to @game.nil? ? {:action => 'index'} : {:action => 'status'}
   end
@@ -337,6 +341,7 @@ class Dashboard::EntryController < DashboardController
 	    	
 	game.entry_complete = true
 	game.save
+	expire_page :controller => 'statistics', :action => 'personal'
 	flash[:notice] = "Individual standings saved."
 	redirect_to :action => 'index'  
   end
@@ -367,6 +372,11 @@ class Dashboard::EntryController < DashboardController
   	end
   	
   	@game.destroy
+  	
+  	expire_page :controller => 'statistics', :action => 'standings'
+    	expire_page :controller => 'statistics', :action => 'team', :id => tg1.team.id
+    	expire_page :controller => 'statistics', :action => 'team', :id => tg2.team.id
+    	expire_page :controller => 'statistics', :action => 'scoreboard'
   	flash[:notice] = "Game was deleted successfully."
   	redirect_to :action => 'status'
   end
@@ -387,6 +397,7 @@ class Dashboard::EntryController < DashboardController
   	
   	@game.update_attributes :entry_complete => false
   	
+  	expire_page :controller => 'statistics', :action => 'personal'
   	flash[:notice] = "Individual stats were cleared for that game."
   	redirect_to :action => 'status'
   

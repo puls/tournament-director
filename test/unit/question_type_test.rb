@@ -6,5 +6,8 @@ class QuestionTypeTest < ActiveSupport::TestCase
 		load_our_fixtures :tournaments, :question_types
 	end
 	
+	def test_value_checks
+	
+	end	
 	
 end

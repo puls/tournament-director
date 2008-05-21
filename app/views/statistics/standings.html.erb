@@ -1,7 +1,8 @@
-<table>
+<table style="border: 1px solid #000;">
 	<tr>
 		<th>Rank</th>
 		<th>Team</th>
+		<th>Games</th>
 		<th>Wins</th>
 		<th>Losses</th>
 		<th>Pct</th>
@@ -12,8 +13,9 @@
 	<tr>
 		<td><%= count -%></td>
 		<td><%= team.name -%></td>
+		<td><%= team.num_games -%></td>
 		<td><%= team.wins -%></td>
 		<td><%= team.losses -%></td>
-		<td><%= team.win_pct -%></td>
+		<td><%= fmt(team.win_pct) -%></td>
 	</tr>
 <% end -%>

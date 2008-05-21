@@ -137,6 +137,19 @@ class Dashboard::ConfigurationController < DashboardController
 	redirect_to :action => 'edit_teams'
   end
   
+  def delete_team
+  	begin
+  		team = Team.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		flash[:error] = "Team not found."
+  		redirect_to :action => 'edit_teams'
+  	end
+  	
+  	team.destroy
+  	flash[:notice] = "Team deleted."
+  	redirect_to :action => 'edit_teams'
+  end
+  
   def save_players
   	team = Team.find(params[:id], :include => :players)
   	players_to_delete = team.players.dup

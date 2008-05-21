@@ -1,6 +1,6 @@
 class Dashboard::TestingController < DashboardController
 
-	before_filter :check_configuration
+	before_filter :load_configuration
 
 	def index
 	
@@ -77,13 +77,13 @@ class Dashboard::TestingController < DashboardController
 				cards2 = Card.find(:all).clone
 				for j in 1..75 # games
 					game = rounds[i-1].games.create(:bracket => brackets[j % 2], :room => rooms[j-1], :tossups => 18 + rand(8), :play_complete => true)
-					card1 = cards2[rand(cards2.size)]
+					card1 = Card.find(cards2[rand(cards2.size)].id)
 					cards2.delete(card1)
-					card2 = cards2[rand(cards2.size)]
+					card2 = Card.find(cards2[rand(cards2.size)].id)
 					cards2.delete(card2)
-					team1 = teams2[rand(teams2.size)]
+					team1 = Team.find(teams2[rand(teams2.size)].id)
 					teams2.delete(team1)
-					team2 = teams2[rand(teams2.size)]
+					team2 = Team.find(teams2[rand(teams2.size)].id)
 					teams2.delete(team2)
 					game.team_games.create(:card => card1, :team => team1, :points => 400, :ordering => 1, :won => true)
 					game.team_games.create(:card => card2, :team => team2, :points => 300, :ordering => 2, :won => false)

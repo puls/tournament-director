@@ -60,3 +60,4 @@ Rails::Initializer.run do |config|
 end
 
 require 'lib/mixins'
+require 'lib/console'

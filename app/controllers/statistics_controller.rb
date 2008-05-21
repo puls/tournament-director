@@ -9,7 +9,7 @@ class StatisticsController < ApplicationController
   
   def standings
   	@allteams = Team.find(:all)
-    	@allteams.sort!{|a,b| b.win_pct <=> a.win_pct}
+    	@allteams.sort!{|a,b| (b.win_pct <=> a.win_pct) == 0 ? b.wins <=> a.wins : b.win_pct <=> a.win_pct}
   end
   
   def scoreboard
