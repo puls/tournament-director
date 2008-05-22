@@ -74,3 +74,8 @@ a.button {
     color: white;
     text-decoration: none;
 }
+
+td.small, td.small input {
+		font-size: 10px;
+		padding: 1px;
+}

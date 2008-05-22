@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-
+  
   def index
     redirect_to :controller => "/dashboard/entry"
   end
@@ -12,7 +12,9 @@ class DashboardController < ApplicationController
       redirect_to :controller => "/dashboard/configuration", :action => "new_tournament"
       return false
     end
-    
+  end
+  
+  def check_teams
     unless Team.count > 0
       redirect_to :controller => "/dashboard/configuration", :action => "edit_teams"
       return false

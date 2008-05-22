@@ -1,6 +1,7 @@
 class Dashboard::ConfigurationController < DashboardController
 
-  before_filter :load_configuration, :except => ["new_tournament", "create_tournament"]
+  before_filter :check_configuration, :except => ["new_tournament", "create_tournament"]
+  before_filter :check_teams, :except => ["new_tournament", "edit_tournament", "create_tournament", "save_tournament", "edit_teams", "save_teams"]
 
   def index
     redirect_to :action => "edit_tournament"
@@ -53,20 +54,6 @@ class Dashboard::ConfigurationController < DashboardController
       brackets_to_delete.each {|b| b.destroy}
     end
     @tournament.bracketed = false if Bracket.count == 0
-    
-    @tournament.tracks_rooms = false if params['room_names'].nil?
-    if @tournament.tracks_rooms?
-      rooms_to_delete = Room.find(:all)
-      for i in 0..params[:room_names].length
-      	name = params[:room_names][i]
-      	next if name.nil? or name.empty?
-      	room = Room.find_or_create_by_name(name)
-      	rooms_to_delete.delete(room)
-      	room.staff = params[:room_staffs][i]
-      	room.save
-      end
-      rooms_to_delete.each { |r| r.destroy }
-    end
     
     @tournament.save
     flash[:notice] = "Changes saved."

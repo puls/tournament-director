@@ -22,6 +22,13 @@
 
 </table>
 <% end %>
+
+<h1>Number of rounds</h1>
+<% form_tag :action => "set_rounds" do %>
+<%= text_field_tag "count", @rounds.size, :size => 2 %>
+<%= submit_tag "Save" %>
+<% end %>
+
 <h1>Card matchups</h1>
 <% form_tag :action => "save_cards" do %>
 <table>
@@ -37,8 +44,12 @@
         <% for room in @rooms %>
         <tr>
             <td><%= room.name %></td>
-            <% for round in @rounds %>
-            <th><%= round.number %></th>
+            <% @rounds.each_with_index do |round, index| %>
+                <td class="small" style="text-align: center;">
+                    <% game = room.games[index] %>
+                    <%= text_field_tag "foobar", game.team_games[0].card, {:size => 3, :disabled => "true"} %> &ndash;
+                    <%= text_field_tag "foobar", game.team_games[1].card, {:size => 3, :disabled => "true"} %>
+                </td>
             <% end %>
         </tr>
         <% end %>

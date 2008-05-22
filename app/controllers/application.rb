@@ -10,8 +10,9 @@ class ApplicationController < ActionController::Base
   
   def load_tournament_database(tournament)
     spec = Tournament.configurations[RAILS_ENV]
-    spec[:database] = tournament.database
-    ActiveRecord::Base.establish_connection(spec)
+    new_spec = spec.clone
+    new_spec["database"] = tournament.database
+    ActiveRecord::Base.establish_connection(new_spec)
     ActiveRecord::Migrator.migrate("db/migrate_data/",nil)
     Tournament.establish_connection(RAILS_ENV)
   end
