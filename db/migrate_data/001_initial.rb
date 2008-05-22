@@ -5,10 +5,6 @@ class Initial < ActiveRecord::Migration
       t.integer :ordering
     end
     
-    create_table :cards do |t|
-      t.integer :number
-    end
-    
     create_table :games do |t|
       t.references :round, :bracket, :room
       t.integer :tossups
@@ -56,7 +52,8 @@ class Initial < ActiveRecord::Migration
     end
     
     create_table :team_games do |t|
-      t.references :team, :game, :card
+      t.references :team, :game
+      t.integer :card
       t.integer :points, :tossups_correct, :tossup_points, :bonus_points
     end
     
@@ -67,6 +64,6 @@ class Initial < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :brackets, :cards, :games, :player_games, :players, :question_types, :rooms, :rounds, :schools, :stat_lines, :team_games, :teams, :tournaments
+    drop_table :brackets, :games, :player_games, :players, :question_types, :rooms, :rounds, :schools, :stat_lines, :team_games, :teams, :tournaments
   end
 end

@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '533c664b5d376cfe5b34f14782ba8862'
   
   def load_tournament_database(tournament)
-    spec = Tournament.establish_connection(RAILS_ENV)
-    spec.config[:database] = tournament.database
-    ActiveRecord::Base.establish_connection(spec.config)
+    spec = Tournament.configurations[RAILS_ENV]
+    spec[:database] = tournament.database
+    ActiveRecord::Base.establish_connection(spec)
     ActiveRecord::Migrator.migrate("db/migrate_data/",nil)
     Tournament.establish_connection(RAILS_ENV)
   end

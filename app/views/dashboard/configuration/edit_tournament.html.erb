@@ -8,14 +8,14 @@
         <tr>
             <th>This tournament:</th>
             <td>
-                <%= check_box "tournament","powers" -%> uses power marks<br />
-                <%= check_box "tournament","timed" -%> is timed<br />
-                <%= check_box "tournament","bracketed",{:onclick => 'toggle_brackets()'} -%> uses multiple brackets<br />
-                <%= check_box "tournament","swiss" -%> uses swiss pairing<br />
-                <%= check_box "tournament","ping_stats" -%> automatically submits to <a href="http://www.quizstats.org">quizstats.org</a><br />
-                <%= check_box "tournament","includes_years" -%> tracks years of players<br />
-                <%= check_box "tournament","tracks_rooms", {:onclick => 'toggle_rooms()'} -%> tracks rooms of games<br />
-                <%= check_box "tournament","ping_contact" -%> automatically submits to <a href="http://www.fraughtmachine.com/efcontact/">Entering Freshman Contact List</a> (high school tournaments)
+                <%= check_box "tournament", "powers" -%> uses power marks<br />
+                <%= check_box "tournament", "timed" -%> is timed<br />
+                <%= check_box "tournament", "bracketed",{:onclick => 'toggle_brackets()'} -%> uses multiple brackets<br />
+                <%= check_box "tournament", "swiss" -%> reassigns cards after every round<br />
+                <%= check_box "tournament", "ping_stats" -%> automatically submits to <a href="http://www.quizstats.org">quizstats.org</a><br />
+                <%= check_box "tournament", "includes_years" -%> tracks years of players<br />
+                <%= check_box "tournament", "tracks_rooms" -%> tracks rooms of games<br />
+                <%= check_box "tournament", "ping_contact" -%> automatically submits to <a href="http://www.fraughtmachine.com/efcontact/">Entering Freshman Contact List</a> (high school tournaments)
             </td>
         </tr>
         <tr id="bracket_row">
@@ -28,28 +28,6 @@
                     page.insert_html :bottom, "bracket_cell", :partial => "line", :locals => {:thing => 'bracket'}
                 } %>
             </td>
-        </tr>
-        <tr id="room_row">
-            <th>Room assignments:</th>
-            <td>
-            	<div id="room_cell" style="margin-bottom: 10px;">
-            	    <%= render :partial => 'room', :collection => @rooms -%>
-            	</div>
-            	<%= link_to_function('add',nil,{:class => 'button'}) { |page|
-            	    page.insert_html :bottom, "room_cell", :partial => 'room'
-            	} %>
-            </td>
-        </tr>
-        <tr id="card_row">
-        	<th>Swiss pair cards:</th>
-        	<td>
-        		<div id="card_cell" style="margin-bottom: 10px;">
-        			<%= render :partial => 'card', :collection => @cards -%>
-        		</div>
-        		<%= link_to_function('add',nil,{:class => 'button'}) { |page|
-        			page.insert_html :bottom, "card_cell", :partial => 'card', :collection => [Card.new, Card.new, Card.new, Card.new, Card.new]
-        		} %>
-        	</td>
         </tr>
         <tr>
             <td class="submit" colspan="2">
@@ -68,29 +46,7 @@
         }
     }
     
-    function toggle_rooms() {
-    	if ($F('tournament_tracks_rooms') == 1) {
-    	    Element.show('room_row');
-    	}
-    	else
-    	{
-    	    Element.hide('room_row');
-    	}
-    }
-    
-    function toggle_cards() {
-    	if ($F('tournament_swiss') == 1) {
-    		Element.show('card_row');
-    	}
-    	else
-    	{
-    		Element.hide('card_row');
-    	}
-    }
-    
     toggle_brackets();
-    toggle_rooms();
-    toggle_cards();
 <% end -%>
 
 <% if @all_tournaments.empty? %>

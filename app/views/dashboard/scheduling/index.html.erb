@@ -1,0 +1,47 @@
+<h1>Room / staff assignments</h1>
+<% form_tag :action => "save_rooms" do %>
+<%= link_to_function('add', nil, {:class => 'button'}) { |page|
+    page.insert_html :bottom, "room_body", :partial => '/dashboard/room'
+} %>
+<table>
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Staff</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="room_body">
+        <%= render :partial => '/dashboard/room', :collection => @rooms -%>
+    </tbody>
+</table>    
+<%= link_to_function('add', nil, {:class => 'button'}) { |page|
+    page.insert_html :bottom, "room_body", :partial => '/dashboard/room'
+} %>
+<%= submit_tag "Save" %>
+
+</table>
+<% end %>
+<h1>Card matchups</h1>
+<% form_tag :action => "save_cards" do %>
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <% for round in @rounds %>
+            <th><%= round.number %></th>
+            <% end %>
+        </tr>
+    </thead>
+    <tbody>
+        <% for room in @rooms %>
+        <tr>
+            <td><%= room.name %></td>
+            <% for round in @rounds %>
+            <th><%= round.number %></th>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+<% end %>

@@ -20,10 +20,12 @@ class DashboardController < ApplicationController
       	session[:tournament_id] = @tournament.id unless @tournament.nil?
     end
     
-    unless @tournament.nil?
+    if @tournament.nil?
+      redirect_to :controller => "/dashboard/configuration", :action => "new_tournament"
+      return false
+    else
       begin
       	QuestionType.find_by_value(15)
-        #@tournament.power = !QuestionType.find_by_value(15).nil?
       rescue ActiveRecord::StatementInvalid
         load_tournament_database(@tournament)
       end
@@ -32,11 +34,6 @@ class DashboardController < ApplicationController
 
   def check_configuration
     load_configuration
-
-    if @tournament.nil?
-      redirect_to :controller => "/dashboard/configuration", :action => "new_tournament"
-      return false
-    end
 
     unless Team.count > 0
       redirect_to :controller => "/dashboard/configuration", :action => "edit_teams"
