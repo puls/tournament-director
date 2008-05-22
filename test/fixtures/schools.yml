@@ -5,3 +5,27 @@
 #
 # two:
 #   column: value
+
+school_one:
+  id: 1
+  name: School 1
+  city: Test 1
+  small: false
+  
+school_two:
+  id: 2
+  name: School 2
+  city: Test 2
+  small: true
+  
+school_three:
+  id: 3
+  name: School 3
+  city: Test 3
+  small: false
+
+school_four:
+  id: 6
+  name: School 4
+  city: Test 4
+  small: true

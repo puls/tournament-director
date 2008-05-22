@@ -1,0 +1,136 @@
+body
+{
+	font-family: "Frutiger",sans-serif;
+	font-size: 11pt;
+	margin: 20px;
+}
+
+.primary_name
+{
+	font-weight: bold;
+}
+.secondary_name
+{
+	text-transform: uppercase;
+	font-size: 8pt;
+}
+
+table.round,table.standings
+{
+	width: 100%;
+}
+
+table {
+	margin-top: 6pt;
+}
+
+div.roundscores {
+	border: 1px dotted black;
+	margin: 10px 0px;
+}
+
+div.roundscores h2 {
+	margin: 10px;
+}
+
+div.roundscores table {
+	float: left;
+	margin: 10px;
+}
+
+h1
+{
+	font-size: 36pt;
+	margin: 10px 0px;
+}
+
+h2
+{
+	font-size: 18pt;
+	margin: 10px 0px;
+}
+
+td
+{
+	padding: 3pt 6pt;
+}
+
+th
+{
+	font-weight: bold;
+	text-align: left;
+	border-bottom: 1pt solid black;
+	padding: 2pt 6pt;
+}
+
+td.number
+{
+	font-family: "Bitstream Vera Sans Mono",monospace;
+	text-align:right;
+	font-size: 10pt;
+/*	width: 75px;*/
+}
+
+th.number
+{
+	text-align: right;
+/*	width: 75px;*/
+}
+
+tr.row2
+{
+	background-color: #574E96;
+	color: #FFF;
+}
+tr.row1
+{
+	background-color: #FF5;
+	color: #000;
+}
+tr.row0 a {
+	color: #FFF;
+}
+tr.row1 a {
+	color: #FFF;
+}
+
+td.cell2
+{
+	background-color: #063;
+	color: #FFF;
+}
+
+table.standings a, #nav a
+{
+	border-bottom: 1pt dotted #999;
+	text-decoration: none;
+	color: inherit;
+}
+#nav-top
+{
+	top: 0px;
+	right: 0px;
+	float: right;
+	display: block;
+	background-color: #063;
+	color: #FFF;
+	padding: 5px;
+	margin: -20px -20px 10px 10px;
+}
+
+#nav-top a
+{
+	color: #FFF;
+	margin: 5px 10px;
+	font-size: 10pt;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1pt;
+}
+
+#footer
+{
+	float: right;
+}
+
+#footer img { border: none; }

@@ -37,7 +37,7 @@ class Initial < ActiveRecord::Migration
     
     create_table :rounds do |t|
       t.integer :number
-      t.boolean :play_complete
+      t.boolean :play_complete, :entry_complete
     end
     
     create_table :schools do |t|

@@ -7,6 +7,6 @@ class Player < ActiveRecord::Base
   validates_presence_of :team
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :team_id
-  validates_numericality_of :year, :only_integer => true
-  validates_numericality_of :qpin, :only_integer => true
+  validates_numericality_of :year, :only_integer => true, :allow_nil => true
+  validates_numericality_of :qpin, :only_integer => true, :allow_nil => true
 end

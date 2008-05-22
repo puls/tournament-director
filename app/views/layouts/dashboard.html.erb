@@ -14,6 +14,7 @@
 	<%= image_tag "tournamentdirector.png", :style => "position: absolute; top: 0px; left: 0px;" %>
     <div style="position: absolute; left: 400px; top: 13px;"><%= @tournament.name unless @tournament.nil? %></div>
 	<%= link_to "Game Entry", :controller => "/dashboard/entry" %>
+	<%= link_to "Game Edits", :controller => "dashboard/entry", :action => "status" -%>
 	<%= link_to "Team Entry", :controller => "/dashboard/configuration", :action => "edit_teams" %>
 	<%= link_to "Scheduling", :controller => "/dashboard/scheduling" %>
 	<%= link_to "Configuration", :controller => "/dashboard/configuration", :action => "edit_tournament" %>
@@ -28,7 +29,7 @@
 <% if flash[:error] %>
     <div id="error"><%= flash[:error] %></div>
     <%= update_page_tag { |page|
-    	page.visual_effect(:highlight, "error")
+    	page.visual_effect(:highlight, "error", :startcolor => "#ff0000")
     } %>
 <% end %>
 <%= yield %>

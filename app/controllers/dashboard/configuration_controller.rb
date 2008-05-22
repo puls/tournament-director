@@ -51,8 +51,6 @@ class Dashboard::ConfigurationController < DashboardController
         brackets_to_delete.delete(bracket)
       end
       brackets_to_delete.each {|b| b.destroy}
-    else
-      Bracket.destroy_all
     end
     @tournament.bracketed = false if Bracket.count == 0
     
@@ -68,8 +66,6 @@ class Dashboard::ConfigurationController < DashboardController
       	room.save
       end
       rooms_to_delete.each { |r| r.destroy }
-    else
-      Room.destroy_all
     end
     
     @tournament.save
@@ -104,6 +100,10 @@ class Dashboard::ConfigurationController < DashboardController
       redirect_to :action => 'edit_tournaments'
     end
     
+    if School.find(:all).empty?
+    	redirect_to :action => 'edit_schools'
+    end
+    
     begin
     	@team = Team.find(params[:id])
     rescue ActiveRecord::RecordNotFound
@@ -121,6 +121,19 @@ class Dashboard::ConfigurationController < DashboardController
 	team.save
 	flash[:notice] = "Team saved."
 	redirect_to :action => 'edit_teams'
+  end
+  
+  def delete_team
+  	begin
+  		team = Team.find(params[:id])
+  	rescue ActiveRecord::RecordNotFound
+  		flash[:error] = "Team not found."
+  		redirect_to :action => 'edit_teams'
+  	end
+  	
+  	team.destroy
+  	flash[:notice] = "Team deleted."
+  	redirect_to :action => 'edit_teams'
   end
   
   def save_players
