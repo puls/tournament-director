@@ -1,21 +1,34 @@
-<table style="border: 1px solid #000;">
-	<tr>
-		<th>Rank</th>
-		<th>Team</th>
-		<th>Games</th>
-		<th>Wins</th>
-		<th>Losses</th>
-		<th>Pct</th>
-	</tr>
+<h2>Current Standings &mdash; Round <%= @max_round %></h2>
+<% for bracket in @brackets -%>
 <% count = 0 -%>
-<% @allteams.each do |team| -%>
-<% count += 1 -%>
+<table class="standings">
 	<tr>
-		<td><%= count -%></td>
-		<td><%= team.name -%></td>
-		<td><%= team.num_games -%></td>
-		<td><%= team.wins -%></td>
-		<td><%= team.losses -%></td>
-		<td><%= fmt(team.win_pct) -%></td>
+		<th colspan="2"><%= bracket.nil? ? "Overall Standings" : bracket.name -%></th>
+		<th class="number">W</th>
+		<th class="number">L</th>
+		<th class="number">Pct</th>
+		<th class="number">PF</th>
+		<th class="number">(per game)</th>
+		<th class="number">PA</th>
+		<th class="number">(per game)</th>
+		<th class="number">PP20H</th>
+		<th class="number">P/Bonus</th>
 	</tr>
+	<% for team in @teams[bracket] -%>
+	<tr class="<%= cycle('row1','row2') %>">
+		<% count += 1 -%>
+		<td class="number"><%= count -%></td>
+		<td class="teamname"><%= link_to team.name,:action => 'team',:id => team.id %></td>
+		<td class="number"><%= team.wins(bracket) %></td>
+		<td class="number"><%= team.losses(bracket) %></td>
+		<td class="number"><%= fmt(team.win_pct(bracket)) %></td>
+		<td class="number"><%= team.pf(bracket) %></td>
+		<td class="number"><%= fmt(team.pf_per(bracket)) %></td>
+		<td class="number"><%= team.pa(bracket) %></td>
+		<td class="number"><%= fmt(team.pa_per(bracket)) %></td>
+		<td class="number"><%= fmt(team.pp20(bracket)) %></td>
+		<td class="number"><%= fmt(team.ppbonus(bracket)) %></td>
+	</tr>
+	<% end -%>
+</table>
 <% end -%>
