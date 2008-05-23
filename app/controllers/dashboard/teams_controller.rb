@@ -8,6 +8,11 @@ class Dashboard::TeamsController < DashboardController
   
   def add_school
     school = School.find_or_create_by_name(params[:school_name])
+    school.city = params[:school_city]
+    unless (params[:small_school].nil?)
+      school.small = true
+    end
+    school.save
     flash[:notice] = "#{school.name} created."
     redirect_to :action => "index"
   end
