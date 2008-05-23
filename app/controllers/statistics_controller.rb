@@ -21,7 +21,7 @@ class StatisticsController < ApplicationController
   end
   
   def scoreboard
-  	@rounds = Round.find(:all, :order => 'number desc')
+  	@rounds = Round.find(:all, :order => 'number desc', :include => {:games => [:team_games, :room]})
   end
   
   def sort_teams(a,b,bracket)
