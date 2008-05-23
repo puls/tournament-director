@@ -13,8 +13,10 @@ class Dashboard::EntryController < DashboardController
     @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id])
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
-    @teams_for_round = @incomplete_games.collect {|g| g.team_games.collect {|tg| tg.team}}.flatten.sort_by {|t| t.name}
-    @rooms_for_round = @incomplete_games.collect {|g| g.room }
+    debugger
+
+    @teams_for_round = @incomplete_games.collect {|g| g.team_games}.flatten.collect {|tg| ["#{tg.team.name} (#{tg.card})", tg.team.id]}.sort_by {|array| array.first}
+    @rooms_for_round = @incomplete_games.collect {|g| g.room}.sort_by {|r| r.name.to_i || r.name}
   end
   
   def entry_for_round
@@ -119,7 +121,7 @@ class Dashboard::EntryController < DashboardController
       next_tg2.save
     end
     
-    if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != ?)", round.id, true]))
+    if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != ?)", round.id, true]) == 0)
       round.play_complete = true
       round.save
     end

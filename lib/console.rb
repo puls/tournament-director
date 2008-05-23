@@ -59,6 +59,8 @@ def load_players(filename)
       next
     end
     
+    college = "" if college.nil?
+    
     year_number = nil
     case year
     when "Fr."
@@ -72,5 +74,15 @@ def load_players(filename)
     end
     
     team.players.create(:name => playername.strip, :future_school => college.strip, :year => year_number)
+  end
+end
+
+def load_staff(filename)
+  file = File.new(filename)
+  file.each do |line|
+    (name, staff1, staff2) = line.split("\t")
+    room = Room.find_by_name(name)
+    room.staff = "#{staff1}, #{staff2}"
+    room.save
   end
 end
