@@ -1,7 +1,7 @@
 <% @rounds.each do |round| -%>
 <% next if round.games.empty? -%>
-<div>
-<h1>Round <%= round.number -%> Scores</h1>
+<div class="roundscores">
+<h2>Round <%= round.number -%> Scores</h2>
 <% games = @tournament.bracketed? ? round.games.sort{|a,b| a.bracket.ordering <=> b.bracket.ordering} : round.games -%>
 <% for game in games -%>
 	<table>
@@ -10,14 +10,16 @@
 			<th colspan="2"><%= game.bracket.name -%>
 		</tr>
 		<% end -%>
-		<tr>
-			<td><%= game.team_games[0].team.name -%></td>
-			<td><%= game.team_games[0].points -%></td>
+		<% for team_game in game.team_games %>
+		<tr class="<%= cycle("row1", "row2") %>">
+		    <%  if team_game.team.nil? %>
+		    <td colspan="2">Holder of card <b><%= team_game.card %></b></td>
+		    <% else %>
+			<td><%= team_game.team.name -%> (card <%= team_game.card %>)</td>
+			<td><%= team_game.points -%></td>
+			<% end %>
 		</tr>
-		<tr>
-			<td><%= game.team_games[1].team.name -%></td>
-			<td><%= game.team_games[1].points -%></td>	
-		</tr>
+        <% end %>
 	</table>
 <% end -%>
 	<p style="clear: both;"></p>
