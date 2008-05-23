@@ -138,7 +138,7 @@ function autocompletePower(firstBox,evt)
 {
 	if (!validNumber(firstBox,evt))
 		return false;
-	if (firstBox.value != '<%= '0' * (@types.length - 1) %>')
+	if (firstBox.value != '<%= '0' * (@types.length == 0 ? 0 : @types.length - 1) %>')
 		return true;
 	evt = (evt) ? evt : ((window.event) ? window.event : null);
 	inputChar = String.fromCharCode(evt.charCode);
