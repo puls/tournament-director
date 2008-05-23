@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  include Cacheable
+
   belongs_to :school
   
   after_destroy :destroy_games
@@ -13,36 +15,21 @@ class Team < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :school_id
   
-  serialize :stats_cache
   
-  def after_initialize
-	  @stats = {}
+  def wins(bracket = nil)
+	if bracket.nil?
+		team_games.clone.select{|g| g.won?}.length
+	else
+		team_games.clone.select{|g| g.game.bracket == bracket and g.won?}.length
+	end		
   end
   
-  def wins(bracket = nil, reload = false)
-	start_bracket(bracket)
-	if reload or @stats[bracket.nil? ? :all : bracket.id][:wins].nil?
-		if bracket.nil?
-			@stats[:all][:wins] = team_games.clone.select{|g| g.won?}.length
-		else
-			@stats[bracket.id][:wins] = team_games.clone.select{|g| g.game.bracket == bracket and g.won?}.length
-		end
+  def losses(bracket = nil)
+	if bracket.nil?
+		team_games.clone.select{|g| not g.won?}.length
+	else
+		team_games.clone.select{|g| g.game.bracket == bracket and not g.won?}.length
 	end
-	
-	@stats[bracket.nil? ? :all : bracket.id][:wins]
-  end
-  
-  def losses(bracket = nil, reload = false)
-	start_bracket(bracket)
-	if reload or @stats[bracket.nil? ? :all : bracket.id][:losses].nil?		
-		if bracket.nil?
-			@stats[:all][:losses] = team_games.clone.select{|g| not g.won?}.length
-		else
-			@stats[bracket.id][:losses] = team_games.clone.select{|g| g.game.bracket == bracket and not g.won?}.length
-		end
-	end
-	
-	@stats[bracket.nil? ? :all : bracket.id][:losses]
   end
   
   def num_games(bracket = nil)
@@ -64,29 +51,19 @@ class Team < ActiveRecord::Base
   end
   
   def pf(bracket = nil, reload = false)
-	start_bracket(bracket)
-  	if reload or @stats[bracket.nil? ? :all : bracket.id][:pf].nil?
-  		if bracket.nil?
-  			@stats[:all][:pf] = team_games.clone.collect{|g| g.points}.sum
-  		else
-  			@stats[bracket.id][:pf] = team_games.clone.select{|g| g.game.bracket == bracket}.collect{|g| g.points}.sum
-  		end
-  	end
-  	
-  	@stats[bracket.nil? ? :all : bracket.id][:pf]
+	if bracket.nil?
+		team_games.clone.collect{|g| g.points}.sum
+	else
+		team_games.clone.select{|g| g.game.bracket == bracket}.collect{|g| g.points}.sum
+	end
   end
   
   def tuh(bracket = nil, reload = false)
-	start_bracket(bracket)
-  	if reload or @stats[bracket.nil? ? :all : bracket.id][:tuh].nil?
-  		if bracket.nil?
-  			@stats[:all][:tuh] = team_games.clone.collect{|g| g.game.tossups}.sum
-  		else
-  			@stats[bracket.id][:tuh] = team_games.clone.select{|g| g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum
-  		end
-  	end
-  	
-  	@stats[bracket.nil? ? :all : bracket.id][:tuh]
+	if bracket.nil?
+		team_games.clone.collect{|g| g.game.tossups}.sum
+	else
+		team_games.clone.select{|g| g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum
+	end
   end
   
   def pf_per(bracket = nil)
@@ -98,16 +75,11 @@ class Team < ActiveRecord::Base
   end
   
   def pa(bracket = nil, reload = false)
-	start_bracket(bracket)
-  	if reload or @stats[bracket.nil? ? :all : bracket.id][:pa].nil?
-  		if bracket.nil?
-  			@stats[:all][:pa] = team_games.clone.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum
-  		else
-  			@stats[bracket.id][:pa] = team_games.clone.select{|tg| tg.game.bracket == bracket}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum
-  		end
-  	end
-  	
-  	@stats[bracket.nil? ? :all : bracket.id][:pa]
+	if bracket.nil?
+		team_games.clone.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum
+	else
+		team_games.clone.select{|tg| tg.game.bracket == bracket}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum
+	end
   end
   
   def pa_per(bracket = nil)
@@ -127,29 +99,19 @@ class Team < ActiveRecord::Base
   end
   
   def bp(bracket = nil, reload = false)
-	start_bracket(bracket)
-	if reload or @stats[bracket.nil? ? :all : bracket.id][:bp].nil?
-		if bracket.nil?
-			@stats[:all][:bp] = team_games.select{|tg| tg.game.entry_complete?}.collect{|tg| tg.bonus_points}.sum
-		else
-			@stats[bracket.id][:bp] = team_games.select{|tg| tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.bonus_points}.sum
-		end
-	end  	
-	
-	@stats[bracket.nil? ? :all : bracket.id][:bp]
+	if bracket.nil?
+		team_games.select{|tg| tg.game.entry_complete?}.collect{|tg| tg.bonus_points}.sum
+	else
+		team_games.select{|tg| tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.bonus_points}.sum
+	end
   end
   
   def tu_correct(bracket = nil, reload = false)
-	start_bracket(bracket)
-  	if reload or @stats[bracket.nil? ? :all : bracket.id][:tu_correct].nil?
-  		if bracket.nil?
-  			@stats[:all][:tu_correct] = team_games.select{|tg| tg.game.entry_complete?}.collect{|tg| tg.tossups_correct}.sum
-  		else
-  			@stats[bracket.id][:tu_correct] = team_games.select{|tg| tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.tossups_correct}.sum
-  		end
-  	end
-  	
-  	@stats[bracket.nil? ? :all : bracket.id][:tu_correct]
+	if bracket.nil?
+		team_games.select{|tg| tg.game.entry_complete?}.collect{|tg| tg.tossups_correct}.sum
+	else
+		team_games.select{|tg| tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.tossups_correct}.sum
+	end
   end
   
   def ppbonus(bracket = nil)
@@ -166,11 +128,48 @@ class Team < ActiveRecord::Base
   	end  	
   end
   
-  protected
-  def start_bracket(bracket)
-  	if @stats[bracket.nil? ? :all : bracket.id].nil?
-  		@stats[bracket.nil? ? :all : bracket.id] = {}
+  def reset_all_stats
+  	self.stats_cache = {}
+  	Bracket.find(:all).push(nil).each do |bracket|
+	  	wins(bracket)
+  		losses(bracket)
+	  	pf(bracket)
+  		pa(bracket)
+	  	bp(bracket)
+  		tu_correct(bracket)
   	end
   end
+  
+  def reset_game_stats
+  	Bracket.find(:all).push(nil).each do |bracket|
+  		wins(bracket, true)
+  		losses(bracket, true)
+  		pf(bracket, true)
+  		pa(bracket, true)
+  	end
+  end
+  
+  def reset_indiv_stats
+  	Bracket.find(:all).push(nil).each do |bracket|
+  		bp(bracket, true)
+  		tu_correct(bracket, true)
+  	end
+  end
+  
+  def start_bracket(bracket)
+  	if not (stats_cache.is_a? Hash)
+  		self.stats_cache = {}
+  		save
+  	end
+  	
+  	if stats_cache[bracket.nil? ? :all : bracket.id].nil?
+  		stats_cache[bracket.nil? ? :all : bracket.id] = {}
+  		save
+  	end
+  end
+
+  serializes_results_in :stats_cache
+  serializes_result_of :wins, :losses, :pf, :pa, :bp, :tu_correct
+  caches_result_of :num_games, :win_pct, :pf_per, :pa_per, :pp20, :ppbonus
 
 end

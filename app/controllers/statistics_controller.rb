@@ -8,15 +8,14 @@ class StatisticsController < ApplicationController
   end
   
   def standings
-  	@allteams = Team.find(:all)
-    	@allteams.sort!{|a,b| (b.win_pct <=> a.win_pct) == 0 ? b.wins <=> a.wins : b.win_pct <=> a.win_pct}
+  	@brackets = Bracket.find(:all, :include => {:games => {:teams => :team_games}}).push nil
+  	@allteams = Team.find(:all, :include => {:team_games => {:game => [:teams, :team_games]}})
+	@allteams.sort!{|a,b| sort_teams(a,b,nil)}
     	@max_round = Round.maximum('number')
-    	@brackets = Bracket.find(:all).push nil
     	
     	@teams = {}
     	@brackets.each do |bracket|
-	    	@teams[bracket] = bracket.nil? ? Team.find(:all) : bracket.teams
-	    	@teams[bracket].sort!{|a,b| sort_teams(a,b,bracket)}
+	    	@teams[bracket] = bracket.teams.sort{|a,b| sort_teams(a,b,bracket)} unless bracket.nil?
 	end
   end
   
@@ -35,6 +34,18 @@ class StatisticsController < ApplicationController
 	      @byes[round.id] << team.name unless round_ids.include?(round.id)
       end
     end
+  end
+  
+  def team
+  	begin
+  		@team = Team.find(params[:id], :include => [:games, {:players => :player_games}])
+  	rescue ActiveRecord::RecordNotFound
+  		
+  	end
+  end
+  
+  def personal
+  
   end
   
   def sort_teams(a,b,bracket)

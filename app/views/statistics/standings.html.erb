@@ -14,7 +14,7 @@
 		<th class="number">PP20H</th>
 		<th class="number">P/Bonus</th>
 	</tr>
-	<% for team in @teams[bracket] -%>
+	<% for team in (bracket.nil? ? @allteams : @teams[bracket]) -%>
 	<tr class="<%= cycle('row1','row2') %>">
 		<% count += 1 -%>
 		<td class="number"><%= count -%></td>

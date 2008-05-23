@@ -1,6 +1,8 @@
 class Player < ActiveRecord::Base
+  include Cacheable
+
   belongs_to :team, :include => :school
-  has_many :player_games, :dependent => :nullify
+  has_many :player_games, :dependent => :nullify, :include => :stat_lines
   has_many :stat_lines, :through => :player_games
   has_many :team_games, :through => :player_games
   
