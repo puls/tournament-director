@@ -1,5 +1,5 @@
 <tr>
-    <td><%= text_field_tag "room_names[]", room.nil? ? "" : room.name, {:size => 5} %></td>
+    <td><%= text_field_tag "room_names[]", room.nil? ? "" : room.name, {:size => 10} %></td>
     <td><%= text_field_tag "room_staffs[]", room.nil? ? "" : room.staff, {:size => 40} %></td>
     <td><%= link_to_function('remove', nil, {:class => 'button'}) { |page| page << "Element.remove(this.parentNode.parentNode)" } %></td>
 </tr>

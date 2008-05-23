@@ -151,7 +151,7 @@ class Dashboard::EntryController < DashboardController
     redirect_to :action => 'index'
   end
 
-  def enter_indivs
+  def enter_players
     begin
       @game = Game.find(params[:id])
     rescue ActiveRecord::RecordNotFound
