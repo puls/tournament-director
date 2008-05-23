@@ -54,7 +54,8 @@ class Initial < ActiveRecord::Migration
     create_table :team_games do |t|
       t.references :team, :game
       t.integer :card
-      t.integer :points, :tossups_correct, :tossup_points, :bonus_points
+      t.integer :points, :tossups_correct, :tossup_points, :bonus_points, :ordering
+      t.boolean :won
     end
     
     create_table :teams do |t|

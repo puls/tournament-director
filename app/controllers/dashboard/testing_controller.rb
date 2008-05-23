@@ -72,7 +72,7 @@ class Dashboard::TestingController < DashboardController
 			Game.destroy_all
 			for i in 1..11 # rounds
 				teams2 = Team.find(:all).clone
-				cards2 = Card.find(:all).clone
+				cards2 = cards.clone
 				for j in 1..75 # games
 					game = rounds[i-1].games.create(:bracket => brackets[j % 2], :room => rooms[j-1], :tossups => 18 + rand(8), :play_complete => true)
 					card1 = cards2[rand(cards2.size)]
@@ -83,8 +83,8 @@ class Dashboard::TestingController < DashboardController
 					teams2.delete(team1)
 					team2 = Team.find(teams2[rand(teams2.size)].id)
 					teams2.delete(team2)
-					game.team_games.create(:card => card1, :team => team1, :points => 400, :ordering => 1, :won => true)
-					game.team_games.create(:card => card2, :team => team2, :points => 300, :ordering => 2, :won => false)
+					game.team_games.create(:card => card1, :team => team1, :points => 300, :ordering => 1, :won => false)
+					game.team_games.create(:card => card2, :team => team2, :points => 400, :ordering => 2, :won => true)
 				end
 			end
 			

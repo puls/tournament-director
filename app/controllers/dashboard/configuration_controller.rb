@@ -1,7 +1,7 @@
 class Dashboard::ConfigurationController < DashboardController
 
   before_filter :check_configuration, :except => ["new_tournament", "create_tournament"]
-  before_filter :check_teams, :except => ["new_tournament", "edit_tournament", "create_tournament", "save_tournament", "edit_teams", "save_teams"]
+  before_filter :check_teams, :except => ["new_tournament", "edit_tournament", "create_tournament", "save_tournament", "edit_teams", "save_teams", "edit_schools", "save_schools"]
 
   def index
     redirect_to :action => "edit_tournament"

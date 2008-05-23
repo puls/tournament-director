@@ -70,7 +70,7 @@
 <h1>Finish stats for a game</h1>
 
 <% @rounds_to_enter.each do |round| -%>
-<% games = round.games.find(:all, :conditions => ['play_complete = ? AND (entry_complete IS NULL OR entry_complete != ?) AND (ignore_indivs IS NULL OR ignore_indivs != ?)', 't','t','t']) -%>
+<% games = round.games.find(:all, :conditions => ['play_complete = ? AND (entry_complete IS NULL OR entry_complete != ?) AND (ignore_indivs IS NULL OR ignore_indivs != ?)', true, true, true]) -%>
 <% if not games.empty? -%>
 <strong>Round <%= round.number -%></strong>
 <ul>
@@ -78,7 +78,7 @@
 	tg1 = game.team_games[0]
 	tg2 = game.team_games[1] -%>
 	<li>
-	<%= link_to "#{tg1.team.name} #{tg1.points}#{" (#{tg1.card.nil? ? "--" : tg1.card.number})" if @tournament.swiss} vs. #{tg2.team.name} #{tg2.points}#{" (#{tg2.card.nil? ? "--" : tg2.card.number})" if @tournament.swiss} in #{game.tossups} tossups [#{(tg1.points > tg2.points) ? "W" : "L" }#{" OT" if game.overtime}#{" forfeit" if game.forfeit}#{", #{game.bracket.name}" if @tournament.bracketed}#{", #{game.room.name}" if @tournament.tracks_rooms}]", {:action => 'enter_indivs', :id => game.id} -%> (<%= link_to "ignore", :action => 'ignore_indivs', :id => game.id -%>)
+	<%= link_to "#{tg1.team.name} #{tg1.points}#{" (#{tg1.card.nil? ? "--" : tg1.card})" if @tournament.swiss} vs. #{tg2.team.name} #{tg2.points}#{" (#{tg2.card.nil? ? "--" : tg2.card})" if @tournament.swiss} in #{game.tossups} tossups [#{(tg1.points > tg2.points) ? "W" : "L" }#{" OT" if game.overtime}#{" forfeit" if game.forfeit}#{", #{game.bracket.name}" if @tournament.bracketed}#{", #{game.room.name}" if @tournament.tracks_rooms}]", {:action => 'enter_indivs', :id => game.id} -%> (<%= link_to "ignore", :action => 'ignore_indivs', :id => game.id -%>)
 	</li>
 <% end -%>
 </ul>
