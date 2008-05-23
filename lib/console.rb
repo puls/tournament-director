@@ -48,3 +48,29 @@ def load_assignments(filename, for_round = 1)
     tg.save
   end
 end
+
+def load_players(filename)
+  file = File.new(filename)
+  file.each do |line|
+    (badname, number, goodname, number2, playername, year, age, college, wearing) = line.split("\t")
+    team = Team.find_by_name(goodname.strip)
+    if (team.nil?)
+      puts "Skipping #{playername} on #{badname}"
+      next
+    end
+    
+    year_number = nil
+    case year
+    when "Fr."
+      year_number = 9
+    when "So."
+      year_number = 10
+    when "Jr."
+      year_number = 11
+    when "Sr."
+      year_number = 12
+    end
+    
+    team.players.create(:name => playername.strip, :future_school => college.strip, :year => year_number)
+  end
+end

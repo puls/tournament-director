@@ -6,7 +6,7 @@
     <%= javascript_include_tag :defaults %>
     <%= stylesheet_link_tag "dashboard" %>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title><%= (@page_title.nil?) ? "Tournament Director" : @page_title %></title>
+	<title><%= @page_title.nil? ? "Tournament Director" : @page_title %></title>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
     <div style="position: absolute; left: 400px; top: 13px;"><%= $tournament.name unless $tournament.nil? %></div>
 	<%= link_to "Game Entry", :controller => "/dashboard/entry" %>
 	<%= link_to "Game Edits", :controller => "dashboard/entry", :action => "status" -%>
-	<%= link_to "Team Entry", :controller => "/dashboard/configuration", :action => "edit_teams" %>
+	<%= link_to "Team Entry", :controller => "/dashboard/teams" %>
 	<%= link_to "Scheduling", :controller => "/dashboard/scheduling" %>
 	<%= link_to "Configuration", :controller => "/dashboard/configuration", :action => "edit_tournament" %>
 </div>

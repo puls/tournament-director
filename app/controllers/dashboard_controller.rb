@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
   
   def check_teams
     unless Team.count > 0
-      redirect_to :controller => "/dashboard/configuration", :action => "edit_teams"
+      redirect_to :controller => "/dashboard/teams"
       return false
     end
   end
