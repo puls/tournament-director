@@ -21,7 +21,20 @@ class StatisticsController < ApplicationController
   end
   
   def scoreboard
-  	@rounds = Round.find(:all, :order => 'number desc', :include => {:games => [:team_games, :room]})
+  	@rounds = Round.find(:all, :order => 'number', :include => {:games => [{:team_games => :team}, :room]})
+  	teams = Team.find(:all, :order => 'name', :include => {:games => :round})
+  	@byes = Hash.new
+  	
+  	@rounds.each do |round|
+  	  @byes[round.id] = Array.new
+	  end
+	  
+	  teams.each do |team|
+	    round_ids = team.games.collect{|g| g.round.id}
+	    @rounds.each do |round|
+	      @byes[round.id] << team.name unless round_ids.include?(round.id)
+      end
+    end
   end
   
   def sort_teams(a,b,bracket)

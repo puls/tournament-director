@@ -20,8 +20,21 @@
 			<% end %>
 		</tr>
         <% end %>
+        <tr class="row3">
+            <td colspan="2">
+                Room: <%= game.room.name %>
+            </td>
+        </tr>
 	</table>
 <% end -%>
-	<p style="clear: both;"></p>
+<h2 style="clear: both;">Byes</h2>
+<% for bye in @byes[round.id] %>
+<table>
+<tr class="<%= cycle("row1", "row2") %>">
+    <td><%= bye %></td>
+</tr>
+</table>
+<% end -%>
+<p style="clear: both;"></p>
 </div>
 <% end -%>
