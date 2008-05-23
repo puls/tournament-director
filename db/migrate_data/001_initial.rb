@@ -23,6 +23,7 @@ class Initial < ActiveRecord::Migration
       t.string :future_school
       t.integer :year
       t.integer :qpin
+      t.text :stats_cache
     end
     
     create_table :question_types do |t|
@@ -61,6 +62,7 @@ class Initial < ActiveRecord::Migration
     create_table :teams do |t|
       t.references :school
       t.string :name
+      t.text :stats_cache
     end
   end
 

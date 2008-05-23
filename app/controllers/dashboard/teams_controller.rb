@@ -8,11 +8,7 @@ class Dashboard::TeamsController < DashboardController
   
   def add_school
     school = School.find_or_create_by_name(params[:school_name])
-    school.city = params[:school_city]
-    unless (params[:small_school].nil?)
-      school.small = true
-    end
-    school.save
+    school.update_attributes(:city => params[:school_city], :small => params[:school_small])
     flash[:notice] = "#{school.name} created."
     redirect_to :action => "index"
   end
@@ -46,6 +42,5 @@ class Dashboard::TeamsController < DashboardController
     flash[:notice] = "Players for #{school.name} saved."
     redirect_to :action => "index"
   end
-  
   
 end
