@@ -10,7 +10,7 @@
 			<th colspan="2"><%= game.bracket.name -%>
 		</tr>
 		<% end -%>
-		<% for team_game in game.team_games.sort_by {|tg| -(tg.points || 0)} %>
+		<% for team_game in game.team_games %>
 		<tr class="<%= cycle("row1", "row2") %>">
 		    <%  if team_game.team.nil? %>
 		    <td colspan="2">Holder of card <b><%= team_game.card %></b></td>
