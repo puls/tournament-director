@@ -3,7 +3,7 @@
     <% for team in @school.teams.sort_by {|t| t.name} %>
     <h2><%= team.name %></h2>
     <%= link_to_function('add', nil, {:class => 'button'}) { |page|
-        page.insert_html :bottom, "tbody#{team.id}", :partial => "playerline", :locals => {:team => team}
+        page.insert_html :bottom, "tbody#{team.id}", :partial => "player", :locals => {:team => team}
     } %>
     <table class="horizontal">
         <thead>
@@ -11,16 +11,15 @@
                 <th>Name</th>
                 <th>Year</th>
                 <th>Future College</th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="tbody<%= team.id %>">
-        <% for player in team.players.sort_by {|p| p.name} %>
-        <%= render :partial => "playerline", :locals => {:team => team, :player => player} %>
-        <% end %>
+        <%= render :partial => "player", :collection => team.players.sort_by{|p| p.name}, :locals => {:team => team} %>
         </tbody>
     </table>
     <%= link_to_function('add', nil, {:class => 'button'}) { |page|
-        page.insert_html :bottom, "tbody#{team.id}", :partial => "playerline", :locals => {:team => team}
+        page.insert_html :bottom, "tbody#{team.id}", :partial => "player", :locals => {:team => team}
     } %>
     <% end %>
     <%= submit_tag "Save" %>
