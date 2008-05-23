@@ -70,11 +70,10 @@
 <h1>Finish stats for a game</h1>
 
 <% @rounds_to_enter.each do |round| -%>
-<% games = round.games.find(:all, :conditions => ['play_complete = ? AND (entry_complete IS NULL OR entry_complete != ?) AND (ignore_indivs IS NULL OR ignore_indivs != ?)', true, true, true]) -%>
-<% if not games.empty? -%>
+<% if not round.games.empty? -%>
 <strong>Round <%= round.number -%></strong>
 <ul>
-<% games.each do |game|
+<% round.games.each do |game|
 	tg1 = game.team_games[0]
 	tg2 = game.team_games[1] -%>
 	<li>
