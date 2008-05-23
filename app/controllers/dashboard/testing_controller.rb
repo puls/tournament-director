@@ -20,11 +20,9 @@ class Dashboard::TestingController < DashboardController
 			
 			# Create Cards
 			@tournament.swiss = true
-			Card.destroy_all
 			cards = []
 			for i in 1..150
-				cards[i-1] = Card.new(:number => i)
-				cards[i-1].save
+				cards[i-1] = i
 			end
 			
 			# Create Rooms
@@ -77,9 +75,9 @@ class Dashboard::TestingController < DashboardController
 				cards2 = Card.find(:all).clone
 				for j in 1..75 # games
 					game = rounds[i-1].games.create(:bracket => brackets[j % 2], :room => rooms[j-1], :tossups => 18 + rand(8), :play_complete => true)
-					card1 = Card.find(cards2[rand(cards2.size)].id)
+					card1 = cards2[rand(cards2.size)]
 					cards2.delete(card1)
-					card2 = Card.find(cards2[rand(cards2.size)].id)
+					card2 = cards2[rand(cards2.size)]
 					cards2.delete(card2)
 					team1 = Team.find(teams2[rand(teams2.size)].id)
 					teams2.delete(team1)
