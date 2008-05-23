@@ -13,6 +13,8 @@ class Team < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :school_id
   
+  serialize :stats_cache
+  
   def after_initialize
 	  @stats = {}
   end

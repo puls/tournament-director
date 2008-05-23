@@ -26,6 +26,14 @@
         <td><%= text_field_tag "school_name", "", :size => 50 %></td>
     </tr>
     <tr>
+    	<th>City:</th>
+    	<td><%= text_field_tag "school_city","", :size => 50 -%></td>
+    </tr>
+    <tr>
+    	<th>Small School:</th>
+    	<td><%= check_box_tag "school_small","1" -%> this is a small school</td>
+    </tr>
+    <tr>
         <td class="submit" colspan="2">
         	<%= submit_tag "Add" %>
         </td>
