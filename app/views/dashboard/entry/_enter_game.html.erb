@@ -52,9 +52,9 @@
 </table>
 <%= hidden_field_tag "id" %>
 <% javascript_tag do -%>
-    var opposite_team = new Array();
-    var room_for_team = new Array();
-    var game_for_team = new Array();
+    var opposite_team = new Array()
+    var room_for_team = new Array()
+    var game_for_team = new Array()
     <% for game in @incomplete_games %>
     <%= "opposite_team[#{game.team_games[0].team.id}] = #{game.team_games[1].team.id}" %>
     <%= "opposite_team[#{game.team_games[1].team.id}] = #{game.team_games[0].team.id}" %>

@@ -1,12 +1,13 @@
 class Dashboard::EntryController < DashboardController
 
   before_filter :check_configuration
+  before_filter :check_teams
 
   def index
     if params['round']
       @round = Round.find_by_number(params['round'])
     else
-      @round = Round.find(:first, :order => 'number', :conditions => "entry_complete is null or entry_complete != 1")
+      @round = Round.find(:first, :order => 'number', :conditions => "play_complete is null or play_complete != 1")
     end
     
     @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != 1) and round_id = ?", @round.id])
@@ -116,6 +117,11 @@ class Dashboard::EntryController < DashboardController
         :order => "rounds.number")
       next_tg2.team = tg1.won ? tg2.team : tg1.team
       next_tg2.save
+    end
+    
+    if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != 1)", round.id]))
+      round.play_complete = true
+      round.save
     end
 
     expire_page :controller => 'statistics', :action => 'standings'

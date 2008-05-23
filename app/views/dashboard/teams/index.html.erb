@@ -1,0 +1,66 @@
+<h1>Edit teams</h1>
+<table class="horizontal">
+<% for school in @schools %>
+<tr>
+    <th colspan="2"><%= school.name %> (<%= school.city %>) <%= link_to "Edit Players", {:action => "players", :id => school}, {:class => "button"} %></th>
+</tr>
+    <% for team in school.teams.sort_by {|t| t.name} %>
+    <tr>
+        <td rowspan="<%= team.players.size + 1 %>"><%= team.name %></td>
+        <td></td>
+    </tr>
+        <% for player in team.players.sort_by {|p| p.name} %>
+        <tr>
+            <td><%= player.name %></td>
+        </tr>
+        <% end %>
+    <% end%>
+<% end %>
+</table>
+
+<h1>Add school</h1>
+<% form_tag :action => "add_school" do -%>
+<table>
+    <tr>
+        <th>Name:</th>
+        <td><%= text_field_tag "school_name", "", :size => 50 %></td>
+    </tr>
+    <tr>
+        <td class="submit" colspan="2">
+        	<%= submit_tag "Add" %>
+        </td>
+    </tr>
+</table>
+<% end %>
+
+<h1>Add team to school</h1>
+<% form_tag :action => "add_team" do -%>
+<table>
+    <tr>
+        <th>School:</th>
+        <td><%= select_tag "school_id", options_from_collection_for_select(@schools, "id", "name"), {:onchange => "school_changed()"} %></td>
+    </tr>
+    <tr>
+        <th>Name:</th>
+        <td><%= text_field_tag "team_name", "", :size => 50 %></td>
+    </tr>
+    <tr>
+        <td class="submit" colspan="2">
+        	<%= submit_tag "Add" %>
+        </td>
+    </tr>
+</table>
+<% end %>
+
+<% javascript_tag do -%>
+var next_letter = new Array()
+<% for school in @schools %>
+<%= "next_letter[#{school.id}] = '#{("A".."Z").to_a[school.teams.size]}'" -%>
+<% end %>
+function school_changed() {
+    var option = $('school_id').options[$('school_id').selectedIndex]
+    var name = option.text
+    $('team_name').value = name + " " + next_letter[option.value]
+}
+school_changed()
+<% end %>
