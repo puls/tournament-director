@@ -1,11 +1,11 @@
-<% @rounds.each do |round| -%>
+<% for round in @rounds -%>
 <% next if round.games.empty? -%>
 <div class="roundscores">
 <h2>Round <%= round.number -%> Scores</h2>
-<% games = @tournament.bracketed? ? round.games.sort{|a,b| a.bracket.ordering <=> b.bracket.ordering} : round.games -%>
+<% games = $tournament.bracketed? ? round.games.sort{|a,b| a.bracket.ordering <=> b.bracket.ordering} : round.games -%>
 <% for game in games -%>
 	<table>
-		<% if @tournament.bracketed? -%>
+		<% if $tournament.bracketed? -%>
 		<tr>
 			<th colspan="2"><%= game.bracket.name -%>
 		</tr>

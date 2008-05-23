@@ -9,13 +9,13 @@ class Dashboard::ConfigurationController < DashboardController
   
   def get_players
   	@team = Team.find(params[:id])
-  	render :partial => 'players', :locals => {:thing => @team, :players => (@team.players.empty?) ? [Player.new, Player.new, Player.new, Player.new] : @team.players.sort{|a,b| a.name <=> b.name}, :years => @tournament.includes_years}
+  	render :partial => 'players', :locals => {:thing => @team, :players => (@team.players.empty?) ? [Player.new, Player.new, Player.new, Player.new] : @team.players.sort{|a,b| a.name <=> b.name}, :years => $tournament.includes_years}
   end
 
   def load_tournament
     session[:tournament_id] = params['id']
-    @tournament = Tournament.find(params['id'])
-    load_tournament_database(@tournament)
+    $tournament = Tournament.find(params['id'])
+    load_tournament_database($tournament)
     redirect_to :action => "edit_tournament"
   end
 
@@ -24,9 +24,9 @@ class Dashboard::ConfigurationController < DashboardController
   end
   
   def create_tournament
-    @tournament = Tournament.create(:name => params['name'], :database => params['database'])
-    session[:tournament_id] = @tournament.id
-    load_tournament_database(@tournament)
+    $tournament = Tournament.create(:name => params['name'], :database => params['database'])
+    session[:tournament_id] = $tournament.id
+    load_tournament_database($tournament)
     redirect_to :action => "edit_tournament"
   end
 
@@ -37,14 +37,15 @@ class Dashboard::ConfigurationController < DashboardController
     if @rooms.empty? then @rooms = [Room.new, Room.new] end
     
     @all_tournaments = Tournament.find(:all, :order => "id desc")
-    @all_tournaments.delete(@tournament)
+    @all_tournaments.delete($tournament)
+    @tournament = $tournament
   end
   
   def save_tournament
-    @tournament.update_attributes(params['tournament'])
-    QuestionType.configure_for_power(@tournament.powers)
-    @tournament.bracketed = false if (params['bracket_names'].nil?)
-    if @tournament.bracketed?
+    $tournament.update_attributes(params['tournament'])
+    QuestionType.configure_for_power($tournament.powers)
+    $tournament.bracketed = false if (params['bracket_names'].nil?)
+    if $tournament.bracketed?
       brackets_to_delete = Bracket.find(:all)
       for name in params['bracket_names']
         next if name.empty?
@@ -53,9 +54,9 @@ class Dashboard::ConfigurationController < DashboardController
       end
       brackets_to_delete.each {|b| b.destroy}
     end
-    @tournament.bracketed = false if Bracket.count == 0
+    $tournament.bracketed = false if Bracket.count == 0
     
-    @tournament.save
+    $tournament.save
     flash[:notice] = "Changes saved."
     redirect_to :action => "edit_tournament"
   end
@@ -83,7 +84,7 @@ class Dashboard::ConfigurationController < DashboardController
   end
   
   def edit_teams
-    if @tournament.nil?
+    if $tournament.nil?
       redirect_to :action => 'edit_tournaments'
     end
     
@@ -130,7 +131,7 @@ class Dashboard::ConfigurationController < DashboardController
   		name = params[:player_names][i]
 		next if name.nil? or name.empty?
 		player = team.players.find(:first, :conditions => ['name = ?', name]) || team.players.build(:name => name)
-		player.year = params[:player_years][i] unless not @tournament.includes_years
+		player.year = params[:player_years][i] unless not $tournament.includes_years
 		player.future_school = params[:player_schools][i]
 		player.save
 		players_to_delete.delete(player)

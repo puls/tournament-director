@@ -10,7 +10,7 @@ class Dashboard::TestingController < DashboardController
 	
 		if params[:sure]
 			# Create Brackets
-			@tournament.bracketed = true
+			$tournament.bracketed = true
 			Bracket.destroy_all
 			brackets = []
 			for i in 1..2
@@ -19,14 +19,14 @@ class Dashboard::TestingController < DashboardController
 			end
 			
 			# Create Cards
-			@tournament.swiss = true
+			$tournament.swiss = true
 			cards = []
 			for i in 1..150
 				cards[i-1] = i
 			end
 			
 			# Create Rooms
-			@tournament.tracks_rooms = true
+			$tournament.tracks_rooms = true
 			Room.destroy_all
 			rooms = []
 			for i in 1..75
@@ -34,7 +34,7 @@ class Dashboard::TestingController < DashboardController
 				rooms[i-1].save
 			end
 			
-			@tournament.save
+			$tournament.save
 		
 			# Create Schools
 			School.destroy_all

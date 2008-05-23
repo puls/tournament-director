@@ -9,6 +9,24 @@ class Game < ActiveRecord::Base
   validates_presence_of :round
   validates_numericality_of :tossups, :only_integer => true, :allow_nil => true
 
+  def description
+    tg0 = team_games[0]
+    tg1 = team_games[1]
+    result = "Round #{round.number}: "
+    result << tg0.team.name
+    result << " (card #{tg0.card})" if $tournament.swiss?
+    result << " <b>#{tg0.points}</b>"
+
+    result << " &ndash; "
+
+    result << tg1.team.name
+    result << " (card #{tg1.card})" if $tournament.swiss?
+    result << " <b>#{tg1.points}</b>"
+    
+    result
+  end
+  
+
 #  def team_game_for(team)
 #  	self.team_games.find(:first, :conditions => {:team_id => team.id})
 #  end
