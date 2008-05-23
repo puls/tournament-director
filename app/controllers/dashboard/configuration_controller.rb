@@ -1,14 +1,14 @@
 class Dashboard::ConfigurationController < DashboardController
 
-  before_filter :check_configuration, :except => ["new_tournament", "create_tournament"]
+  before_filter :check_configuration, :except => ["new_tournament", "create_tournament","load_tournament"]
 
   def index
     redirect_to :action => "edit_tournament"
   end
   
   def load_tournament
-    session[:tournament_id] = params['id']
-    $tournament = Tournament.find(params['id'])
+    session[:tournament_id] = params[:id]
+    $tournament = Tournament.find(params[:id])
     load_tournament_database($tournament)
     redirect_to :action => "edit_tournament"
   end

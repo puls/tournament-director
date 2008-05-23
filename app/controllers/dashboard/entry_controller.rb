@@ -7,11 +7,11 @@ class Dashboard::EntryController < DashboardController
     if params['round']
       @round = Round.find_by_number(params['round'])
     else
-      @round = Round.find(:first, :order => 'number', :conditions => "play_complete is null or play_complete != 1")
+      @round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     end
     
-    @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != 1) and round_id = ?", @round.id])
-    @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => "games.play_complete is not null and games.play_complete = 1 and (games.entry_complete is null or games.entry_complete != 1)")
+    @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id])
+    @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
     @teams_for_round = @incomplete_games.collect {|g| g.team_games.collect {|tg| tg.team}}.flatten.sort_by {|t| t.name}
     @rooms_for_round = @incomplete_games.collect {|g| g.room }
@@ -65,7 +65,7 @@ class Dashboard::EntryController < DashboardController
     end
 
     unless game.save
-      game.errors.each_full {|msg| flash[:error] = msg }
+      flash[:error] = game.errors.full_messages.join("<br />\n")
       redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
       return false
     end
@@ -90,14 +90,14 @@ class Dashboard::EntryController < DashboardController
     end
     
     if not tg1.save
-      tg1.errors.each_full {|msg| flash[:error] = msg }
+      flash[:error] = tg1.errors.full_messages.join("<br />\n")
       game.destroy if @game.nil?
       redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
       return false
     end
 
     if not tg2.save
-      tg1.errors.each_full {|msg| flash[:error] = msg }
+      flash[:error] = tg2.errors.full_messages.join("<br />\n")
       game.destroy if @game.nil?
       redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
       return false
@@ -119,7 +119,7 @@ class Dashboard::EntryController < DashboardController
       next_tg2.save
     end
     
-    if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != 1)", round.id]))
+    if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != ?)", round.id, true]))
       round.play_complete = true
       round.save
     end
@@ -145,7 +145,7 @@ class Dashboard::EntryController < DashboardController
     @game.save
 
     if not @game.errors.empty?
-      @game.errors.each_full {|msg| flash[:error] = msg}
+      flash[:error] = @game.errors.full_messages.join("<br />\n")
     end
 
     redirect_to :action => 'index'
