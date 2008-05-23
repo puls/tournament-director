@@ -8,6 +8,7 @@ development:
   adapter: mysql
   database: tournaments_dev
   username: qbtd
+  password: kog59et
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
