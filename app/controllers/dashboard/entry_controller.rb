@@ -348,7 +348,7 @@ class Dashboard::EntryController < DashboardController
   
   # Will list all entered games and link for editing
   def status
-  	@rounds = Round.find(:all, :include => [{:games => [{:team_games => :team} ]}], :order => 'number')
+  	@rounds = Round.find(:all, :include => [{:games => [{:team_games => :team} ]}], :order => 'number, team_games.ordering')
   	
   end
   
