@@ -4,23 +4,23 @@
     <tr>
         <th>Round</th>
         <th>Teams</th>
-        <% if @tournament.swiss -%><th>Cards</th><% end -%>
+        <% if $tournament.swiss -%><th>Cards</th><% end -%>
         <th>Points</th>
-        <% if @tournament.bracketed -%><th>Bracket</th><% end -%>
+        <% if $tournament.bracketed -%><th>Bracket</th><% end -%>
         <th>TUH</th>
-        <% if @tournament.tracks_rooms -%><th>Room</th><% end -%>
+        <% if $tournament.tracks_rooms -%><th>Room</th><% end -%>
         <th>Flags</th>
         <th></th>
     </tr>
     <tr>
         <td rowspan="2">
-            <%= text_field_tag 'round_number', @last_round, {:size => 2, :tabindex => 1, :onblur => "#{'update_room_list();' if @tournament.tracks_rooms}"} %>
+            <%= text_field_tag 'round_number', @last_round, {:size => 2, :tabindex => 1, :onblur => "#{'update_room_list();' if $tournament.tracks_rooms}"} %>
         </td>
         <td>
             <%= @game.team_games[0].team.name -%>
             <%= hidden_field_tag 'team1', @game.team_games[0].team.id -%>
         </td>
-        <% if @tournament.swiss -%>
+        <% if $tournament.swiss -%>
         <td>
             <%= text_field_tag 'card1', @game.team_games[0].card.number, {:size => 3, :tabindex => 4} -%>
         </td>
@@ -28,7 +28,7 @@
         <td>
             <%= text_field_tag 'score1', @game.team_games[0].points, {:size => 4,:tabindex => 6} -%>
         </td>
-        <% if @tournament.bracketed -%>
+        <% if $tournament.bracketed -%>
         <td rowspan="2">
             <%= select_tag 'bracket', options_for_select(Bracket.find(:all).collect{|a| [a.name, a.id]}, @game.bracket.id), {:tabindex => 8} -%>
         </td>
@@ -38,7 +38,7 @@
         <td rowspan="2">
             <%= text_field_tag 'tossups', @game.tossups, {:size => 2,:tabindex => 9} -%>
         </td>
-        <% if @tournament.tracks_rooms %>
+        <% if $tournament.tracks_rooms %>
         <td rowspan="2">
             <%= select_tag 'room', nil, {:tabindex => 10} -%>
         </td>
@@ -58,7 +58,7 @@
             <%= @game.team_games[1].team.name -%>
             <%= hidden_field_tag 'team2', @game.team_games[1].team.id -%>
         </td>
-        <% if @tournament.swiss -%>
+        <% if $tournament.swiss -%>
         <td>
         	<%= text_field_tag 'card2', @game.team_games[1].card.number, {:size => 3, :tabindex => 5} -%>
         </td>
@@ -73,7 +73,7 @@
 <%= update_page_tag do |page|
 	page<< "function update_room_list(){"
 	page<< "var round_id = $('round_number').value;"
-	page<< remote_function(:update => "room", :url => {:action => 'rooms_for_round', :id => "'+round_id+'", :editing => true, :selected => @tournament.tracks_rooms? ? @game.room.id : nil})
+	page<< remote_function(:update => "room", :url => {:action => 'rooms_for_round', :id => "'+round_id+'", :editing => true, :selected => $tournament.tracks_rooms? ? @game.room.id : nil})
 	page<< "}"
 	page<< "update_room_list();"
 end -%>

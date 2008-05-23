@@ -1,0 +1,85 @@
+<table class="horizontal">
+    <tr>
+        <th>Teams</th>
+        <th>Points</th>
+        <% if $tournament.bracketed -%><th>Bracket</th><% end -%>
+        <th>TUH</th>
+        <% if $tournament.tracks_rooms -%><th>Room</th><% end -%>
+        <th>Flags</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            <%= select_tag 'team1', options_from_collection_for_select(@teams_for_round, 'id', 'name'),
+				:tabindex => 2, :onchange => 'team1_changed()' %>
+        </td>
+        <td>
+            <%= text_field_tag 'score1',nil,{:size => 4,:tabindex => 6} -%>
+        </td>
+        <% if $tournament.bracketed -%>
+        <td rowspan="2">
+            <%= select_tag 'bracket', options_for_select(Bracket.find(:all).collect{|a| [a.name, a.id]}), {:tabindex => 8} -%>
+        </td>
+        <% else %>
+        <%= hidden_field_tag 'bracket' -%>
+        <% end %>
+        <td rowspan="2">
+            <%= text_field_tag 'tossups', "", {:size => 2,:tabindex => 9} -%>
+        </td>
+        <% if $tournament.tracks_rooms %>
+        <td rowspan="2">
+            <%= select_tag 'room', options_from_collection_for_select(@rooms_for_round, 'id', 'name'), :tabindex => 10 %>
+        </td>
+        <% end -%>
+        <td rowspan="2" style="text-align: left; white-space: nowrap;">
+        	<%= check_box_tag 'extragame', "1", false, :tabindex => 11  %> extra game<br />
+        	<%= check_box_tag 'overtime', "1", false, :tabindex => 12 %> overtime<br />
+        	<%= check_box_tag 'playoffs', "1", false, :tabindex => 13 %> playoffs<br />
+        	<%= check_box_tag 'forfeit', "1", false, :tabindex => 14 %> forfeit<br />
+        </td>
+        <td rowspan="2" class="submit">
+            <%= submit_tag 'Save', {:tabindex => 15} -%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <%= select_tag 'team2', options_from_collection_for_select(@teams_for_round, 'id', 'name'), :tabindex => 3 %>
+        </td>
+        <td>
+            <%= text_field_tag 'score2', nil, {:size => 4,:tabindex => 7} %>
+        </td>
+    </tr>
+</table>
+<%= hidden_field_tag "id" %>
+<% javascript_tag do -%>
+    var opposite_team = new Array();
+    var room_for_team = new Array();
+    var game_for_team = new Array();
+    <% for game in @incomplete_games %>
+    <%= "opposite_team[#{game.team_games[0].team.id}] = #{game.team_games[1].team.id}" %>
+    <%= "opposite_team[#{game.team_games[1].team.id}] = #{game.team_games[0].team.id}" %>
+    <%= "room_for_team[#{game.team_games[0].team.id}] = #{game.room.id}" %>
+    <%= "room_for_team[#{game.team_games[1].team.id}] = #{game.room.id}" %>
+    <%= "game_for_team[#{game.team_games[0].team.id}] = #{game.id}" %>
+    <%= "game_for_team[#{game.team_games[1].team.id}] = #{game.id}" %>
+    <% end %>
+    function team1_changed() {
+    	var team1 = $F('team1')
+    	var teams = $('team2').options
+    	for (var index = 0; index < teams.length; index++) {
+    		if (teams[index].value == opposite_team[team1]) {
+    			$('team2').selectedIndex = index
+                break
+    		}
+    	}
+    	var rooms = $('room').options
+    	for (var index = 0; index < rooms.length; index++) {
+    		if (rooms[index].value == room_for_team[team1]) {
+    			$('room').selectedIndex = index
+                break
+    		}
+    	}
+    	$('id').value = game_for_team[team1]
+    }
+    team1_changed();
+<% end -%>

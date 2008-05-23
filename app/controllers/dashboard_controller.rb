@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
   def check_configuration
     load_configuration
 
-    if @tournament.nil?
+    if $tournament.nil?
       redirect_to :controller => "/dashboard/configuration", :action => "new_tournament"
       return false
     end
