@@ -10,7 +10,7 @@ class Dashboard::EntryController < DashboardController
   		@last_round = @last_round.number
   	end
   	
-  	@rounds_to_enter = Round.find(:all, :conditions => ['(rounds.entry_complete IS NULL OR rounds.entry_complete != ?) AND (games.play_complete = ? AND (games.entry_complete IS NULL OR games.entry_complete != ?) AND (games.ignore_indivs IS NULL OR games.ignore_indivs != ?))', true, true, true, true], :include => [{:games => [:room, :bracket, {:team_games => :team}]}])
+  	@rounds_to_enter = Round.find(:all, :order => 'number', :conditions => ['(rounds.entry_complete IS NULL OR rounds.entry_complete != ?) AND (games.play_complete = ? AND (games.entry_complete IS NULL OR games.entry_complete != ?) AND (games.ignore_indivs IS NULL OR games.ignore_indivs != ?))', true, true, true, true], :include => [{:games => [:room, :bracket, {:team_games => :team}]}])
   	
   end
 
