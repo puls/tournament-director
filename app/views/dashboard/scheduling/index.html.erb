@@ -44,11 +44,10 @@
         <% for room in @rooms %>
         <tr>
             <td><%= room.name %></td>
-            <% @rounds.each_with_index do |round, index| %>
+            <% for game in room.games %>
                 <td class="small" style="text-align: center;">
-                    <% game = room.games[index] %>
-                    <%= text_field_tag "foobar", game.team_games[0].card, {:size => 3, :disabled => "true"} %> &ndash;
-                    <%= text_field_tag "foobar", game.team_games[1].card, {:size => 3, :disabled => "true"} %>
+                    <%= text_field_tag "cards[][0]", game.team_games[0].card, {:size => 3, :disabled => "true"} %> &ndash;
+                    <%= text_field_tag "cards[][1]", game.team_games[1].card, {:size => 3, :disabled => "true"} %>
                 </td>
             <% end %>
         </tr>

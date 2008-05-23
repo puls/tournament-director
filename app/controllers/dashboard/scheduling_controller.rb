@@ -3,27 +3,12 @@ class Dashboard::SchedulingController < DashboardController
   before_filter :check_configuration
   
   def index
-    @rooms = Room.find(:all, :include => ["rounds", "games"], :order => "name")
+    @rooms = Room.find(:all, :include => {:games => :team_games}, :order => "name")
     if @rooms.empty?
       @rooms = [Room.new, Room.new]
     end
 
     @rounds = Round.find(:all, :order => "number")
-    @rooms.each do |room|
-      @rounds.each do |round|
-        game = room.games.detect {|g| g.round == round}
-        unless game
-          game = Game.new(:round => round)
-          room.games << game
-        end
-        while (game.team_games.size < 2)
-          game.team_games << TeamGame.new
-        end
-      end
-      room.games.sort! do |a, b|
-        a.round.number <=> b.round.number
-      end
-    end
   end
   
   def set_rounds
