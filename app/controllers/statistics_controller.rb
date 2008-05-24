@@ -38,7 +38,7 @@ class StatisticsController < ApplicationController
 
   def team
   	begin
-  		@team = Team.find(params[:id], :include => [{:games => [:room, {:team_games => :team}]}, {:players => :player_games}])
+  		@team = Team.find(params[:id], :include => [{:games => [:room, {:team_games => :team}]}, {:players => :player_games}], :conditions => ['games.play_complete = ?', true])
   	rescue ActiveRecord::RecordNotFound
   		flash[:error] = "Team was not found."
                 redirect_to :action => 'standings'

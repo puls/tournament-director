@@ -52,7 +52,7 @@ class Team < ActiveRecord::Base
 
   def pf(bracket = nil)
 	if bracket.nil?
-		team_games.clone.collect{|g| g.game.play_complete? and g.points}.sum || 0
+		team_games.clone.select{|g| g.game.play_complete?}.collect{|g| g.points}.sum || 0
 	else
 		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.points}.sum || 0
 	end
@@ -60,7 +60,7 @@ class Team < ActiveRecord::Base
 
   def tuh(bracket = nil)
 	if bracket.nil?
-		team_games.clone.collect{|g| g.game.play_complete? and g.game.tossups}.sum || 0
+		team_games.clone.select{|g| g.game.play_complete?}.collect{|g| g.game.tossups}.sum || 0
 	else
 		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum || 0
 	end
@@ -76,7 +76,7 @@ class Team < ActiveRecord::Base
 
   def pa(bracket = nil)
 	if bracket.nil?
-		team_games.clone.collect{|tg| tg.game.play_complete? and tg.game.team_games[tg.ordering % 2].points}.sum || 0
+		team_games.clone.select{|tg| tg.game.play_complete?}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum || 0
 	else
 		team_games.clone.select{|tg| tg.game.play_complete? and tg.game.bracket == bracket}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum || 0
 	end
