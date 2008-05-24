@@ -10,7 +10,7 @@ class Dashboard::EntryController < DashboardController
       @round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     end
     
-    @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id])
+    @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id], :order => 'team_games.ordering')
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
     debugger
@@ -110,14 +110,14 @@ class Dashboard::EntryController < DashboardController
         :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].min, round.number + 1],
         :include => {:game => :round},
         :order => "rounds.number")
-      next_tg1.team = tg1.won ? tg1.team : tg2.team
+      next_tg1.team = tg1.won? ? tg1.team : tg2.team
       next_tg1.save
 
       next_tg2 = TeamGame.find(:first,
         :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].max, round.number + 1],
         :include => {:game => :round},
         :order => "rounds.number")
-      next_tg2.team = tg1.won ? tg2.team : tg1.team
+      next_tg2.team = tg1.won? ? tg2.team : tg1.team
       next_tg2.save
     end
     
@@ -302,7 +302,7 @@ class Dashboard::EntryController < DashboardController
 
   # Will list all entered games and link for editing
   def status
-    @rounds = Round.find(:all, :include => [{:games => [{:team_games => :team} ]}], :order => 'number, team_games.ordering')
+    @rounds = Round.find(:all, :include => [{:games => [{:team_games => :team} ]}], :order => 'number, team_games.ordering', :conditions => ['games.play_complete = ?', true])
   end
 
   def edit_game

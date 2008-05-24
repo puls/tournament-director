@@ -48,7 +48,7 @@ class StatisticsController < ApplicationController
   end
 
   def personal
-    @players_all = Player.find(:all, :include => [:team, :player_games]).select{|p| not p.team.nil?}.sort{|a,b| b.pp20 <=> a.pp20}
+    @players_all = Player.find(:all, :include => [:team, :player_games]).select{|p| not p.team.nil?}.sort{|a,b| sort_players(a,b)}
     @players_tuh_cut = @players_all.select{|p| $tournament.tuh_cutoff.nil? or p.tuh >= $tournament.tuh_cutoff}
     @players_neg = @players_all.sort{|a,b| sort_negs(a,b)}[0,30]
 
