@@ -175,49 +175,49 @@ class Dashboard::EntryController < DashboardController
     @types = QuestionType.find(:all, :order => 'value desc')
   end
 
-  def save_indivs
+  def save_players
     @types = QuestionType.find(:all, :order => 'value desc')
 
     # Parse the input
 
     game = Game.find(params[:id])
     teams = params[:team]
-    bothteams = []
-    tgs = {}
-    pgs = []
+    bothteams = Array.new
+    team_games = Hash.new
+    player_games = Array.new
     for index in teams.keys
       team = game.teams.find(teams[index])
-      team_game = game.team_games.clone.find{|tg|tg.team == team}
-      tgs[team.id] = team_game
+      team_game = TeamGame.find_by_game_id_and_team_id(game.id, team.id)
+      team_games[team.id] = team_game
       for player_line in params["teamData"][index].values
         fields = player_line.split(",")
         name = fields.shift
-        player = team.players.find(:first,:conditions => ['name = ?',name]) || team.players.create(:name => name)
-        pgame = player.player_games.create(:team_game => team_game, :tossups_heard => fields.shift)
+        player = team.players.find_or_create_by_name(name)
+        player_game = team_game.player_games.create(:player => player, :tossups_heard => fields.shift)
 
-        if pgame.tossups_heard > game.tossups
+        if player_game.tossups_heard > game.tossups
           #fail
           flash[:error] = "Player tossups heard were greater than game tossups heard."
-          redirect_to :action => 'enter_indivs', :id => game.id
-          pgame.destroy
-          pgs.each{|pg| pg.destroy}
+          redirect_to :action => 'enter_players', :id => game.id
+          player_game.destroy
+          player_games.each{|pg| pg.destroy}
           return false;
         end
 
         for type in @types
-          line = pgame.stat_lines.create(:question_type => type, :number => fields.shift)
+          line = player_game.stat_lines.create(:question_type => type, :number => fields.shift)
         end
 
-        if pgame.stat_lines.collect{|sl| sl.number}.sum > pgame.tossups_heard
+        if player_game.stat_lines.collect{|sl| sl.number}.sum > player_game.tossups_heard
           #fail
           flash[:error] = "Player answered more tossups than tossups heard."
-          redirect_to :action => 'enter_indivs', :id => game.id
-          pgame.destroy
-          pgs.each{|pg| pg.destroy}
+          redirect_to :action => 'enter_players', :id => game.id
+          player_game.destroy
+          player_games.each{|pg| pg.destroy}
           return false;             
         end
 
-        pgs.push pgame
+        player_games.push player_game
       end
       bothteams.push team
     end
@@ -225,76 +225,73 @@ class Dashboard::EntryController < DashboardController
     # Validate the input
 
     # tossups answered correctly by team
-    tot_tossups = {}
+    total_tossups = Hash.new
     for team in bothteams
-      tot_tossups[team.id] =  pgs.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.clone.select{|sl| sl.question_type.value > 0}.collect{|sl| sl.number}}.flatten.sum
+      total_tossups[team.id] =  player_games.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.clone.select{|sl| sl.question_type.value > 0}.collect{|sl| sl.number}}.flatten.sum
     end
 
     # tossups answered correctly and negged on by team
-    tot_ans = {}
+    total_answered = Hash.new
     for team in bothteams
-      tot_ans[team.id] = pgs.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.clone.collect{|sl| sl.number}}.flatten.sum
+      total_answered[team.id] = player_games.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.clone.collect{|sl| sl.number}}.flatten.sum
     end
 
-    tot_tuh = pgs.clone.collect{|pg| pg.tossups_heard}.sum
+    total_tossups_heard = player_games.clone.collect{|pg| pg.tossups_heard}.sum
 
     # tossup points and bonus points by team
-    tups = {}
-    bps = {}
+    tossup_points = Hash.new
+    bonus_points = Hash.new
     for team in bothteams
-      tups[team.id] = pgs.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.collect{|sl| sl.question_type.value * sl.number}}.flatten.sum
-      bps[team.id] = tgs[team.id].points - tups[team.id]
+      tossup_points[team.id] = player_games.clone.select{|pg| pg.player.team.id == team.id}.collect{|pg| pg.stat_lines.collect{|sl| sl.question_type.value * sl.number}}.flatten.sum
+      bonus_points[team.id] = team_games[team.id].points - tossup_points[team.id]
     end
 
-    if tot_tossups.values.sum > game.tossups
+    if total_tossups.values.sum > game.tossups
       # fail    
       flash[:error] = "More tossups were answered correctly than were asked."
-      redirect_to :action => 'enter_indivs', :id => game.id
-      pgs.each{|pg| pg.destroy}
+      redirect_to :action => 'enter_players', :id => game.id
+      player_games.each{|pg| pg.destroy}
       return false;
     end
 
-    if tot_tuh > (8*game.tossups)
+    if total_tossups_heard > (8 * game.tossups)
       #fail
       flash[:error] = "More tossups were heard by all players than the maximum possible."
-      redirect_to :action => 'enter_indivs', :id => game.id
-      pgs.each{|pg| pg.destroy}
+      redirect_to :action => 'enter_players', :id => game.id
+      player_games.each{|pg| pg.destroy}
       return false;
     end
 
     for team in bothteams
-      if tot_ans[team.id] > game.tossups
+      if total_answered[team.id] > game.tossups
         #fail
         flash[:error] = "More tossups were answered by the team than were asked."
-        redirect_to :action => 'enter_indivs', :id => game.id
-        pgs.each{|pg| pg.destroy}
+        redirect_to :action => 'enter_players', :id => game.id
+        player_games.each{|pg| pg.destroy}
         return false;
       end
 
-      if tot_tossups[team.id] == 0 and bps[team.id] > 0
+      if total_tossups[team.id] == 0 and bonus_points[team.id] > 0
         #fail     
         flash[:error] = "Team has bonus points without any correct tossups."
-        redirect_to :action => 'enter_indivs', :id => game.id
-        pgs.each{|pg| pg.destroy}
+        redirect_to :action => 'enter_players', :id => game.id
+        player_games.each{|pg| pg.destroy}
         return false;
-      elsif tot_tossups[team.id] > 0
-        bppt = (bps[team.id]/tot_tossups[team.id])
-        if bppt < 0.0 or bppt > 30.0
+      elsif total_tossups[team.id] > 0
+        bonus_points_per_tossup = (bonus_points[team.id]/total_tossups[team.id])
+        if bonus_points_per_tossup < 0.0 or bonus_points_per_tossup > 30.0
           #fail       
           flash[:error] = "Bonus points per tossup correct is out of range 0-30"
-          redirect_to :action => 'enter_indivs', :id => game.id
-          pgs.each{|pg| pg.destroy}
+          redirect_to :action => 'enter_players', :id => game.id
+          player_games.each{|pg| pg.destroy}
           return false;
         end
       end
-
-
     end
 
-    game.team_games.each{|tg| 
-      tg.update_attributes(:tossups_correct => tot_tossups[team.id], :tossup_points => tups[team.id], :bonus_points => bps[team.id])
-      tg.save
-    }
+    game.team_games.each do |tg| 
+      tg.update_attributes(:tossups_correct => total_tossups[team.id], :tossup_points => tossup_points[team.id], :bonus_points => bonus_points[team.id])
+    end
 
     game.entry_complete = true
     game.save
@@ -306,7 +303,6 @@ class Dashboard::EntryController < DashboardController
   # Will list all entered games and link for editing
   def status
     @rounds = Round.find(:all, :include => [{:games => [{:team_games => :team} ]}], :order => 'number, team_games.ordering')
-
   end
 
   def edit_game
