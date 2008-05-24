@@ -1,0 +1,57 @@
+<h2>Stats for <%= @team.name %></h2>
+<p>Team has heard <b><%= @team.tuh(nil) %></b> tossups.</p>
+<h3>Match Summary</h3>
+<table class="standings">
+	<tr>
+		<th>Round</th>
+		<% if $tournament.bracketed? -%>
+		<th>Bracket</th>
+                <% end -%>
+                <% if $tournament.swiss? -%>
+                <th>Card</th>
+                <% end -%>
+                <% if $tournament.tracks_rooms? -%>
+                <th>Room</th>
+                <% end -%>
+		<th>Opponent</th>
+		<th>Result</th>
+	</tr>
+	<% for tgame in @team.team_games.select{|tg| tg.game.play_complete?} -%>
+	<tr class="<%= cycle('row1','row2') %>">
+		<td><%= tgame.game.round.number %></td>
+		<% if $tournament.bracketed? -%>
+		<td><%= tgame.game.bracket.name %></td>
+                <% end -%>
+                <% if $tournament.swiss? -%>
+		<td><%= tgame.card -%></td>
+                <% end -%>
+		<% if $tournament.tracks_rooms? -%>
+		<td><%= tgame.game.room.name -%>
+		<% end -%>
+		<td><%= link_to(tgame.other_team.name + ($tournament.swiss? ? " (#{tgame.other_tg.card})" : ""), :action => 'team',:id => tgame.other_team.id) -%></td>
+		<td><%= tgame.won? ? "Won" : "Lost" -%>, <%= tgame.points -%> &ndash; <%= tgame.other_tg.points -%></td>
+	</tr>
+	<% end -%>
+	<tr>
+		<td>Overall:</td>
+		<td colspan="2">
+			<%= @team.wins(nil) %> &ndash; <%= @team.losses(nil) %>
+			(<%= sprintf("%.3f",@team.win_pct(nil)) %>)
+		</td>
+	</tr>
+</table>
+<h3>Player Performance</h3>
+<table class="standings">
+	<tr>
+		<th>Player Name</th>
+		<th class="number">GP</th>
+		<% for type in @types %>
+		<th class="number"><%= type.value %></th>
+		<% end %>
+		<th class="number">Pts</th>
+		<th class="number">PPG</th>
+		<th class="number">PP20H</th>
+		<th class="number">TU/-5</th>
+	</tr>
+	<%= render :partial => 'player', :collection => @team.players, :locals => {:types => @types, :team_name => false} -%>
+</table>
