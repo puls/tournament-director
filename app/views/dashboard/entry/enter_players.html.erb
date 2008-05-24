@@ -19,7 +19,7 @@
 		<td><%= text_field_tag "field#{type.value}_1",nil,:size => 3,
 			:onkeypress => "return " + (i > 0 ? "validNumber" : "autocompletePower") + "(this,event)" -%></td>
 		<% end %>
-		<td><%= text_field_tag "fieldpts_1",nil,:size => 3,:onfocus => "checkComplete()" %></td>
+		<td><%= text_field_tag "fieldpts_1",nil,:size => 3,:onfocus => "checkComplete(this)" %></td>
 	</tr>
 	<tr>
 		<td colspan="2">Totals</td>
@@ -50,7 +50,7 @@
 		<td><%= text_field_tag "field#{type.value}_2",nil,:size => 3,
 			:onkeypress => "return " + (i > 0 ? "validNumber" : "autocompletePower") + "(this,event)" -%></td>
 		<% end %>
-		<td><%= text_field_tag "fieldpts_2",nil,:size => 3,:onfocus => "checkComplete()" %></td>
+		<td><%= text_field_tag "fieldpts_2",nil,:size => 3,:onfocus => "checkComplete(this)" %></td>
 	</tr>
 	<tr>
 		<td colspan="2">Totals</td>
@@ -85,14 +85,13 @@ var teams = new Array("<%= @team1.id %>","<%= @team2.id %>");
 Element.hide('entryRow2')
 Element.hide('submitButton')
 
-function validNumber(field,evt)
-{
+function validNumber(field,evt) {
 	evt = (evt) ? evt : ((window.event) ? window.event : null);
 	code = evt.charCode;
 	return (code < 32 || code == 45 || (code >= 48 && code <= 57));
 }
-function autocompleteName(inputField,evt)
-{
+
+function autocompleteName(inputField,evt) {
 	evt = (evt) ? evt : ((window.event) ? window.event : null);
 	code = evt.charCode;
 	if (code >= 34 && code <= 126)
@@ -112,8 +111,8 @@ function autocompleteName(inputField,evt)
 	else
 		return true;
 }
-function match(stringToMatch)
-{
+
+function match(stringToMatch) {
 	var ary = names[currentTeam - 1];
 	for (var i = 0;i < ary.length;i++) {
 		if (ary[i].indexOf(stringToMatch) == 0)
@@ -121,8 +120,8 @@ function match(stringToMatch)
 	}
 	return stringToMatch;
 }
-function submitNumbers()
-{
+
+function submitNumbers() {
 	var url = "<%= url_for :action => 'save_indivs',:id => @game.id %>?";
 	for (var i = 0;i < teams.length;i++) {
 		url += encodeURIComponent("team[" + i + "]") + "=";
@@ -134,9 +133,9 @@ function submitNumbers()
 	}
 	window.location = url;
 }
-function autocompletePower(firstBox,evt)
-{
-	if (!validNumber(firstBox,evt))
+
+function autocompletePower(firstBox, evt) {
+	if (!validNumber(firstBox, evt))
 		return false;
 	if (firstBox.value != '<%= '0' * (@types.length == 0 ? 0 : @types.length - 1) %>')
 		return true;
@@ -152,14 +151,14 @@ function autocompletePower(firstBox,evt)
 	Field.activate(thisBox)
 	return false;
 }
-function checkTossups(inputField)
-{
+
+function checkTossups(inputField) {
 	var nameField = $("name" + currentTeam);
 	if (inputField.value == '' && nameField.value != '')
 		inputField.value = tossupsHeard;
 }
-function checkComplete()
-{
+
+function checkComplete(sender) {
 	if (editMode) return false;
 	var name = $F("name" + currentTeam);
 	var tossups = $F("tu" + currentTeam);
@@ -175,8 +174,6 @@ function checkComplete()
 		confirmBonus(currentTeam)
 		if (currentTeam == 1)
 			advanceCurrentTeam();
-/*		else if (confirm('submit?'))*/
-/*			setTimeout("submitNumbers()",500)*/
 		else
 			startEditMode();
 		return true;
@@ -188,8 +185,8 @@ function checkComplete()
 	advanceCurrentPlayer();
 	return false;
 }
-function advanceCurrentPlayer()
-{
+
+function advanceCurrentPlayer() {
 	var nameField = $("name" + currentTeam);
 	var tossups = $("tu" + currentTeam);
 	var fields = new Array();
@@ -211,15 +208,13 @@ function advanceCurrentPlayer()
 	
 	newRow.className = "row" + (currentPlayer % 2);
 	
-	for (var i = 0;i < teamData[currentTeam - 1][currentPlayer].length;i++)
-	{
+	for (var i = 0;i < teamData[currentTeam - 1][currentPlayer].length;i++) {
 		var cell = newRow.insertCell(i);
 		cell.innerHTML = teamData[currentTeam - 1][currentPlayer][i];
 	}
 
 	var ary = names[currentTeam - 1];
 	for (var i = 0;i < ary.length;i++) {
-		/*if (ary[i].indexOf(nameField.value) > -1) // Buggy - consider two names such as "Player 1" and "Player 11" or "1 Player" and "11 Player"*/
 		if (ary[i] == nameField.value)
 			ary.splice(i,1);
 	}
@@ -232,8 +227,8 @@ function advanceCurrentPlayer()
 	currentPlayer++;
 	
 }
-function computeTotals(team)
-{
+
+function computeTotals(team) {
 	var totals = new Array();
 	var count = <%= @types.length + 1 %>;
 	for (var i = 0;i < count;i++)
@@ -248,8 +243,8 @@ function computeTotals(team)
 	<% end %>
 	$("totalpts_" + team).innerHTML = totals[3];
 }
-function confirmBonus(team)
-{
+
+function confirmBonus(team) {
 	var tupoints = $("totalpts_" + team).innerHTML
 	var totalpts = (team == 1 ? <%= @teamgame1.points %> : <%= @teamgame2.points %>)
 	$('confirm' + team).innerHTML = 
@@ -258,16 +253,16 @@ function confirmBonus(team)
 		"<tr style=\"font-size: larger;\"><th style=\"text-align: right;\">" + (totalpts-tupoints) +
 		"</th><td>points on bonuses</td></tr></table>"
 }
-function advanceCurrentTeam()
-{
+
+function advanceCurrentTeam() {
 	Element.show('entryRow2');
 	Element.hide('entryRow1');
 	currentTeam = 2;
 	currentPlayer = 0;
 	Field.activate('name2');
 }
-function startEditMode()
-{
+
+function startEditMode() {
 	editMode = true;
 	var editor = $("entryRow1")
 	var editor2 = $("entryRow2")
@@ -289,8 +284,8 @@ function startEditMode()
 	}
 	Element.show("submitButton");
 }
-function edit(team,player)
-{
+
+function edit(team,player) {
 	Element.hide("submitButton");
 	var table = $("players" + team);
 	var editor = $("entryRow" + team);
@@ -310,8 +305,8 @@ function edit(team,player)
 	field.value = teamData[team - 1][player][<%= i + 2 %>]
 	<% end -%>
 }
-function save(team,player)
-{
+
+function save(team,player) {
 	Element.show("submitButton");
 	var table = $("players" + team);
 	var row = table.rows[player + 1];
@@ -332,7 +327,6 @@ function save(team,player)
 	computeTotals(team);
 	confirmBonus(team);
 }
-
 
 // ]]>
 </script>

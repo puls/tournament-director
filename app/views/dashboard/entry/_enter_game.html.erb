@@ -10,7 +10,7 @@
     </tr>
     <tr>
         <td>
-            <%= select_tag 'team1', options_from_collection_for_select(@teams_for_round, 'id', 'name'),
+            <%= select_tag 'team1', options_for_select(@teams_for_round),
 				:tabindex => 2, :onchange => 'team1_changed()' %>
         </td>
         <td>
@@ -43,7 +43,7 @@
     </tr>
     <tr>
         <td>
-            <%= select_tag 'team2', options_from_collection_for_select(@teams_for_round, 'id', 'name'), :tabindex => 3 %>
+            <%= select_tag 'team2', options_for_select(@teams_for_round), :tabindex => 3 %>
         </td>
         <td>
             <%= text_field_tag 'score2', nil, {:size => 4,:tabindex => 7} %>
