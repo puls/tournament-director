@@ -86,3 +86,58 @@ def load_staff(filename)
     room.save
   end
 end
+
+def flip(game_id)
+  game = Game.find(game_id)
+  (tg1, tg2) = game.team_games
+  points = tg2.points
+  tg2.points = tg1.points
+  tg1.points = points
+  tg1.save
+  tg2.save
+end
+
+def reset_cards_from_round(number)
+  round = Round.find_by_number(number)
+
+  round.games.each do |game|
+    (tg1, tg2) = game.team_games
+    
+    card1 = tg1.card
+    card2 = tg2.card
+
+    bad_tgs = TeamGame.find(:all, :include => {:game => :round}, :conditions => ["rounds.number > ? AND team_id IS NOT NULL AND (card = ? OR card = ?)", round.number, card1, card2])
+    bad_tgs.each do |tg|
+      puts "Bad team game: #{tg.team.name} in round #{tg.game.round.number}"
+      tg.team = nil
+      tg.save
+    end
+
+    if tg1.points > tg2.points
+      tg1.won = true
+      tg2.won = false
+    else
+      tg1.won = false
+      tg2.won = true
+    end
+    
+    tg1.save
+    tg2.save
+
+    next_tg1 = TeamGame.find(:first,
+      :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].min, round.number + 1],
+      :include => {:game => :round},
+      :order => "rounds.number")
+    next_tg1.team = tg1.won ? tg1.team : tg2.team
+    next_tg1.save
+    
+    next_tg2 = TeamGame.find(:first,
+      :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].max, round.number + 1],
+      :include => {:game => :round},
+      :order => "rounds.number")
+    next_tg2.team = tg1.won ? tg2.team : tg1.team
+    next_tg2.save
+    
+    nil
+  end
+end

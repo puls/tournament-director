@@ -9,9 +9,12 @@ class Game < ActiveRecord::Base
   validates_presence_of :round
   validates_numericality_of :tossups, :only_integer => true, :allow_nil => true
 
+  def sorted_team_games
+    team_games.sort_by {|tg|tg.ordering}
+  end
+
   def description
-    tg0 = team_games[0]
-    tg1 = team_games[1]
+    (tg0, tg1) = sorted_team_games
     result = "Round #{round.number}: "
     result << tg0.team.name
     result << " (card #{tg0.card})" if $tournament.swiss?

@@ -13,8 +13,6 @@ class Dashboard::EntryController < DashboardController
     @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id])
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
-    debugger
-
     @teams_for_round = @incomplete_games.collect {|g| g.team_games}.flatten.collect {|tg| ["#{tg.team.name} (#{tg.card})", tg.team.id]}.sort_by {|array| array.first}
     @rooms_for_round = @incomplete_games.collect {|g| g.room}.sort_by {|r| r.name.to_i || r.name}
   end
@@ -76,11 +74,11 @@ class Dashboard::EntryController < DashboardController
       tg1 = game.team_games.build(:team => Team.find(params[:team1]), :points => params[:score1], :ordering => 1)
       tg2 = game.team_games.build(:team => Team.find(params[:team2]), :points => params[:score2], :ordering => 2)
     else
-      tg1 = game.team_games[0]
-      tg1.update_attributes(:points => params[:score1])
+      tg1 = game.team_games.find_by_team_id(params[:team1])
+      tg1.update_attributes(:points => params[:score1], :ordering => 1)
 
-      tg2 = game.team_games[1]
-      tg2.update_attributes(:points => params[:score2])
+      tg2 = game.team_games.find_by_team_id(params[:team2])
+      tg2.update_attributes(:points => params[:score2], :ordering => 2)
     end
 
     if tg1.points > tg2.points
