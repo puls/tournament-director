@@ -19,16 +19,16 @@ class Player < ActiveRecord::Base
   end
 
   def gp(arg = nil)
-    fg = player_games.collect{|pg| pg.game.tossups }.sum || 1
+    fg = player_games.select{|pg| not pg.game.playoffs? and not pg.game.extragame?}.collect{|pg| pg.game.tossups }.sum || 1
     tuh.to_f / fg.to_f
   end
 
   def answered(type)
-    stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).collect{|sl| sl.number}.sum || 0
+    stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).select{|| not sl.game.playoffs? and not sl.game.extragame?}.collect{|sl| sl.number}.sum || 0
   end
 
   def tuh(arg = nil)
-    player_games.collect{|pg| pg.tossups_heard}.sum || 0
+    player_games.select{|pg| not pg.game.playoffs? and not pg.game.extragame?}.collect{|pg| pg.tossups_heard}.sum || 0
   end
 
   def points(arg = nil)
@@ -67,6 +67,14 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def npg(arg = nil)
+    if gp == 0.0
+      0.0
+    else
+      negs.to_f / gp
+    end
+  end
+
   def neg20(arg = nil)
     if tuh == 0
       0.0
@@ -77,5 +85,5 @@ class Player < ActiveRecord::Base
 
   serializes_results_in :stats_cache
   serializes_result_of :gp, :answered, :tuh
-  caches_result_of :points, :ppg, :pp20, :tu_neg, :tossups, :negs
+  caches_result_of :points, :ppg, :pp20, :tu_neg, :tossups, :negs, :neg20, :npg
 end
