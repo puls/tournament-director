@@ -1,6 +1,8 @@
-<% if player.is_a? Array
-  i, player = player[1], player[0]
+<% if player_neg.is_a? Array
+  player = player_neg[0]
+  i = player_neg[1]
 else
+  player = player_neg
   i = nil
 end -%>
 <tr class="<%= cycle('row1','row2') -%>">
@@ -13,9 +15,8 @@ end -%>
   <% for type in types -%>
   <td class="number"><%= player.answered(type) -%></td>
   <% end -%>
-  <td class="number"><%= player.points -%></td>
-  <td class="number"><%= fmt(player.ppg) -%></td>
-  <td class="number"><%= fmt(player.pp20) -%></td>
+  <td class="number"><%= fmt(player.npg) -%></td>
+  <td class="number"><%= fmt(player.neg20) -%></td>
   <td class="number"><%= fmt(player.tu_neg) -%></td>
 </tr>
 <% player.save_if_changed %>
