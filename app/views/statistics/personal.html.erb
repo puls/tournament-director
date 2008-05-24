@@ -1,0 +1,48 @@
+<h2>Individual Standings &mdash; Round <%= @max_round %></h2>
+
+<table class="standings">
+	<tr>
+		<th colspan="2">PPG Leaders</th>
+		<th class="number">GP</th>
+		<% for type in @types %>
+		<th class="number"><%= type.value %></th>
+		<% end %>
+		<th class="number">Pts</th>
+		<th class="number">PPG</th>
+		<th class="number">PP20H</th>
+		<th class="number">TU/neg</th>
+	</tr>
+	<% i = 0 %>
+        <%= render :partial => 'player', :collection => @players_tuh_cut, :locals => {:types => @types, :team_name => true} -%>
+</table>
+
+<table class="standings">
+	<tr>
+		<th colspan="2">Neg-5 Leaders</th>
+		<th class="number">GP</th>
+		<% for type in @negtypes %>
+		<th class="number"><%= type.value %></th>
+		<% end %>
+		<th class="number">neg/game</th>
+		<th class="number">neg/20H</th>
+		<th class="number">TU/neg</th>
+	</tr>
+	<% i = 0 %>
+	<% for player in @negplayers %>
+	<tr class="<%= cycle('row1','row2') %>">
+		<td style="text-align: right;"><%= i += 1 %>.</td>
+		<td>
+			<%= player.name %>,
+			<%= link_to player.team.name,{:action => 'team',:id => player.team},{:class=>"secondary_name"} %>
+			<%= "(#{player.text_year})" unless player.text_year.empty? %>
+		</td>
+		<td class="number"><%= fmt(player.gp) %></td>
+		<% for type in @negtypes %>
+		<td class="number"><%= player.answered(type) %></td>
+		<% end %>
+		<td class="number"><%= fmt(player.npg) %></td>
+		<td class="number"><%= fmt(player.np20) %></td>
+		<td class="number"><%= fmt(player.tu_neg) %></td>
+	</tr>
+	<% end %>
+</table>
