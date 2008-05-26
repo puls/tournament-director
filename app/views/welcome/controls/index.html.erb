@@ -1,0 +1,18 @@
+<h1>Welcome Page Controls</h1>
+
+<table>
+  <tr>
+    <th>School</th>
+    <th>Checked In</th>
+    <th>Paid</th>
+    <th>Rosters</th>
+  </tr>
+<% for school in @all_schools -%>
+  <tr>
+    <td><%= school.name -%> (<%= school.city -%>)</td>
+
+    <td class="<%= school.checked_in? ? "yes_toggle" : "no_toggle" -%>"><%= link_to(school.checked_in? ? "yes" : "no", :action => 'toggle_check_in', :id => school.id) -%></td>
+    <td class="<%= school.paid? ? "yes_toggle" : "no_toggle" -%>"><%= link_to(school.paid? ? "yes" : "no", :action => 'toggle_paid', :id => school.id) -%></td>
+    <td class="<%= school.checked_roster? ? "yes_toggle" : "no_toggle" -%>"><%= link_to(school.checked_roster? ? "yes" : "no", :action => 'toggle_roster', :id => school.id) -%></td>
+  </tr>
+<% end -%>

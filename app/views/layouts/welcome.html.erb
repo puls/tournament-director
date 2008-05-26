@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <%= javascript_include_tag :defaults %>
+    <%= stylesheet_link_tag "dashboard" %>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><%= $tournament.nil? ? "Tournament Director" : $tournament.name %></title>
+    <meta http-equiv="refresh" content="90" />
+</head>
+
+<body>
+<div id="nav" style="background-image: url('<%= image_path('background.png') %>'); vertical-align: middle;">
+	<%= image_tag "tournamentdirector.png", :style => "position: absolute; top: 0px; left: 0px;" %>
+    <div style="position: absolute; left: 400px; top: 13px;"><%= $tournament.name unless $tournament.nil? %></div>
+</div>
+
+<% if flash[:notice] %>
+    <div id="flash"><%= flash[:notice] %></div>
+    <%= update_page_tag { |page|
+        page.visual_effect(:highlight, "flash")
+    } %>
+<% end %>
+<% if flash[:error] %>
+    <div id="error"><%= flash[:error] %></div>
+    <%= update_page_tag { |page|
+    	page.visual_effect(:highlight, "error", :startcolor => "#ff0000")
+    } %>
+<% end %>
+<%= yield %>
+
+</body>
+</html>

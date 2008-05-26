@@ -1,0 +1,25 @@
+<p><h2>Welcome to <%= $tournament.name %></h2></p>
+
+<% if not @teams_check_in.empty? %>
+<p>
+<h3>Would the following teams please come register:</h3>
+<ul>
+<% for team in @teams_check_in %>
+	<li><%= team.name %> </li>
+<% end %>
+</ul>
+</p>
+<% end %>
+
+<% if not @teams_roster_check.empty? %>
+<p>
+<h3>Would the following teams please check/submit their rosters as soon as possible:</h3>
+<ul>
+<% for team in @teams_roster_check %>
+	<li><%= team.name %></li>
+<% end %>
+</ul>
+</p>
+<% end %>
+
+<%= $tournament.welcome_content -%>

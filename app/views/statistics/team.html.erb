@@ -16,7 +16,7 @@
 		<th>Opponent</th>
 		<th>Result</th>
 	</tr>
-	<% for tgame in @team.team_games.select{|tg| tg.game.play_complete?} -%>
+	<% for tgame in @team.team_games.select{|tg| tg.game.play_complete?}.sort{|a,b| a.round.number <=> b.round.number} -%>
 	<tr class="<%= cycle('row1','row2') %>">
 		<td><%= tgame.game.round.number %></td>
 		<% if $tournament.bracketed? -%>
@@ -59,5 +59,20 @@
 		<th class="number">PP20H</th>
 		<th class="number">TU/-5</th>
 	</tr>
-	<%= render :partial => 'player', :collection => @team.players, :locals => {:types => @types, :team_name => false, :i => nil} -%>
+	<%= render :partial => 'player', :collection => @team.players, :locals => {:types => @types, :team_name => false, :player_link => true} -%>
 </table>
+
+<% for player in @team.players -%>
+<h4><a id="player_<%= player.id -%>"><%= player.name -%> <%= "(#{player.name})" if $tournament.tracks_years -%></a></h4>
+<table>
+        <tr>
+                <th>Round</th>
+                <th class="number">TUH</th>
+                <% for type in @types -%>
+                <th class="number"><%= type.value -%></th>
+                <% end -%>
+                <th class="number">Pts</th>
+        </tr>
+        <%= render :partial => 'player_game', :collection => player.player_games, :locals => {:types => @types} -%>
+</table>
+<% end -%>
