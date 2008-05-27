@@ -13,7 +13,7 @@
 		<th class="number">TU/neg</th>
 	</tr>
 	<% i = 0 %>
-        <%= render :partial => 'player', :collection => @players_tuh_cut.collect{|p| [p, i+=1]}, :locals => {:types => @types, :team_name => true} -%>
+        <%= render :partial => 'player', :collection => @players_tuh_cut.collect{|p| [p, i+=1]}, :locals => {:types => @types, :team_name => true, :player_link => false} -%>
 </table>
 
 <table class="standings">

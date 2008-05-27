@@ -79,3 +79,26 @@ td.small, td.small input {
 		font-size: 10px;
 		padding: 1px;
 }
+
+td.yes_toggle
+{
+        background-color: rgb(0,128,255);
+        text-decoration: none;
+        color: white;
+        text-align: center;
+}
+
+td.no_toggle
+{
+        background-color: rgb(0,32,64);
+        text-decoration: none;
+        color: white;
+        text-align: center;
+}
+
+td.no_toggle a, td.yes_toggle a
+{
+        color: white;
+	text-decoration: none;
+        font-weight: bold;
+}

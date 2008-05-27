@@ -4,19 +4,19 @@ class Initial < ActiveRecord::Migration
       t.string :name
       t.integer :ordering
     end
-    
+
     create_table :games do |t|
       t.references :round, :bracket, :room
       t.integer :tossups
       t.boolean :play_complete, :entry_complete, :extragame, :overtime, :playoffs, :forfeit, :ignore_indivs
       t.integer :serial_number
     end
-    
+
     create_table :player_games do |t|
       t.references :player, :team_game
       t.integer :tossups_heard
     end
-    
+
     create_table :players do |t|
       t.references :team
       t.string :name
@@ -25,40 +25,41 @@ class Initial < ActiveRecord::Migration
       t.integer :qpin
       t.text :stats_cache
     end
-    
+
     create_table :question_types do |t|
       t.integer :value
       t.string :name
     end
-    
+
     create_table :rooms do |t|
       t.string :name
       t.text :staff
     end
-    
+
     create_table :rounds do |t|
       t.integer :number
       t.boolean :play_complete, :entry_complete
     end
-    
+
     create_table :schools do |t|
       t.string :name
       t.string :city
       t.boolean :small
+      t.boolean :checked_in, :paid, :checked_roster
     end
-    
+
     create_table :stat_lines do |t|
       t.references :question_type, :player_game
       t.integer :number
     end
-    
+
     create_table :team_games do |t|
       t.references :team, :game
       t.integer :card
       t.integer :points, :tossups_correct, :tossup_points, :bonus_points, :ordering
       t.boolean :won
     end
-    
+
     create_table :teams do |t|
       t.references :school
       t.string :name
