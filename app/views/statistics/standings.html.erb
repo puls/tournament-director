@@ -19,11 +19,11 @@
 		<% count += 1 -%>
 		<td class="number"><%= count -%></td>
                 <td class="teamname">
-                        <%= team.name %>
+                        <%= link_to team.name,:action => 'team',:id => team.id %>
                         <% if (team.school.small?) %>
                         (small)
                         <% end %>
-                        <!--<%= link_to team.name,:action => 'team',:id => team.id %>-->
+                        <!---->
                 </td>
 		<td class="number"><%= team.wins(bracket) %></td>
 		<td class="number"><%= team.losses(bracket) %></td>

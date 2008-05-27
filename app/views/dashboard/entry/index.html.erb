@@ -2,11 +2,11 @@
 <% form_tag :action => "save_game" do -%>
 Round: <%= text_field_tag  "round_number", @round.number, {:size => 2, :tabindex => 1, :onchange => remote_function(:update => "game_entry", :url => {:action => "entry_for_round"}, :with => "'round=' + $F('round_number')")} -%>
     <div id="game_entry">
-    <%= render :partial => "enter_game" %>   
+    <%= render :partial => "enter_game" %>
     </div>
 <% end %>
 <h1>Games needing player stats</h1>
-<% for game in @complete_games -%>
+<% for game in @complete_games.sort{|a,b| sort_for_entry(a,b)} -%>
 <p>
     <%= link_to game.description, :action => "enter_players", :id => game.id -%>
     (<%= link_to "ignore", :action => "ignore_players", :id => game.id -%>)

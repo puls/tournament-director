@@ -1,6 +1,6 @@
 body
 {
-	font-family: "Frutiger",sans-serif;
+	font-family: "Arial",sans-serif;
 	font-size: 11pt;
 	margin: 20px;
 }
@@ -52,7 +52,8 @@ h2
 
 td
 {
-	padding: 3pt 6pt;
+	padding: 3pt;
+	border: 1pt dotted #CCC;
 }
 
 th
@@ -60,7 +61,6 @@ th
 	font-weight: bold;
 	text-align: left;
 	border-bottom: 1pt solid black;
-	padding: 2pt 6pt;
 }
 
 td.number
@@ -68,67 +68,40 @@ td.number
 	font-family: "Bitstream Vera Sans Mono",monospace;
 	text-align:right;
 	font-size: 10pt;
-/*	width: 75px;*/
+	/*	width: 75px;*/
 }
 
 th.number
 {
 	text-align: right;
-/*	width: 75px;*/
+	/*	width: 75px;*/
 }
 
-.row2
+tr.row2
 {
-	/*background-color: #574E96;
-	color: #FFF;*/
-	background-color: rgb(210, 210, 210);
+	background-color: #CCC;
+	color: #000;
 }
-.row1
+tr.row1
 {
-	/*background-color: #FF5;
-	color: #000;*/
-	color: white;
-	background-color: rgb(0, 64, 128);
+	background-color: #FFF;
+	color: #000;
 }
-.row0 a {
-	color: #FFF;
+tr a {
+	text-decoration: none;
+	color: #000;
 }
-.row1 a {
-	color: #FFF;
+td.teamname {
+	font-weight: bold;
 }
-
-td.cell2
-{
-	background-color: #063;
-	color: #FFF;
-}
-
 table.standings a, #nav a
 {
-	border-bottom: 1pt dotted #999;
 	text-decoration: none;
 	color: inherit;
 }
 #nav-top
 {
-	top: 0px;
-	right: 0px;
-	float: right;
-	display: block;
-	background-color: #063;
-	color: #FFF;
-	padding: 5px;
-	margin: -20px -20px 10px 10px;
-}
-
-#nav-top a
-{
-	color: #FFF;
-	margin: 5px 10px;
-	font-size: 10pt;
-	font-weight: bold;
-	text-transform: uppercase;
-	letter-spacing: 1pt;
+	display: none;
 }
 
 #footer
@@ -137,3 +110,5 @@ table.standings a, #nav a
 }
 
 #footer img { border: none; }
+
+.load { display: none; }

@@ -2,7 +2,6 @@ class WelcomeController < ApplicationController
 
   before_filter :load_configuration
   before_filter :get_school_lists
-  layout 'statistics'
 
   def index
   end

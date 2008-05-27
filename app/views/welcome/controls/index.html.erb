@@ -1,5 +1,7 @@
 <h1>Welcome Page Controls</h1>
 
+<%= link_to "Welcome Page", :controller => '/welcome', :action => 'index' -%>
+
 <table>
   <tr>
     <th>School</th>
@@ -16,3 +18,18 @@
     <td class="<%= school.checked_roster? ? "yes_toggle" : "no_toggle" -%>"><%= link_to(school.checked_roster? ? "yes" : "no", :action => 'toggle_roster', :id => school.id) -%></td>
   </tr>
 <% end -%>
+</table>
+
+<p>
+<% form_tag :action => 'save_welcome_content' do -%>
+<table>
+  <tr>
+      <th>Welcome page content</th>
+      <td><%= text_area "tournament","welcome_content" -%></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="submit"><%= submit_tag "Save" -%></td>
+  </tr>
+</table>
+<% end -%>
+</p>

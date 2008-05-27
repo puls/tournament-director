@@ -9,7 +9,7 @@ class StatisticsController < ApplicationController
 
   def standings
     @brackets = Bracket.find(:all).push nil
-    @allteams = Team.find(:all, :include => [{:team_games => {:game => :bracket}}, :games])
+    @allteams = Team.find(:all, :include => [{:team_games => {:game => :bracket}}, :games, :school])
     @allteams.sort!{|a,b| sort_teams(a,b,nil)}
     round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     if (round.nil?)
@@ -39,7 +39,7 @@ class StatisticsController < ApplicationController
       end
     end
   end
-  
+
   def playoffs
   	@rounds = Round.find(:all, :order => 'number', :include => {:games => [{:team_games => :team}, :room]}, :conditions => "round_id > 14")
   	@rounds.each do |round|
