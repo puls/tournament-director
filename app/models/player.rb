@@ -19,16 +19,17 @@ class Player < ActiveRecord::Base
   end
 
   def gp(arg = nil)
-    fg = player_games.select{|pg| not pg.game.playoffs? and not pg.game.extragame?}.collect{|pg| pg.game.tossups }.sum || 1
-    tuh.to_f / fg.to_f
+    player_games.inject(0) do |sum, pg|
+      sum + (pg.tossups_heard.to_f / pg.team_game.game.tossups.to_f)
+    end
   end
 
   def answered(type)
-    stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).select{|| not sl.game.playoffs? and not sl.game.extragame?}.collect{|sl| sl.number}.sum || 0
+    stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).select{|sl| not sl.player_game.team_game.game.playoffs? and not sl.player_game.team_game.game.extragame?}.collect{|sl| sl.number}.sum || 0
   end
 
   def tuh(arg = nil)
-    player_games.select{|pg| not pg.game.playoffs? and not pg.game.extragame?}.collect{|pg| pg.tossups_heard}.sum || 0
+    player_games.select{|pg| not pg.team_game.game.playoffs? and not pg.team_game.game.extragame?}.collect{|pg| pg.tossups_heard}.sum || 0
   end
 
   def points(arg = nil)

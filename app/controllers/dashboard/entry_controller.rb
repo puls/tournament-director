@@ -10,6 +10,10 @@ class Dashboard::EntryController < DashboardController
       @round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     end
     
+    if (@round.nil?)
+      @round = Round.find(:first)
+    end
+    
     @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id], :order => 'team_games.ordering')
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
@@ -103,20 +107,24 @@ class Dashboard::EntryController < DashboardController
       return false
     end
 
-    if $tournament.swiss?
+    if $tournament.swiss? && !tg1.card.nil? && !tg2.card.nil?
       next_tg1 = TeamGame.find(:first,
         :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].min, round.number + 1],
         :include => {:game => :round},
         :order => "rounds.number")
-      next_tg1.team = tg1.won? ? tg1.team : tg2.team
-      next_tg1.save
+      unless (next_tg1.nil?)
+        next_tg1.team = tg1.won? ? tg1.team : tg2.team
+        next_tg1.save
+      end
 
       next_tg2 = TeamGame.find(:first,
         :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].max, round.number + 1],
         :include => {:game => :round},
         :order => "rounds.number")
-      next_tg2.team = tg1.won? ? tg2.team : tg1.team
-      next_tg2.save
+      unless (next_tg2.nil?)
+        next_tg2.team = tg1.won? ? tg2.team : tg1.team
+        next_tg2.save
+      end
     end
     
     if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != ?)", round.id, true]) == 0)

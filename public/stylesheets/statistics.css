@@ -77,20 +77,20 @@ th.number
 /*	width: 75px;*/
 }
 
-tr.row2
+.row2
 {
 	background-color: #574E96;
 	color: #FFF;
 }
-tr.row1
+.row1
 {
 	background-color: #FF5;
 	color: #000;
 }
-tr.row0 a {
+.row0 a {
 	color: #FFF;
 }
-tr.row1 a {
+.row1 a {
 	color: #FFF;
 }
 

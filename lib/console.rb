@@ -49,6 +49,26 @@ def load_assignments(filename, for_round = 1)
   end
 end
 
+def load_assignments2(filename, for_round = 15)
+  file = File.new(filename)
+  file.each do |line|
+    (initial_card, name) = line.split("\t")
+    name.strip!
+    team = Team.find_by_name(name)
+    
+    puts "#{name} => #{team} (#{initial_card})"
+
+    tg = TeamGame.find(:first,
+      :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", initial_card, for_round],
+      :include => {:game => :round},
+      :order => "rounds.number")
+      
+    
+    tg.team = team
+    tg.save
+  end
+end
+
 def load_players(filename)
   file = File.new(filename)
   file.each do |line|
@@ -87,14 +107,14 @@ def load_staff(filename)
   end
 end
 
-def flip(game_id)
-  game = Game.find(game_id)
-  (tg1, tg2) = game.team_games
-  points = tg2.points
-  tg2.points = tg1.points
-  tg1.points = points
-  tg1.save
-  tg2.save
+def pending_games_for_round(number)
+  round = Round.find_by_number(number)
+  games = round.games.find(:all, :conditions => "play_complete is null")
+  games.collect do |g|
+    [g.id, g.team_games.collect do |tg|
+      tg.team.name
+    end]
+  end
 end
 
 def reset_cards_from_round(number)
@@ -128,16 +148,79 @@ def reset_cards_from_round(number)
       :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].min, round.number + 1],
       :include => {:game => :round},
       :order => "rounds.number")
-    next_tg1.team = tg1.won ? tg1.team : tg2.team
-    next_tg1.save
+    unless (next_tg1.nil?)
+      next_tg1.team = tg1.won ? tg1.team : tg2.team
+      next_tg1.save
+    end
     
     next_tg2 = TeamGame.find(:first,
       :conditions => ["card = ? AND rounds.number >= ? AND team_id IS NULL", [tg1.card, tg2.card].max, round.number + 1],
       :include => {:game => :round},
       :order => "rounds.number")
-    next_tg2.team = tg1.won ? tg2.team : tg1.team
-    next_tg2.save
+    unless (next_tg2.nil?)
+      next_tg2.team = tg1.won ? tg2.team : tg1.team
+      next_tg2.save
+    end
     
     nil
   end
+end
+
+def reset_cache
+  count = 0
+  Game.find(:all).each do |game|
+    (tg1, tg2) = game.team_games
+    save = false
+    if (tg1.points > tg2.points)
+      if (tg1.won != true || tg2.won != false)
+        puts "won field is wrong for #{game.description}"
+        save = true
+      end
+      tg1.won = true
+      tg2.won = false
+    else
+      if (tg1.won == true || tg2.won == false)
+        puts "won field is wrong for #{game.description}"
+        save = true
+      end
+      tg1.won = false
+      tg2.won = true
+    end
+    
+    if (save)
+      tg1.save
+      tg2.save
+    end
+    
+    game.team_games.each do |tg|
+      tossups_correct = tg.player_games.inject(0) do |sum, pg|
+        sum + pg.stat_lines.inject(0) do |sum2, sl|
+          sum2 + (sl.question_type.value > 0 ? sl.number : 0)
+        end
+      end
+      if (tossups_correct != tg.tossups_correct)
+        puts "#{count}: fixing tossups for #{tg.team.name} in round #{game.round.number} (#{tg.tossups_correct} => #{tossups_correct})"
+        tg.tossups_correct = tossups_correct
+        count = count + 1
+      end
+    end
+  end
+end
+
+def fix_duplicate_player_games
+  Player.find(:all, :include => {:player_games => {:team_game => {:game => :round}}}).each do |player|
+    played_rounds = Hash.new
+    player.player_games.clone.each do |pg|
+      round = pg.team_game.game.round
+      if (played_rounds[round.id].nil?)
+        played_rounds[round.id] = pg
+      else
+        puts "duplicated player game for #{player.name} in round #{round.number}"
+        pg.stat_lines.each {|sl|sl.destroy}
+        pg.destroy
+      end
+    end
+  end
+  
+  return "something else"
 end

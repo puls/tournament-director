@@ -18,7 +18,13 @@
 	<tr class="<%= cycle('row1','row2') %>">
 		<% count += 1 -%>
 		<td class="number"><%= count -%></td>
-		<td class="teamname"><%= link_to team.name,:action => 'team',:id => team.id %></td>
+                <td class="teamname">
+                        <%= team.name %>
+                        <% if (team.school.small?) %>
+                        (small)
+                        <% end %>
+                        <!--<%= link_to team.name,:action => 'team',:id => team.id %>-->
+                </td>
 		<td class="number"><%= team.wins(bracket) %></td>
 		<td class="number"><%= team.losses(bracket) %></td>
 		<td class="number"><%= fmt(team.win_pct(bracket)) %></td>

@@ -33,26 +33,22 @@ class Team < ActiveRecord::Base
   end
 
   def num_games(bracket = nil)
-  	if bracket.nil?
-  		games.length
-  	else
-  		games.select{|g| g.play_complete? and g.bracket == bracket}.length
-  	end
+    games.select{|g| g.play_complete? and g.bracket == bracket}.length
   end
 
   def win_pct(bracket = nil)
-  	if num_games(bracket) == 0
-  		0.0
-	elsif losses(bracket) == 0
-		1.0
-	else
-		wins(bracket).to_f / num_games(bracket).to_f
-  	end
+    if num_games(bracket) == 0
+      0.0
+    elsif losses(bracket) == 0
+      1.0
+    else
+      wins(bracket).to_f / num_games(bracket).to_f
+    end
   end
 
   def pf(bracket = nil)
 	if bracket.nil?
-		team_games.clone.select{|g| g.game.play_complete?}.collect{|g| g.points}.sum || 0
+		team_games.clone.select{|g| g.game.play_complete?}.inject(0){|sum, tg| sum + tg.points} || 0
 	else
 		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.points}.sum || 0
 	end
@@ -60,9 +56,9 @@ class Team < ActiveRecord::Base
 
   def tuh(bracket = nil)
 	if bracket.nil?
-		team_games.clone.select{|g| g.game.play_complete?}.collect{|g| g.game.tossups}.sum || 0
+		team_games.select{|g| g.game.play_complete?}.collect{|g| g.game.tossups}.sum || 0
 	else
-		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum || 0
+		team_games.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum || 0
 	end
   end
 
@@ -75,11 +71,11 @@ class Team < ActiveRecord::Base
   end
 
   def pa(bracket = nil)
-	if bracket.nil?
-		team_games.clone.select{|tg| tg.game.play_complete?}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum || 0
-	else
-		team_games.clone.select{|tg| tg.game.play_complete? and tg.game.bracket == bracket}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum || 0
-	end
+    if bracket.nil?
+      team_games.select{|tg| tg.game.play_complete?}.inject(0){|sum, tg| sum + tg.game.team_games[tg.ordering % 2].points} || 0
+    else
+      team_games.select{|tg| tg.game.play_complete? and tg.game.bracket == bracket}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum || 0
+    end
   end
 
   def pa_per(bracket = nil)

@@ -15,7 +15,7 @@
 		    <%  if team_game.team.nil? %>
 		    <td colspan="2">Holder of card <b><%= team_game.card %></b></td>
 		    <% else %>
-			<td><%= team_game.team.name -%> (card <%= team_game.card %>)</td>
+			<td><%= team_game.team.name -%></td>
 			<td><%= team_game.points -%></td>
 			<% end %>
 		</tr>
@@ -27,7 +27,9 @@
         </tr>
 	</table>
 <% end -%>
+<% if @byes[round.id].size > 0 %>
 <h2 style="clear: both;">Byes</h2>
+<% end %>
 <% for bye in @byes[round.id] %>
 <table>
 <tr class="<%= cycle("row1", "row2") %>">

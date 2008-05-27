@@ -1,5 +1,6 @@
 class StatLine < ActiveRecord::Base
   belongs_to :player_game
+  belongs_to :game
   belongs_to :question_type
 
   validates_presence_of :question_type

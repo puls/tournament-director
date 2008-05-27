@@ -1,0 +1,12 @@
+<table>
+<% colspan = 1 %>
+<% for round in @rounds -%>
+    <tr>
+        <% for game in @winner_games[round.id] %>
+        <td colspan="<%= colspan %>" class="row1"><%= game.team_games[0].team.name %></td>
+        <td colspan="<%= colspan %>" class="row2"><%= game.team_games[0].team.name %></td>
+        <% end %>
+    </tr>
+    <% colspan++ %>
+<% end %>
+</table>
