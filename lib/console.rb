@@ -224,3 +224,28 @@ def fix_duplicate_player_games
   
   return "something else"
 end
+
+def export(dir)
+  Dir.chdir(dir)
+  
+  file = File.new('teams', 'w')
+  Team.find(:all, :include => :school).each do |t|
+    file.puts "#{t.id},'#{t.name}','#{t.school.name}','#{t.school.city}',#{t.school.small}"
+  end
+  
+  file = File.new('scores', 'w')
+  Game.find(:all, :order => 'round_id', :include => {:team_games => :team}).each do |g|
+    tg1 = g.team_games.first
+    tg2 = g.team_games.last
+    file.puts ",#{g.round.number},#{tg1.team.id},#{tg2.team.id},#{tg1.points},#{tg2.points},#{g.tossups}"
+  end
+  
+  file = File.new('indstats', 'w')
+  (fifteen, ten, negfive) = QuestionType.find(:all, :order => 'value desc')
+  PlayerGame.find(:all, :include => [{:team_game => {:game => :round}}, :player, :stat_lines]).each do |pg|
+    file.print ",#{pg.team_game.game.round.number},#{pg.player.team.id},#{pg.team_game.other_team.id},#{pg.player.name},"
+    file.puts "#{pg.team_game.game.tossups},#{pg.tossups_heard},#{pg.stat_line_for(fifteen)},#{pg.stat_line_for(ten)},#{pg.stat_line_for(negfive)}"
+  end
+  
+  return "success"
+end

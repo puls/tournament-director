@@ -10,7 +10,7 @@ class PlayerGame < ActiveRecord::Base
 
   def stat_line_for(type)
     begin
-      stat_lines.find(:first, :conditions => {:question_type => type}).number
+      stat_lines.find(:first, :conditions => {:question_type_id => type}).number
     rescue ActiveRecord::RecordNotFound
       0
     end
