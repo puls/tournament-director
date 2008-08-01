@@ -5,6 +5,11 @@ class Welcome::ControlsController < WelcomeController
   layout 'dashboard'
 
   def index
+    begin
+      @tournament = Tournament.find($tournament.id)
+    rescue ActiveRecord::RecordNotFound
+      @tournament = Tournament.new
+    end
   end
 
   def toggle_check_in
@@ -58,5 +63,15 @@ class Welcome::ControlsController < WelcomeController
       redirect_to :action => 'index'
   end
 
+  def save_welcome_content
+    begin
+      Tournament.find($tournament.id).update_attributes(params[:tournament])
+      flash[:notice] = "Content saved."
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Content not saved."
+    end
+
+    redirect_to :action => 'index'
+  end
 
 end

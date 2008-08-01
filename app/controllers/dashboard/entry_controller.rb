@@ -9,23 +9,23 @@ class Dashboard::EntryController < DashboardController
     else
       @round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     end
-    
+
     if (@round.nil?)
       @round = Round.find(:first)
     end
-    
+
     @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id], :order => 'team_games.ordering')
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
     @teams_for_round = @incomplete_games.collect {|g| g.team_games}.flatten.collect {|tg| ["#{tg.team.name} (#{tg.card})", tg.team.id]}.sort_by {|array| array.first}
     @rooms_for_round = @incomplete_games.collect {|g| g.room}.sort_by {|r| r.name.to_i || r.name}
   end
-  
+
   def entry_for_round
     index
     render :partial => "enter_game"
   end
-  
+
   def save_game
     if (params[:id])
       begin
@@ -34,7 +34,7 @@ class Dashboard::EntryController < DashboardController
         @game = nil
       end
     end
-    
+
     was_incomplete = @game.nil? || !@game.play_complete?
 
     if params[:round_number].empty?
@@ -49,7 +49,7 @@ class Dashboard::EntryController < DashboardController
       flash[:error] = "You cannot select the same team for both slots."
       redirect_to @game.nil? ? {:action => 'index'} : {:action => 'edit_game', :id => @game.id}
       return false
-    end 
+    end
 
     if params[:score1].to_i == params[:score2].to_i and not params[:forfeit]
       flash[:error] = "Scores cannot be equal in a non-forfeit."
@@ -92,7 +92,7 @@ class Dashboard::EntryController < DashboardController
       tg1.won = false
       tg2.won = true
     end
-    
+
     if not tg1.save
       flash[:error] = tg1.errors.full_messages.join("<br />\n")
       game.destroy if @game.nil?
@@ -126,7 +126,7 @@ class Dashboard::EntryController < DashboardController
         next_tg2.save
       end
     end
-    
+
     if (Game.count(:conditions => ["round_id = ? and (play_complete is null or play_complete != ?)", round.id, true]) == 0)
       round.play_complete = true
       round.save
@@ -220,7 +220,7 @@ class Dashboard::EntryController < DashboardController
           redirect_to :action => 'enter_players', :id => game.id
           player_game.destroy
           player_games.each{|pg| pg.destroy}
-          return false;             
+          return false;
         end
 
         player_games.push player_game
@@ -253,7 +253,7 @@ class Dashboard::EntryController < DashboardController
     end
 
     if total_tossups.values.sum > game.tossups
-      # fail    
+      # fail
       flash[:error] = "More tossups were answered correctly than were asked."
       redirect_to :action => 'enter_players', :id => game.id
       player_games.each{|pg| pg.destroy}
@@ -278,7 +278,7 @@ class Dashboard::EntryController < DashboardController
       end
 
       if total_tossups[team.id] == 0 and bonus_points[team.id] > 0
-        #fail     
+        #fail
         flash[:error] = "Team has bonus points without any correct tossups."
         redirect_to :action => 'enter_players', :id => game.id
         player_games.each{|pg| pg.destroy}
@@ -286,7 +286,7 @@ class Dashboard::EntryController < DashboardController
       elsif total_tossups[team.id] > 0
         bonus_points_per_tossup = (bonus_points[team.id]/total_tossups[team.id])
         if bonus_points_per_tossup < 0.0 or bonus_points_per_tossup > 30.0
-          #fail       
+          #fail
           flash[:error] = "Bonus points per tossup correct is out of range 0-30"
           redirect_to :action => 'enter_players', :id => game.id
           player_games.each{|pg| pg.destroy}
@@ -295,7 +295,7 @@ class Dashboard::EntryController < DashboardController
       end
     end
 
-    game.team_games.each do |tg| 
+    game.team_games.each do |tg|
       tg.update_attributes(:tossups_correct => total_tossups[team.id], :tossup_points => tossup_points[team.id], :bonus_points => bonus_points[team.id])
     end
 
@@ -303,7 +303,7 @@ class Dashboard::EntryController < DashboardController
     game.save
     expire_page :controller => 'statistics', :action => 'personal'
     flash[:notice] = "Individual standings saved."
-    redirect_to :action => 'index'  
+    redirect_to :action => 'index'
   end
 
   # Will list all entered games and link for editing

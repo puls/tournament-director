@@ -1,7 +1,7 @@
 body
 {
 	font-family: "Arial",sans-serif;
-	font-size: 9pt;
+	font-size: 11pt;
 	margin: 20px;
 }
 
@@ -12,7 +12,7 @@ body
 .secondary_name
 {
 	text-transform: uppercase;
-	font-size: 7pt;
+	font-size: 8pt;
 }
 
 table.round,table.standings
@@ -67,7 +67,7 @@ td.number
 {
 	font-family: "Bitstream Vera Sans Mono",monospace;
 	text-align:right;
-	font-size: 8pt;
+	font-size: 10pt;
 	/*	width: 75px;*/
 }
 

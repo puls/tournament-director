@@ -16,7 +16,7 @@
 		<th>Opponent</th>
 		<th>Result</th>
 	</tr>
-	<% for tgame in @team.team_games.select{|tg| tg.game.play_complete?}.sort{|a,b| a.round.number <=> b.round.number} -%>
+	<% for tgame in @team.team_games.select{|tg| tg.game.play_complete?}.sort{|a,b| a.game.round.number <=> b.game.round.number} -%>
 	<tr class="<%= cycle('row1','row2') %>">
 		<td><%= tgame.game.round.number %></td>
 		<% if $tournament.bracketed? -%>
@@ -28,7 +28,7 @@
 		<% if $tournament.tracks_rooms? -%>
 		<td><%= tgame.game.room.name -%>
 		<% end -%>
-		<td><%= link_to(tgame.other_team.name + ($tournament.swiss? ? " (#{tgame.other_tg.card})" : ""), :action => 'team',:id => tgame.other_team.id) -%></td>
+		<td><%= link_to(tgame.other_team.name + ($tournament.swiss? ? " (card #{tgame.other_tg.card})" : ""), :action => 'team',:id => tgame.other_team.id) -%></td>
 		<td>
                         <%= tgame.won? ? "Won" : "Lost" -%>, <%= tgame.points -%> &ndash; <%= tgame.other_tg.points -%>
                         <%= "OT" if tgame.game.overtime? -%>
@@ -63,7 +63,7 @@
 </table>
 
 <% for player in @team.players -%>
-<h4><a id="player_<%= player.id -%>"><%= player.name -%> <%= "(#{player.name})" if $tournament.tracks_years -%></a></h4>
+<h4><a id="player_<%= player.id -%>"><%= player.name -%> <%= "(#{player.name})" if $tournament.includes_years? -%></a></h4>
 <table>
         <tr>
                 <th>Round</th>

@@ -6,7 +6,7 @@ end -%>
 <tr class="<%= cycle('row1','row2') -%>">
   <% if not i.nil? -%><td><%= "#{i}" -%></td><% end -%>
   <td>
-    <%= player_link? ? (link_to player.name, :href => "#player_#{player.id}") : player.name %> <%= "(#{player.year})" if player.year != "" and not player.year.nil? and $tournament.includes_years? -%>
+    <%= player_link ? (link_to player.name, :href => "#player_#{player.id}") : player.name %> <%= "(#{player.year})" if player.year != "" and not player.year.nil? and $tournament.includes_years? -%>
     <%= link_to player.team.name,{:action => 'team',:id => player.team},{:class=>"secondary_name"} if team_name %>
   </td>
   <td class="number"><%= fmt(player.gp) -%></td>

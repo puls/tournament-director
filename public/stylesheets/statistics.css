@@ -79,13 +79,16 @@ th.number
 
 .row2
 {
-	background-color: #574E96;
-	color: #FFF;
+	/*background-color: #574E96;
+	color: #FFF;*/
+	background-color: rgb(210, 210, 210);
 }
 .row1
 {
-	background-color: #FF5;
-	color: #000;
+	/*background-color: #FF5;
+	color: #000;*/
+	color: white;
+	background-color: rgb(0, 64, 128);
 }
 .row0 a {
 	color: #FFF;

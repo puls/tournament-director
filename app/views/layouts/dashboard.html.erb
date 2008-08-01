@@ -15,6 +15,7 @@
     <div style="position: absolute; left: 400px; top: 13px;"><%= $tournament.name unless $tournament.nil? %></div>
 	<%= link_to "Game Entry", :controller => "/dashboard/entry" %>
 	<%= link_to "Game Edits", :controller => "dashboard/entry", :action => "status" -%>
+        <%= link_to "Welcome Control", :controller => "welcome/controls" %>
 	<%= link_to "Team Entry", :controller => "/dashboard/teams" %>
 	<%= link_to "Scheduling", :controller => "/dashboard/scheduling" %>
 	<%= link_to "Configuration", :controller => "/dashboard/configuration", :action => "edit_tournament" %>
