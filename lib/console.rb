@@ -234,7 +234,7 @@ def export(dir)
   end
   
   file = File.new('scores', 'w')
-  Game.find(:all, :order => 'round_id', :include => {:team_games => :team}).each do |g|
+  Game.find(:all, :order => 'round_id', :include => [{:team_games => :team}, :round]).each do |g|
     tg1 = g.team_games.first
     tg2 = g.team_games.last
     file.puts ",#{g.round.number},#{tg1.team.id},#{tg2.team.id},#{tg1.points},#{tg2.points},#{g.tossups}"
@@ -242,7 +242,7 @@ def export(dir)
   
   file = File.new('indstats', 'w')
   (fifteen, ten, negfive) = QuestionType.find(:all, :order => 'value desc')
-  PlayerGame.find(:all, :include => [{:team_game => {:game => :round}}, :player, :stat_lines]).each do |pg|
+  PlayerGame.find(:all, :include => [{:team_game => {:game => [:round, :team_games]}}, :player, :stat_lines]).each do |pg|
     file.print ",#{pg.team_game.game.round.number},#{pg.player.team.id},#{pg.team_game.other_team.id},#{pg.player.name},"
     file.puts "#{pg.team_game.game.tossups},#{pg.tossups_heard},#{pg.stat_line_for(fifteen)},#{pg.stat_line_for(ten)},#{pg.stat_line_for(negfive)}"
   end
