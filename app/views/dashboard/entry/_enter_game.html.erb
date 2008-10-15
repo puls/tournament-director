@@ -55,6 +55,7 @@
     var opposite_team = new Array()
     var room_for_team = new Array()
     var game_for_team = new Array()
+    var latest_bracket_for_team = new Array()
     <% for game in @incomplete_games %>
     <%= "opposite_team[#{game.team_games[0].team.id}] = #{game.team_games[1].team.id}" %>
     <%= "opposite_team[#{game.team_games[1].team.id}] = #{game.team_games[0].team.id}" %>
@@ -62,6 +63,9 @@
     <%= "room_for_team[#{game.team_games[1].team.id}] = #{game.room.id}" %>
     <%= "game_for_team[#{game.team_games[0].team.id}] = #{game.id}" %>
     <%= "game_for_team[#{game.team_games[1].team.id}] = #{game.id}" %>
+    <% end %>
+    <% for bracket_info in @latest_bracket_for_team %>
+    <%= "latest_bracket_for_team[#{bracket_info[0].id}] = #{bracket_info[1].id}" %>
     <% end %>
     function team1_changed() {
     	var team1 = $F('team1')
@@ -79,6 +83,13 @@
                 break
     		}
     	}
+        var brackets = $('bracket').options
+        for (var index = 0; index < brackets.length; index++) {
+                if (brackets[index].value == latest_bracket_for_team[team1]) {
+                        $('bracket').selectedIndex = index
+                break
+                }
+        }
     	$('id').value = game_for_team[team1]
     }
     team1_changed();

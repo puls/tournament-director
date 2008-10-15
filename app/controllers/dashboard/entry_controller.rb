@@ -14,16 +14,50 @@ class Dashboard::EntryController < DashboardController
       @round = Round.find(:first)
     end
 
-    @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id], :order => 'team_games.ordering')
+    if(@round.nil?)
+      @round = Round.create(:number => 1)
+    end
+
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
 
-    @teams_for_round = @incomplete_games.collect {|g| g.team_games}.flatten.collect {|tg| ["#{tg.team.name} (#{tg.card})", tg.team.id]}.sort_by {|array| array.first}
-    @rooms_for_round = @incomplete_games.collect {|g| g.room}.sort_by {|r| r.name.to_i || r.name}
+    if $tournament.uses_cards? then
+      @incomplete_games = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete is null or play_complete != ?) and round_id = ?", true, @round.id], :order => 'team_games.ordering')
+#      @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
+
+      @teams_for_round = @incomplete_games.collect {|g| g.team_games}.flatten.collect {|tg| ["#{tg.team.name} (#{tg.card})", tg.team.id]}.sort_by {|array| array.first}
+      @rooms_for_round = @incomplete_games.collect {|g| g.room}.sort_by {|r| r.name.to_i || r.name}
+    else
+      @all_teams = Team.find(:all, :order => 'teams.name', :include => [{:team_games => {:game => :bracket}}])
+      @games_done_for_round = Game.find(:all, :include => [:room, {:team_games => :team}], :conditions => ["(play_complete = ?) and round_id = ?", true, @round.id])
+      @teams_done_for_round = @games_done_for_round.collect {|g| g.team_games}.flatten.collect {|tg| tg.team}
+
+      for team in @teams_done_for_round
+        @all_teams.delete team
+      end
+
+      @teams_for_round = @all_teams.collect {|t| ["#{t.name}", t.id]}.sort_by {|array| array.first}
+
+      @rooms_for_round = Room.find(:all)
+
+      for game in @games_done_for_round
+        @rooms_for_round.delete game.room
+      end
+
+      @rooms_for_round.sort_by {|r| r.name.to_i || r.name}
+      @incomplete_games = []
+
+      @latest_bracket_for_team = @all_teams.collect{|team| [team, team.team_games.collect {|tg| tg.game}.sort_by {|g| g.round.number }.last.bracket]}
+    end
   end
 
   def entry_for_round
     index
     render :partial => "enter_game"
+  end
+
+  def rooms_for_round
+    @rooms = Room.find(:all)
+    render :partial => "room_option", :collection => @rooms
   end
 
   def save_game
