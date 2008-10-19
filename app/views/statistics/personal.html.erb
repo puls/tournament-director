@@ -1,9 +1,14 @@
 <h2>Individual Standings &mdash; Round <%= @max_round %></h2>
-
+<% if $tournament.count_playoffs_for_personal? then %>
+<strong>Note:</strong> Playoff games are counted for determining personal statistics.
+<% else %>
+<strong>Note:</strong> Playoff games are not counted for determining personal statistics.  
+<% end %>
 <table class="standings">
 	<tr>
 		<th colspan="2">PPG Leaders</th>
 		<th class="number">GP</th>
+		<th class="number">TUH</th>
 		<% for type in @types %>
 		<th class="number"><%= type.value %></th>
 		<% end %>
@@ -11,6 +16,7 @@
 		<th class="number">PPG</th>
 		<th class="number">PP20H</th>
 		<th class="number">TU/neg</th>
+		<th class="number">neg/20H</th>
 	</tr>
 	<% i = 0 %>
         <%= render :partial => 'player', :collection => @players_tuh_cut.collect{|p| [p, i+=1]}, :locals => {:types => @types, :team_name => true, :player_link => false} -%>

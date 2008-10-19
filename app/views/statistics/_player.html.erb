@@ -6,10 +6,11 @@ end -%>
 <tr class="<%= cycle('row1','row2') -%>">
   <% if not i.nil? -%><td><%= "#{i}" -%></td><% end -%>
   <td>
-    <%= player_link ? (link_to player.name, :href => "#player_#{player.id}") : player.name %> <%= "(#{player.year})" if player.year != "" and not player.year.nil? and $tournament.includes_years? -%>
+    <%= player_link ? (link_to player.name, {:anchor => "player_#{player.id}"}) : player.name %> <%= "(#{player.year})" if player.year != "" and not player.year.nil? and $tournament.includes_years? -%>
     <%= link_to player.team.name,{:action => 'team',:id => player.team},{:class=>"secondary_name"} if team_name %>
   </td>
   <td class="number"><%= fmt(player.gp) -%></td>
+  <td class="number"><%= fmt(player.tuh) -%></td>
   <% for type in types -%>
   <td class="number"><%= player.answered(type) -%></td>
   <% end -%>
@@ -17,5 +18,6 @@ end -%>
   <td class="number"><%= fmt(player.ppg) -%></td>
   <td class="number"><%= fmt(player.pp20) -%></td>
   <td class="number"><%= fmt(player.tu_neg) -%></td>
+  <td class="number"><%= fmt(player.neg20) -%></td>
 </tr>
 <% player.save_if_changed %>

@@ -8,12 +8,16 @@ class StatisticsController < ApplicationController
   end
 
   def standings
-    @brackets = Bracket.find(:all).push nil
+    @brackets = Bracket.find(:all, :order => 'brackets.ordering asc', :include => [{:games => [:team_games, :teams]}]).push nil
     @allteams = Team.find(:all, :include => [{:team_games => {:game => :bracket}}, :games, :school])
     @allteams.sort!{|a,b| sort_teams(a,b,nil)}
     round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     if (round.nil?)
       round = Round.find(:first, :order => 'number desc')
+    end
+    
+    if not $tournament.uses_cards? and round.number != 1 and not round.play_complete? then
+      round = Round.find(:first, :conditions => ['number = ?', round.number - 1])
     end
 
     @max_round = round.number
@@ -90,10 +94,15 @@ class StatisticsController < ApplicationController
   end
 
   def sort_negs(a,b)
-    if a.tu_neg.to_f == b.tu_neg.to_f
-      b.neg20 <=> a.neg20
+    #if a.tu_neg.to_f == b.tu_neg.to_f
+    #  b.neg20 <=> a.neg20
+    #else
+    #  b.tu_neg.to_f <=> a.tu_neg.to_f
+    #end
+    if a.neg20.to_f == b.neg20.to_f
+      b.tu_neg <=> a.tu_neg
     else
-      b.tu_neg.to_f <=> a.tu_neg.to_f
+      b.neg20.to_f <=> a.neg20.to_f
     end
   end
 

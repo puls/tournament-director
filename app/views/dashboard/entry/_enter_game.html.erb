@@ -64,8 +64,8 @@
     <%= "game_for_team[#{game.team_games[0].team.id}] = #{game.id}" %>
     <%= "game_for_team[#{game.team_games[1].team.id}] = #{game.id}" %>
     <% end %>
-    <% for bracket_info in @latest_bracket_for_team %>
-    <%= "latest_bracket_for_team[#{bracket_info[0].id}] = #{bracket_info[1].id}" %>
+    <% for bracket_info in @latest_bracket_for_team -%>
+    <%= "latest_bracket_for_team[#{bracket_info[0].id}] = #{bracket_info[1].id}" unless bracket_info[1].nil? %>
     <% end %>
     function team1_changed() {
     	var team1 = $F('team1')
@@ -83,6 +83,7 @@
                 break
     		}
     	}
+    	<% if $tournament.bracketed? then -%>
         var brackets = $('bracket').options
         for (var index = 0; index < brackets.length; index++) {
                 if (brackets[index].value == latest_bracket_for_team[team1]) {
@@ -90,6 +91,7 @@
                 break
                 }
         }
+      <% end -%>
     	$('id').value = game_for_team[team1]
     }
     team1_changed();

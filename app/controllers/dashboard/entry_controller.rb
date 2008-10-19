@@ -11,11 +11,15 @@ class Dashboard::EntryController < DashboardController
     end
 
     if (@round.nil?)
-      @round = Round.find(:first)
+      @round = Round.find(:first, :order => 'number desc')
     end
 
     if(@round.nil?)
       @round = Round.create(:number => 1)
+    end
+    
+    if not params['round'] and not $tournament.uses_cards? and @round.number != 1 and not @round.play_complete? then
+      @round = Round.find(:first, :conditions => ['number = ?', @round.number - 1])
     end
 
     @complete_games = Game.find(:all, :order => 'teams.name', :include => [:round, {:team_games => :team}], :conditions => ["games.play_complete is not null and games.play_complete = ? and (games.entry_complete is null or games.entry_complete != ?)", true, true])
@@ -46,7 +50,11 @@ class Dashboard::EntryController < DashboardController
       @rooms_for_round.sort_by {|r| r.name.to_i || r.name}
       @incomplete_games = []
 
-      @latest_bracket_for_team = @all_teams.collect{|team| [team, team.team_games.collect {|tg| tg.game}.sort_by {|g| g.round.number }.last.bracket]}
+      if $tournament.bracketed? then
+        @latest_bracket_for_team = @all_teams.collect{|team| [team, team.team_games.collect {|tg| tg.game}.sort_by {|g| g.round.number }.last]}.collect{|team| [team[0], team[1].nil? ? nil : team[1].bracket]}
+      else
+        @latest_bracket_for_team = []
+      end
     end
   end
 
@@ -57,7 +65,7 @@ class Dashboard::EntryController < DashboardController
 
   def rooms_for_round
     @rooms = Room.find(:all)
-    render :partial => "room_option", :collection => @rooms
+    render :partial => "room_option", :collection => @rooms, :locals => {:selected => params[:selected]}
   end
 
   def save_game
@@ -220,14 +228,15 @@ class Dashboard::EntryController < DashboardController
 
     # Parse the input
 
-    game = Game.find(params[:id])
+    game = Game.find(params[:id], :include => [{:team_games => :team}])
     teams = params[:team]
     bothteams = Array.new
     team_games = Hash.new
     player_games = Array.new
     for index in teams.keys
       team = game.teams.find(teams[index])
-      team_game = TeamGame.find_by_game_id_and_team_id(game.id, team.id)
+#      team_game = TeamGame.find_by_game_id_and_team_id(game.id, team.id)
+      team_game = game.team_games.select{|tg| tg.team == team}.first
       team_games[team.id] = team_game
       for player_line in params["teamData"][index].values
         fields = player_line.split(",")
@@ -330,7 +339,7 @@ class Dashboard::EntryController < DashboardController
     end
 
     game.team_games.each do |tg|
-      tg.update_attributes(:tossups_correct => total_tossups[team.id], :tossup_points => tossup_points[team.id], :bonus_points => bonus_points[team.id])
+      tg.update_attributes(:tossups_correct => total_tossups[tg.team.id], :tossup_points => tossup_points[tg.team.id], :bonus_points => bonus_points[tg.team.id])
     end
 
     game.entry_complete = true

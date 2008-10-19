@@ -9,7 +9,9 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <% if $tournament.includes_years? then %>
                 <th>Year</th>
+                <% end -%>
                 <th>Future College</th>
                 <th></th>
             </tr>

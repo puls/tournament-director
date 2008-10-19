@@ -11,11 +11,13 @@
                 <%= check_box "tournament", "powers" -%> uses power marks<br />
                 <%= check_box "tournament", "timed" -%> is timed<br />
                 <%= check_box "tournament", "bracketed",{:onclick => 'toggle_brackets()'} -%> uses multiple brackets<br />
+                <%= check_box "tournament", "uses_cards" -%> uses cards<br />
                 <%= check_box "tournament", "swiss" -%> reassigns cards after every round<br />
                 <%= check_box "tournament", "ping_stats" -%> automatically submits to <a href="http://www.quizstats.org">quizstats.org</a><br />
                 <%= check_box "tournament", "includes_years" -%> tracks years of players<br />
-                <%= check_box "tournament", "uses_cards" -%> uses card system<br />
                 <%= check_box "tournament", "tracks_rooms" -%> tracks rooms of games<br />
+                <%= check_box "tournament", "playoffs_holdover_records" -%> playoffs holdover records<br />
+                <%= check_box "tournament", "count_playoffs_for_personal" -%> count playoff games for personal stats<br />
                 <%= check_box "tournament", "ping_contact" -%> automatically submits to <a href="http://www.fraughtmachine.com/efcontact/">Entering Freshman Contact List</a> (high school tournaments)
             </td>
         </tr>

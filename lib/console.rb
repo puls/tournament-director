@@ -249,3 +249,27 @@ def export(dir)
   
   return "success"
 end
+
+def fix_tossup_and_bonus_points
+  fix_duplicate_player_games
+  games = Game.find(:all, :include => [{:team_games => {:player_games => {:stat_lines => :question_type}}}])
+  for game in games
+    for team_game in game.team_games
+      tossups_correct = 0
+      tossup_points = 0
+      bonus_points = 0
+      for player_game in team_game.player_games
+        for stat_line in player_game.stat_lines
+          if stat_line.question_type.value > 0 then
+            tossups_correct = tossups_correct + stat_line.number
+          end
+          tossup_points = tossup_points + (stat_line.number * stat_line.question_type.value)
+        end
+      end
+      
+      bonus_points = team_game.points - tossup_points
+      team_game.update_attributes(:tossups_correct => tossups_correct, :tossup_points => tossup_points, :bonus_points => bonus_points)
+    end
+  end
+end
+

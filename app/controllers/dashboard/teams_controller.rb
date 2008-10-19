@@ -32,7 +32,9 @@ class Dashboard::TeamsController < DashboardController
         next if name.empty?
         player = Player.find_or_create_by_name_and_team_id(name, team.id)
         players_to_delete.delete(player)
-        player.year = params["team#{team.id}_years"][index]
+        if $tournament.includes_years? then
+          player.year = params["team#{team.id}_years"][index]
+        end
         player.future_school = params["team#{team.id}_future_schools"][index]
         player.save
       end

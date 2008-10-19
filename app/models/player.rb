@@ -12,6 +12,10 @@ class Player < ActiveRecord::Base
   validates_numericality_of :year, :only_integer => true, :allow_nil => true
   validates_numericality_of :qpin, :only_integer => true, :allow_nil => true
 
+  def non_extra_player_games
+    player_games.select{|pg| not pg.team_game.game.extragame?}
+  end
+
   def after_find
     if not stats_cache.is_a? Hash
       self.stats_cache = {}
@@ -19,17 +23,26 @@ class Player < ActiveRecord::Base
   end
 
   def gp(arg = nil)
-    player_games.inject(0) do |sum, pg|
+    pgs = $tournament.count_playoffs_for_personal? ? non_extra_player_games : non_extra_player_games.select{|pg| not pg.team_game.game.playoffs?}
+    pgs.inject(0) do |sum, pg|
       sum + (pg.tossups_heard.to_f / pg.team_game.game.tossups.to_f)
     end
   end
 
   def answered(type)
-    stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).select{|sl| not sl.player_game.team_game.game.playoffs? and not sl.player_game.team_game.game.extragame?}.collect{|sl| sl.number}.sum || 0
+    if $tournament.count_playoffs_for_personal? then
+      stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).select{|sl| not sl.player_game.team_game.game.extragame?}.collect{|sl| sl.number}.sum || 0
+    else
+      stat_lines.find(:all, :conditions => ['question_type_id = ?', type.id]).select{|sl| not sl.player_game.team_game.game.extragame? and not sl.player_game.team_game.game.playoffs?}.collect{|sl| sl.number}.sum || 0
+    end
   end
 
   def tuh(arg = nil)
-    player_games.select{|pg| not pg.team_game.game.playoffs? and not pg.team_game.game.extragame?}.collect{|pg| pg.tossups_heard}.sum || 0
+    if $tournament.count_playoffs_for_personal? then
+      non_extra_player_games.collect{|pg| pg.tossups_heard}.sum || 0    
+    else
+      non_extra_player_games.select{|pg| not pg.team_game.game.playoffs?}.collect{|pg| pg.tossups_heard}.sum || 0
+    end
   end
 
   def points(arg = nil)

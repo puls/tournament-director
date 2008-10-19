@@ -1,4 +1,13 @@
 <h2>Current Standings &mdash; Round <%= @max_round %></h2>
+<% if $tournament.bracketed? then %>
+<% if $tournament.playoffs_holdover_records? then %>
+<strong>Note:</strong> Playoff bracket statistics include carried-over 
+non-playoff games against teams in the same playoff bracket.
+<% else %>
+<strong>Note:</strong> Playoff bracket statistics do not include carried-over 
+non-playoff games.
+<% end %>
+<% end -%>
 <% for bracket in @brackets -%>
 <% count = 0 -%>
 <table class="standings">

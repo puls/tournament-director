@@ -21,5 +21,9 @@ class TeamGame < ActiveRecord::Base
   def other_tg
     game.team_games[ordering % 2]
   end
+  
+  def ppb
+    bonus_points.to_f / tossups_correct.to_f
+  end
 
 end

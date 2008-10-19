@@ -1,6 +1,8 @@
 <tr>
     <td><%= text_field_tag "team#{team.id}_names[]", player.nil? ? "" : player.name, {:size => 50} %></td>
+    <% if $tournament.includes_years? then %>
     <td><%= text_field_tag "team#{team.id}_years[]", player.nil? ? "" : player.year, {:size => 5} %></td>
+    <% end -%>
     <td><%= text_field_tag "team#{team.id}_future_schools[]", player.nil? ? "" : player.future_school, {:size => 20} %></td>
     <td><%= link_to_function('remove', nil, {:class => 'button'}) { |page| page << "Element.remove(this.parentNode.parentNode)" } %></td>
 </tr>

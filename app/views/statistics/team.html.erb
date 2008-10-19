@@ -15,6 +15,9 @@
                 <% end -%>
 		<th>Opponent</th>
 		<th>Result</th>
+		<th>TU Correct</th>
+		<th>TU/Bonus Pts</th>
+		<th>PPB</th>
 	</tr>
 	<% for tgame in @team.team_games.select{|tg| tg.game.play_complete?}.sort{|a,b| a.game.round.number <=> b.game.round.number} -%>
 	<tr class="<%= cycle('row1','row2') %>">
@@ -36,6 +39,15 @@
                         <%= "(playoff)" if tgame.game.playoffs? -%>
                         <%= "(extra)" if tgame.game.extragame? -%>
                 </td>
+    <% if tgame.tossups_correct.nil? then %>
+    <td>n/a</td>
+    <td>n/a</td>
+    <td>n/a</td>
+    <% else %>
+    <td><%= tgame.tossups_correct -%> / <%= tgame.game.tossups -%></td>
+    <td><%= tgame.tossup_points -%> / <%= tgame.bonus_points -%></td>
+    <td><%= fmt(tgame.ppb) -%></td>
+    <% end -%>
 	</tr>
 	<% end -%>
 	<tr>
@@ -51,13 +63,15 @@
 	<tr>
 		<th>Player Name</th>
 		<th class="number">GP</th>
+		<th class="number">TUH</th>
 		<% for type in @types %>
 		<th class="number"><%= type.value %></th>
 		<% end %>
 		<th class="number">Pts</th>
 		<th class="number">PPG</th>
 		<th class="number">PP20H</th>
-		<th class="number">TU/-5</th>
+		<th class="number">TU/neg</th>
+		<th class="number">neg/20H</th>
 	</tr>
 	<%= render :partial => 'player', :collection => @team.players, :locals => {:types => @types, :team_name => false, :player_link => true} -%>
 </table>

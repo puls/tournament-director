@@ -15,25 +15,44 @@ class Team < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :school_id
 
+  def opponents_in_bracket(bracket)
+    bracket.teams.clone.collect{|team| team.id}
+  end
 
   def wins(bracket = nil)
-	if bracket.nil?
-		team_games.clone.select{|g| g.game.play_complete? and g.won?}.length
-	else
-		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket and g.won?}.length
-	end
+	  if bracket.nil?
+	  	team_games.select{|g| g.game.play_complete? and g.won?}.length
+	  else
+	    if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|g| g.game.play_complete? and g.won? and (g.game.bracket == bracket or opponents_in_bracket(bracket).include? g.other_team.id)}.length
+	    else
+	  	  team_games.select{|g| g.game.play_complete? and g.game.bracket == bracket and g.won?}.length
+	  	end
+	  end
   end
 
   def losses(bracket = nil)
-	if bracket.nil?
-		team_games.clone.select{|g| g.game.play_complete? and not g.won?}.length
-	else
-		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket and not g.won?}.length
-	end
+  	if bracket.nil?
+  		team_games.select{|g| g.game.play_complete? and not g.won?}.length
+	  else
+	    if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|g| g.game.play_complete? and not g.won? and (g.game.bracket == bracket or opponents_in_bracket(bracket).include? g.other_team.id)}.length
+	  	else
+	  	  team_games.select{|g| g.game.play_complete? and g.game.bracket == bracket and not g.won?}.length
+	  	end
+	  end
   end
 
   def num_games(bracket = nil)
-    games.select{|g| g.play_complete? and g.bracket == bracket}.length
+    if bracket.nil? then
+      games.select{|g| g.play_complete?}.length
+    else
+      if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|g| g.game.play_complete? and (g.game.bracket == bracket or opponents_in_bracket(bracket).include? g.other_team.id)}.length
+	    else
+        games.select{|g| g.play_complete? and g.bracket == bracket}.length
+      end
+    end
   end
 
   def win_pct(bracket = nil)
@@ -47,19 +66,27 @@ class Team < ActiveRecord::Base
   end
 
   def pf(bracket = nil)
-	if bracket.nil?
-		team_games.clone.select{|g| g.game.play_complete?}.inject(0){|sum, tg| sum + tg.points} || 0
-	else
-		team_games.clone.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.points}.sum || 0
-	end
+	  if bracket.nil?
+	  	team_games.select{|g| g.game.play_complete?}.inject(0){|sum, tg| sum + tg.points} || 0
+	  else
+	    if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|g| g.game.play_complete? and (g.game.bracket == bracket or opponents_in_bracket(bracket).include? g.other_team.id)}.collect{|g| g.points}.sum || 0
+	    else
+	  	  team_games.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.points}.sum || 0
+	  	end
+	  end
   end
 
   def tuh(bracket = nil)
-	if bracket.nil?
-		team_games.select{|g| g.game.play_complete?}.collect{|g| g.game.tossups}.sum || 0
-	else
-		team_games.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum || 0
-	end
+	  if bracket.nil?
+	    	team_games.select{|g| g.game.play_complete?}.collect{|g| g.game.tossups}.sum || 0
+	  else
+	    if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|g| g.game.play_complete? and (g.game.bracket == bracket or opponents_in_bracket(bracket).include? g.other_team.id)}.collect{|g| g.game.tossups}.sum || 0
+	    else
+  	  	team_games.select{|g| g.game.play_complete? and g.game.bracket == bracket}.collect{|g| g.game.tossups}.sum || 0
+  	  end
+	  end
   end
 
   def pf_per(bracket = nil)
@@ -74,7 +101,11 @@ class Team < ActiveRecord::Base
     if bracket.nil?
       team_games.select{|tg| tg.game.play_complete?}.inject(0){|sum, tg| sum + tg.game.team_games[tg.ordering % 2].points} || 0
     else
-      team_games.select{|tg| tg.game.play_complete? and tg.game.bracket == bracket}.collect{|tg| tg.game.team_games[tg.ordering % 2].points}.sum || 0
+      if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|tg| tg.game.play_complete? and (tg.game.bracket == bracket or opponents_in_bracket(bracket).include? tg.other_team.id)}.collect{|tg| tg.other_tg.points}.sum || 0
+	    else
+        team_games.select{|tg| tg.game.play_complete? and tg.game.bracket == bracket}.collect{|tg| tg.other_tg.points}.sum || 0
+      end
     end
   end
 
@@ -95,19 +126,27 @@ class Team < ActiveRecord::Base
   end
 
   def bp(bracket = nil)
-	if bracket.nil?
-		team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete?}.collect{|tg| tg.bonus_points}.sum || 0
-	else
-		team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.bonus_points}.sum || 0
-	end
+	  if bracket.nil?
+	  	team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete?}.collect{|tg| tg.bonus_points}.sum || 0
+	  else
+	    if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete? and (tg.game.bracket == bracket or opponents_in_bracket(bracket).include? tg.other_team.id)}.collect{|tg| tg.bonus_points}.sum || 0
+	    else
+	  	  team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.bonus_points}.sum || 0
+	  	end
+	  end
   end
 
   def tu_correct(bracket = nil)
-	if bracket.nil?
-		team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete?}.collect{|tg| tg.tossups_correct}.sum || 0
-	else
-		team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.tossups_correct}.sum || 0
-	end
+	  if bracket.nil?
+	  	team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete?}.collect{|tg| tg.tossups_correct}.sum || 0
+	  else
+	    if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
+	      team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete? and (tg.game.bracket == bracket or opponents_in_bracket(bracket).include? tg.other_team.id)}.collect{|tg| tg.tossups_correct}.sum || 0
+	    else
+	  	  team_games.select{|tg| tg.game.play_complete? and tg.game.entry_complete? and tg.game.bracket == bracket}.collect{|tg| tg.tossups_correct}.sum || 0
+	  	end
+	  end
   end
 
   def ppbonus(bracket = nil)

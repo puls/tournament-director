@@ -1,5 +1,5 @@
 <tr>
-  <td><%= player_game.game.round.number -%></td>
+  <td><%= player_game.team_game.game.round.number -%></td>
   <td><%= player_game.tossups_heard -%></td>
   <% for type in types -%>
   <td class="number"><%= player_game.stat_line_for(type) -%></td>
