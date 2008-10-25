@@ -16,7 +16,9 @@ end -%>
   <td class="number"><%= player.answered(type) -%></td>
   <% end -%>
   <td class="number"><%= fmt(player.npg) -%></td>
+<% if $tournament.timed? %>
   <td class="number"><%= fmt(player.neg20) -%></td>
+<% end %>
   <td class="number"><%= fmt(player.tu_neg) -%></td>
 </tr>
 <% player.save_if_changed %>
