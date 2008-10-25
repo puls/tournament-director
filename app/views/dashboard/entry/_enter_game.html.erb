@@ -24,7 +24,7 @@
         <%= hidden_field_tag 'bracket' -%>
         <% end %>
         <td rowspan="2">
-            <%= text_field_tag 'tossups', "", {:size => 2,:tabindex => 9} -%>
+            <%= text_field_tag 'tossups', $tournament.questions_per_round, {:size => 2,:tabindex => 9} -%>
         </td>
         <% if $tournament.tracks_rooms %>
         <td rowspan="2">

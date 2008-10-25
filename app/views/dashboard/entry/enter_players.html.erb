@@ -80,6 +80,7 @@ var names = new Array(
 	new Array(<%= @team1.players.collect {|p| '"' + p.name.gsub(/"/,'\\"') + '"'}.join(",") %>),
 	new Array(<%= @team2.players.collect {|p| '"' + p.name.gsub(/"/,'\\"') + '"'}.join(",") %>)
 );
+var remainingTossups = new Array(4 * tossupsHeard, 4 * tossupsHeard);
 var teams = new Array("<%= @team1.id %>","<%= @team2.id %>");
 
 Element.hide('entryRow2')
@@ -155,7 +156,7 @@ function autocompletePower(firstBox, evt) {
 function checkTossups(inputField) {
 	var nameField = $("name" + currentTeam);
 	if (inputField.value == '' && nameField.value != '')
-		inputField.value = tossupsHeard;
+		inputField.value = Math.min(tossupsHeard, remainingTossups[currentTeam - 1]);
 }
 
 function checkComplete(sender) {
@@ -197,6 +198,7 @@ function advanceCurrentPlayer() {
 
 	teamData[currentTeam - 1][currentPlayer] =
 		new Array(nameField.value,1 * tossups.value)
+	remainingTossups[currentTeam - 1] -= 1 * tossups.value;
 	var total = 0;
 	<% @types.each_with_index do |type,i| %>
 	teamData[currentTeam - 1][currentPlayer].push(1 * fields[<%= i %>].value)
