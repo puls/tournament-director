@@ -20,7 +20,9 @@ non-playoff games.
 		<th class="number">(per game)</th>
 		<th class="number">PA</th>
 		<th class="number">(per game)</th>
+		<% if $tournament.timed? %>
 		<th class="number">PP20H</th>
+		<% end %>
 		<th class="number">P/Bonus</th>
 	</tr>
 	<% for team in (bracket.nil? ? @allteams : @teams[bracket]) -%>
@@ -41,7 +43,9 @@ non-playoff games.
 		<td class="number"><%= fmt(team.pf_per(bracket)) %></td>
 		<td class="number"><%= team.pa(bracket) %></td>
 		<td class="number"><%= fmt(team.pa_per(bracket)) %></td>
+		<% if $tournament.timed? %>
 		<td class="number"><%= fmt(team.pp20(bracket)) %></td>
+		<% end %>
 		<td class="number"><%= fmt(team.ppbonus(bracket)) %></td>
 	</tr>
 	<% end -%>

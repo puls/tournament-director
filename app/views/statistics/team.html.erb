@@ -1,5 +1,7 @@
 <h2>Stats for <%= @team.name %></h2>
+<% if $tournament.timed? %>
 <p>Team has heard <b><%= @team.tuh(nil) %></b> tossups.</p>
+<% end %>
 <h3>Match Summary</h3>
 <table class="standings">
 	<tr>
@@ -63,13 +65,17 @@
 	<tr>
 		<th>Player Name</th>
 		<th class="number">GP</th>
+		<% if $tournament.timed? %>
 		<th class="number">TUH</th>
+		<% end %>
 		<% for type in @types %>
 		<th class="number"><%= type.value %></th>
 		<% end %>
 		<th class="number">Pts</th>
 		<th class="number">PPG</th>
+		<% if $tournament.timed? %>
 		<th class="number">PP20H</th>
+		<% end %>
 		<th class="number">TU/neg</th>
 		<th class="number">neg/20H</th>
 	</tr>

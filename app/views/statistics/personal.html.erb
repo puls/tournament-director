@@ -8,13 +8,17 @@
 	<tr>
 		<th colspan="2">PPG Leaders</th>
 		<th class="number">GP</th>
+		<% if $tournament.timed? %>
 		<th class="number">TUH</th>
+		<% end %>
 		<% for type in @types %>
 		<th class="number"><%= type.value %></th>
 		<% end %>
 		<th class="number">Pts</th>
 		<th class="number">PPG</th>
+		<% if $tournament.timed? %>
 		<th class="number">PP20H</th>
+		<% end %>
 		<th class="number">TU/neg</th>
 		<th class="number">neg/20H</th>
 	</tr>
@@ -30,7 +34,9 @@
 		<th class="number"><%= type.value %></th>
 		<% end %>
 		<th class="number">neg/game</th>
+		<% if $tournament.timed? %>
 		<th class="number">neg/20H</th>
+		<% end %>
 		<th class="number">TU/neg</th>
 	</tr>
 	<% i = 0 %>

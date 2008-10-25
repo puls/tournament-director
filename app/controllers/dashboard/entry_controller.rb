@@ -5,7 +5,7 @@ class Dashboard::EntryController < DashboardController
 
   def index
     if params['round']
-      @round = Round.find_by_number(params['round'])
+      @round = Round.find_or_create_by_number(params['round'])
     else
       @round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
     end

@@ -20,11 +20,13 @@
 			<% end %>
 		</tr>
         <% end %>
+		<% if $tournament.tracks_rooms? %>
         <tr class="row3">
             <td colspan="2">
                 Room: <%= game.room.name %>
             </td>
         </tr>
+		<% end %>
 	</table>
 <% end -%>
 <% if @byes[round.id].size > 0 %>

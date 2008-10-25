@@ -10,13 +10,17 @@ end -%>
     <%= link_to player.team.name,{:action => 'team',:id => player.team},{:class=>"secondary_name"} if team_name %>
   </td>
   <td class="number"><%= fmt(player.gp) -%></td>
+	<% if $tournament.timed? %>
   <td class="number"><%= fmt(player.tuh) -%></td>
+	<% end %>
   <% for type in types -%>
   <td class="number"><%= player.answered(type) -%></td>
   <% end -%>
   <td class="number"><%= player.points -%></td>
   <td class="number"><%= fmt(player.ppg) -%></td>
+  <% if $tournament.timed? %>
   <td class="number"><%= fmt(player.pp20) -%></td>
+  <% end %>
   <td class="number"><%= fmt(player.tu_neg) -%></td>
   <td class="number"><%= fmt(player.neg20) -%></td>
 </tr>
