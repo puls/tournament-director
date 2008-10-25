@@ -34,12 +34,15 @@
 		<td><%= tgame.game.room.name -%>
 		<% end -%>
 		<td><%= link_to(tgame.other_team.name + ($tournament.swiss? ? " (card #{tgame.other_tg.card})" : ""), :action => 'team',:id => tgame.other_team.id) -%></td>
-		<td>
-                        <%= tgame.won? ? "Won" : "Lost" -%>, <%= tgame.points -%> &ndash; <%= tgame.other_tg.points -%>
+		<td><%= tgame.won? ? "Won" : "Lost" -%>,
+			<% if tgame.game.forfeit? -%>
+				by forfeit
+			<% else -%>
+                        <%= tgame.points -%> &ndash; <%= tgame.other_tg.points -%>
                         <%= "OT" if tgame.game.overtime? -%>
-                        <%= "forfeit" if tgame.game.forfeit? -%>
                         <%= "(playoff)" if tgame.game.playoffs? -%>
                         <%= "(extra)" if tgame.game.extragame? -%>
+			<% end %>
                 </td>
     <% if tgame.tossups_correct.nil? then %>
     <td>n/a</td>

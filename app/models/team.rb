@@ -45,12 +45,12 @@ class Team < ActiveRecord::Base
 
   def num_games(bracket = nil)
     if bracket.nil? then
-      games.select{|g| g.play_complete?}.length
+      games.select{|g| g.play_complete? and !g.forfeit?}.length
     else
       if $tournament.playoffs_holdover_records? and bracket.playoff_bracket? then
 	      team_games.select{|g| g.game.play_complete? and (g.game.bracket == bracket or opponents_in_bracket(bracket).include? g.other_team.id)}.length
 	    else
-        games.select{|g| g.play_complete? and g.bracket == bracket}.length
+        games.select{|g| g.play_complete? and !g.forfeit? and g.bracket == bracket}.length
       end
     end
   end
