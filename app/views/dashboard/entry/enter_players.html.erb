@@ -243,7 +243,7 @@ function computeTotals(team) {
 	<% @types.each_with_index do |type,i| %>
 	$('total<%= type.value %>_' + team).innerHTML = totals[<%= i %>];
 	<% end %>
-	$("totalpts_" + team).innerHTML = totals[3];
+	$("totalpts_" + team).innerHTML = totals[totals.length-1];
 }
 
 function confirmBonus(team) {
@@ -274,13 +274,13 @@ function startEditMode() {
 	
 	var table = $("players1");
 	for (var i = 1;i < table.rows.length - 1;i++) {
-		var newCell = table.rows[i].insertCell(6);
+		var newCell = table.rows[i].insertCell(3 + questionTypes.length);
 		newCell.innerHTML = "<input type=\"button\" onclick=\"edit(1," +
 			(i - 1) + ")\" value=\"edit\" />";
 	}
 	table = $("players2");
 	for (var i = 1;i < table.rows.length - 1;i++) {
-		var newCell = table.rows[i].insertCell(6);
+		var newCell = table.rows[i].insertCell(3 + questionTypes.length);
 		newCell.innerHTML = "<input type=\"button\" onclick=\"edit(2," +
 			(i - 1) + ")\" value=\"edit\" />";
 	}
