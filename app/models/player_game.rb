@@ -15,6 +15,10 @@ class PlayerGame < ActiveRecord::Base
       0
     end
   end
+  
+  def round_number
+    team_game.game.round.number
+  end
 
   def points(types = nil)
     if types.nil?

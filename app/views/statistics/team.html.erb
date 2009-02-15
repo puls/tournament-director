@@ -96,6 +96,6 @@
                 <% end -%>
                 <th class="number">Pts</th>
         </tr>
-        <%= render :partial => 'player_game', :collection => player.player_games, :locals => {:types => @types} -%>
+        <%= render :partial => 'player_game', :collection => player.player_games.sort_by(&:round_number), :locals => {:types => @types} -%>
 </table>
 <% end -%>
