@@ -174,10 +174,10 @@ class Dashboard::EntryController < DashboardController
       round.save
     end
 
-    expire_page :controller => 'statistics', :action => 'standings'
-    expire_page :controller => 'statistics', :action => 'team', :id => tg1.team.id
-    expire_page :controller => 'statistics', :action => 'team', :id => tg2.team.id
-    expire_page :controller => 'statistics', :action => 'scoreboard'
+    expire_page :controller => '/statistics', :action => 'standings'
+    expire_page :controller => '/statistics', :action => 'team', :id => tg1.team.id
+    expire_page :controller => '/statistics', :action => 'team', :id => tg2.team.id
+    expire_page :controller => '/statistics', :action => 'scoreboard'
     flash[:notice] = "Game saved."
     redirect_to was_incomplete ? {:action => 'index'} : {:action => 'status'}
   end
@@ -344,7 +344,7 @@ class Dashboard::EntryController < DashboardController
 
     game.entry_complete = true
     game.save
-    expire_page :controller => 'statistics', :action => 'personal'
+    expire_page :controller => '/statistics', :action => 'personal'
     flash[:notice] = "Individual standings saved."
     redirect_to :action => 'index'
   end
@@ -375,10 +375,10 @@ class Dashboard::EntryController < DashboardController
 
     @game.destroy
 
-    expire_page :controller => 'statistics', :action => 'standings'
-    expire_page :controller => 'statistics', :action => 'team', :id => tg1.team.id
-    expire_page :controller => 'statistics', :action => 'team', :id => tg2.team.id
-    expire_page :controller => 'statistics', :action => 'scoreboard'
+    expire_page :controller => '/statistics', :action => 'standings'
+    expire_page :controller => '/statistics', :action => 'team', :id => tg1.team.id
+    expire_page :controller => '/statistics', :action => 'team', :id => tg2.team.id
+    expire_page :controller => '/statistics', :action => 'scoreboard'
     flash[:notice] = "Game was deleted successfully."
     redirect_to :action => 'status'
   end
@@ -399,7 +399,7 @@ class Dashboard::EntryController < DashboardController
 
     @game.update_attributes :entry_complete => false
 
-    expire_page :controller => 'statistics', :action => 'personal'
+    expire_page :controller => '/statistics', :action => 'personal'
     flash[:notice] = "Individual stats were cleared for that game."
     redirect_to :action => 'status'
 
