@@ -53,10 +53,10 @@ class StatisticsController < ApplicationController
 
   def team
   	begin
-  		@team = Team.find(params[:id], :include => [{:games => [:room, {:team_games => :team}]}, {:players => :player_games}], :conditions => ['games.play_complete = ?', true])
+      @team = Team.find(params[:id], :include => [{:games => [:room, {:team_games => :team}]}, {:players => :player_games}], :conditions => ['games.play_complete = ?', true])
   	rescue ActiveRecord::RecordNotFound
   		flash[:error] = "Team was not found."
-                redirect_to :action => 'standings'
+      redirect_to :action => 'standings'
   	end
 
   	@types = QuestionType.find(:all, :order => 'value desc')
@@ -65,7 +65,7 @@ class StatisticsController < ApplicationController
   def personal
     @players_all = Player.find(:all, :include => [:team, {:player_games => :team_game}]).select{|p| not p.team.nil?}.sort{|a,b| sort_players(a,b)}
     @players_tuh_cut = @players_all.select{|p| $tournament.tuh_cutoff.nil? or p.tuh >= $tournament.tuh_cutoff}
-    @players_neg = @players_all.sort{|a,b| sort_negs(a,b)}[0,30]
+    @players_neg = @players_all.sort{|a,b| sort_negs(a,b)}[0,15]
 
   	round = Round.find(:first, :order => 'number', :conditions => ["play_complete is null or play_complete != ?", true])
   	if (round.nil?)
