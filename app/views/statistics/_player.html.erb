@@ -11,7 +11,7 @@ end -%>
   </td>
   <td class="number"><%= fmt(player.gp) -%></td>
 	<% if $tournament.timed? %>
-  <td class="number"><%= fmt(player.tuh) -%></td>
+  <td class="number"><%= player.tuh -%></td>
 	<% end %>
   <% for type in types -%>
   <td class="number"><%= player.answered(type) -%></td>
