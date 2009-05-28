@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Tournament Director &rarr; Schools</title>
+  <link rel="stylesheet" href="style/dashboard.css" type="text/css" media="screen" charset="utf-8" />
+</head>
+
+<body>
+  <div id="container">
+    <h1 id="tournament_name"></h1>
+    <h2 id="schools">
+      Schools
+      <button class="add_school" style="float: right;">Add school</button>
+    </h2>
+    <div>
+      <div id="school_template" style="display: none;" class="school box">
+        <button class="edit_button" style="float: right;">Edit</button>
+        <h3 class="name"></h3>
+        <h4><span class="city"></span></h4>
+      </div>
+      <div id="team_template" style="display: none;">
+        <p><b class="team_name"></b>: <span class="player_names"></span></p>
+      </div>
+      <form id="schools_form" style="display: none;">
+        <button class="delete_school" style="float: right;">Delete This School</button>
+
+        <input type="hidden" name="type" value="school" id="type" />
+        <p><label for="name">School Name:</label><input type="text" name="name" value="" id="name" /></p>
+        <p><label for="city">Location:</label><input type="text" name="city" value="" id="city" /></p>
+        <p><input type="checkbox" name="small" id="small" /><label for="small">Small School</label></p>
+        
+        <button class="add_team">Add Team</button>
+
+        <table class="team" style="display: none; margin-top: 15px;" id="team_form">
+          <tr><th colspan="3"><input type="text" name="team_name" value="" class="team_name" /></th></tr>
+          <tr><th>Player Name</th><th>Year</th><th>Future School</th></tr>
+          <tr class="player">
+            <td><input type="text" name="player_name" value="" class="player_name" /></td>
+            <td><select name="player_year" class="player_year">
+              <option value="7">7th Grade</option>
+              <option value="8">8th Grade</option>
+              <option value="9">9 - Freshman</option>
+              <option value="10">10 - Sophomore</option>
+              <option value="11">11 - Junior</option>
+              <option value="12">12 - Senior</option>
+            </select></td>
+            <td><input type="text" name="player_school" value="" class="player_school" /></td>
+          </tr>
+        </table>
+
+        <p><button>Save &rarr;</button><span id="schools_success" style="display: none;">Saved!</span></p>
+        
+      </form>
+      <div id="school_listing"></div>
+    </div>
+    <p id="footer">
+      <img src="tournamentdirector.png" width="314" height="42" alt="Tournament Director" />
+    </p>
+  </div>
+  <script src="/_utils/script/json2.js"></script>
+  <script src="/_utils/script/jquery.js?1.3.1"></script>
+  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
+  <script src="/_utils/script/jquery.cookies.js"></script>
+  <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="shared.js"></script>
+  <script>
+  tournament = null;
+  $.CouchApp(function (app) {
+    var schools = {};
+    var updateListing = function () {
+      app.view('schools', {
+        success: function (response) {
+          schools = {};
+          $.each(response.rows, function (index, row) {
+            schools[row.value._id] = row.value;
+          });
+          var element = $('#school_listing');
+          element.html('');
+          $.each(schools, function (key, school) {
+            var schoolMarkup = $('#school_template').clone();
+            schoolMarkup.attr('id', school._id);
+            schoolMarkup.find('.name').text(school.name);
+            schoolMarkup.find('.city').text(school.city);
+            schoolMarkup.show();
+            var teams = school.teams || [];
+            $.each(teams, function (index, team) {
+              var teamMarkup = $('#team_template').clone();
+              teamMarkup.attr('id', '');
+              teamMarkup.find('.team_name').text(team.name);
+              var players = team.players || {};
+              var player_names = [];
+              $.each(players, function (name, player) {
+                player_names.push(player.name);
+              });
+              teamMarkup.find('.player_names').text(player_names.join(', '));
+              teamMarkup.show();
+              schoolMarkup.append(teamMarkup);
+            });
+            element.append(schoolMarkup);
+          });
+          
+          $('.edit_button').click(editSchool);
+        }
+      });
+    };
+
+    updateListing();
+
+    var addTeam = function(key, team, fields) {
+      var teamForm = $('#team_form').clone();
+      teamForm.attr('id', '');
+      teamForm.find('tr.player').remove();
+      teamForm.find('.team_name').attr('name', 'teams-' + key + '-name');
+      fields.push('teams-' + key + '-name');
+      $.each(team.players, function (playerKey, player) {
+        addPlayer(teamForm, key, playerKey, player, fields);
+      });
+      teamForm.show();
+      $('#team_form').before(teamForm);
+    };
+    
+    var addPlayer = function(teamForm, key, playerKey, player, fields) {
+      var playerForm = $('#team_form tr.player').clone();
+      var baseKey = 'teams-' + key + '-players-' + playerKey;
+      ['name', 'year', 'school'].forEach(function (field) {
+        playerForm.find('.player_' + field).attr('name', baseKey + '-' + field);
+        fields.push(baseKey + '-' + field);
+      });
+      teamForm.append(playerForm);
+    };
+    
+    var wireFormButtons = function () {
+      $('button.add_team').click(function (event) {
+        event.preventDefault();
+        var team = {players:{}};
+        var key = 'team1';
+        team.players['team1_player1'] = {};
+        addTeam(key, team, schoolsForm.fields);
+        currentFormSchool.teams[key] = team;
+        return false;
+      });
+      
+      $('button.delete_school').click(function (event) {
+        event.preventDefault();
+        schoolsForm.deleteDoc({
+          success: successFunction
+        });
+        return false;
+      });
+    };
+    
+    var schoolsForm = null;
+    var currentFormSchool = null;
+    
+    var successFunction = function (response) {
+      var form = $('#schools_form');
+      form.hide();
+      $('#school_listing').before(form);
+      updateListing();
+    };
+    
+    var editSchool = function (event) {
+      var parent = $(this).parent('.school');
+
+      var formOptions = {
+        id: parent.attr('id'),
+        fields: ['type', 'name', 'city', 'small'],
+        success: successFunction
+      };
+
+      currentFormSchool = schools[formOptions.id];
+      
+      $('#schools_form .team:not(#team_form)').remove();
+      
+      $.each(currentFormSchool.teams, function (key, team) {
+        addTeam(key, team, formOptions.fields);
+      });
+      
+      parent.after($('#schools_form'));
+      $('#schools_form').show();
+      
+      wireFormButtons();
+      
+      parent.hide();
+      schoolsForm = app.docForm('form#schools_form', formOptions);
+    };
+    
+    var addSchool = function(event) {
+      var formOptions = {
+        fields: ['type', 'name', 'city', 'small'],
+        success: successFunction
+      };
+
+      currentFormSchool = {};
+      $('#schools_form .team:not(#team_form)').remove();
+      $('#schools_form').show();
+      wireFormButtons();
+      schoolsForm = app.docForm('form#schools_form', formOptions);
+    };
+    
+    $('.add_school').click(addSchool);
+    
+  });
+  </script>
+</body>
+</html>

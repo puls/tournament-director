@@ -1,0 +1,93 @@
+body {
+  background-color: #005447;
+  color: #FFF;
+  font-family: "TradeGothic","Verdana",sans-serif;
+  text-align: center;
+  font-size: 12px;
+}
+#submitter
+{
+  clear: both;
+  width: 100%:
+  text-align: center;
+  font-size: 14px;
+}
+
+#container {
+  width: 780px;
+  margin: 75px auto;
+  text-align: left;
+  background-color: #E7B98A;
+  color: #222;
+  padding: 0px 10px 20px 10px;
+  border: 1px outset #999;
+}
+
+.box {
+  border: 1px dotted #999;
+}
+
+button {
+  color: #222;
+  background-color: #DDD;
+}
+
+input,select {
+  color: #222;
+  font-family: "TradeGothic","Verdana",sans-serif;
+  font-size: 12px;
+}
+
+input.active {
+  background-color: #CCC;
+}
+
+h1 {
+  text-align: right;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 0px -10px;
+  background-color: #930;
+  color: #FFF;
+  padding: 10px;
+  border-bottom: 1px outset;
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 24px;
+  padding: 5px;
+  margin: 0px -10px;
+  color: #FFF;
+  background-color: #339;
+}
+
+table {
+  margin: 0px -10px;
+  width: 800px;
+}
+
+th {
+  background-color: #000;
+  color: #FFF;
+  border: 1px outset;
+  padding: 3px;
+}
+
+td {
+  background-color: #DDD;
+  border: 1px dotted;
+  padding: 3px;
+}
+
+#footer {
+  margin-top: 20px;
+  margin-bottom: -45px;
+  margin-left: 420px;
+  width: 314px;
+  border: 1px outset;
+  background-color: white;
+}
+
+img { border: none; }

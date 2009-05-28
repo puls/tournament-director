@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Tournament Director &rarr; Setup</title>
+  <link rel="stylesheet" href="style/dashboard.css" type="text/css" media="screen" charset="utf-8" />
+</head>
+
+<body>
+  <div id="container">
+    <h1 id="tournament_name"></h1>
+    <h2 id="settings">Tournament Settings</h2>
+    <div>
+      <form id="setup_form">
+        <input type="hidden" name="type" value="tournament" id="type" />
+        <p><label for="name">Tournament Name:</label> <input type="text" name="name" value="" id="name" /></p>
+        <p><input type="checkbox" value="1" name="power" value="" id="power" /><label for="power">Uses Power Marks</label></p>
+        <p><input type="checkbox" value="1" name="bracketed" value="" id="bracketed" /><label for="bracketed">Uses multiple brackets</label></p>
+        <p><input type="checkbox" value="1" name="track_years" value="" id="track_years" /><label for="track_years">Tracks player years</label></p>
+        <p><input type="checkbox" value="1" name="switches_cards" value="" id="switches_cards" /><label for="switches_cards">Swiss pairs: winner keeps lower card</label></p>
+        <p><input type="checkbox" value="1" name="timed" value="" id="timed" /><label for="timed">Rounds are timed</label></p>
+        <p><label for="default_questions">Questions per match:</label> <input type="text" name="default_questions" value="" id="default_questions" /></p>
+
+        <p><input type="submit" value="Save &rarr;"><span id="setup_success" style="display: none;">Saved!</span></p>
+      </form>
+    </div>
+    <p id="footer">
+      <img src="tournamentdirector.png" width="314" height="42" alt="Tournament Director" />
+    </p>
+  </div>
+  <script src="/_utils/script/json2.js"></script>
+  <script src="/_utils/script/jquery.js?1.3.1"></script>
+  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
+  <script src="/_utils/script/jquery.cookies.js"></script>
+  <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="shared.js"></script>
+  <script>
+  tournament = null;
+  $.CouchApp(function (app) {
+    var setupForm = app.docForm('form#setup_form', {
+      id: 'tournament',
+      fields: ['name', 'power', 'bracketed', 'track_years', 'switches_cards', 'timed', 'default_questions', 'type'],
+      success: function (response) {
+        updateTournament();
+        $('#setup_success').show().fadeOut(500);
+      }
+    });
+  });
+  </script>
+</body>
+</html>
