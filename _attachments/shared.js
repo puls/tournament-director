@@ -4,6 +4,10 @@ $.CouchApp(function (app) {
             success: function (doc) {
                 tournament = doc;
                 $('#tournament_name').text(tournament.name);
+            },
+            error: function (status, error, reason) {
+              app.db.saveDoc({'_id': 'tournament'});
+              document.location.href = document.location.href.replace(/\/[^\/]+$/, '/setup.html');
             }
         });
     };
@@ -19,3 +23,21 @@ $.CouchApp(function (app) {
     });
     $('h2:first').click();
 });
+
+function getRandomNumber(range) {
+	return Math.floor(Math.random() * range);
+}
+
+function getRandomChar() {
+	var chars = "0123456789abcdef";
+	return chars.substr( getRandomNumber(16), 1 );
+}
+
+function randomID(size) {
+	var str = "";
+	for(var i = 0; i < size; i++)
+	{
+		str += getRandomChar();
+	}
+	return str;
+}

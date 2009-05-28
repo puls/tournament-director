@@ -27,6 +27,10 @@ body {
   border: 1px dotted #999;
 }
 
+.right {
+  float: right;
+}
+
 button {
   color: #222;
   background-color: #DDD;
