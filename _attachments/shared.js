@@ -1,27 +1,41 @@
 $.CouchApp(function (app) {
-    updateTournament = function () {
-        app.db.openDoc('tournament', {
-            success: function (doc) {
-                tournament = doc;
-                $('#tournament_name').text(tournament.name);
-            },
-            error: function (status, error, reason) {
-              app.db.saveDoc({'_id': 'tournament'});
-              document.location.href = document.location.href.replace(/\/[^\/]+$/, '/setup.html');
-            }
-        });
-    };
-    updateTournament();
-    
-    $('h2:not(:first) + div').hide();
-    $('h2').click(function (event) {
-      var next = $(this).next('div');
-      if (next.is(':hidden')) {
-        $('h2 + div').slideUp();
-        next.slideDown();
+  updateTournament = function () {
+    app.db.openDoc('tournament', {
+      success: function (doc) {
+        tournament = doc;
+        $('#tournament_name').text(tournament.name);
+      },
+      error: function (status, error, reason) {
+        app.db.saveDoc({'_id': 'tournament'});
+        document.location.href = document.location.href.replace(/\/[^\/]+$/, '/setup.html');
       }
     });
-    $('h2:first').click();
+  };
+  updateTournament();
+  
+  schools = {};
+  loadSchools = function (callback) {
+    app.view('load_schools', {
+      success: function (response) {
+        schools = {};
+        $.each(response.rows, function (index, row) {
+          schools[row.value._id] = row.value;
+        });
+        callback();
+      }
+    });
+  };
+  
+/*  $('h2:not(:first) + div').hide();
+  $('h2').click(function (event) {
+    var next = $(this).next('div');
+    if (next.is(':hidden')) {
+    $('h2 + div').slideUp();
+    next.slideDown();
+    }
+  });
+  $('h2:first').click();
+*/
 });
 
 function getRandomNumber(range) {

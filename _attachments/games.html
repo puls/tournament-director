@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Tournament Director &rarr; Games</title>
+  <link rel="stylesheet" href="style/dashboard.css" type="text/css" media="screen" charset="utf-8" />
+</head>
+
+<body>
+  <div id="container">
+    <h1 id="tournament_name"></h1>
+    <form id="team_form">
+      <h2 id="teams">
+        Enter Team Scores (<span id="team_status"></span>)
+        <div class="right">
+          <label for="round">Round:</label>
+          <input name="round" id="team_round" value="1" />
+        </div>
+      </h2>
+      <div>
+        <input type="hidden" name="_id" value="" id="game_id" />
+        <input type="hidden" name="_rev" value="" id="game_rev" />
+        <input type="hidden" name="team1-name" value="" id="team1-name" />
+        <input type="hidden" name="team2-name" value="" id="team2-name" />
+        <table>
+          <tr>
+            <th>Round</th>
+            <th>Team</th>
+            <th>Card</th>
+            <th>Points</th>
+            <th>Tossups</th>
+            <th>Room</th>
+            <th></th>
+          </tr>
+          <tr>
+            <td rowspan="2" id="round">1</td>
+            <td>
+              <select id="team1" name="team1-id" tabindex="1"></select>
+            </td>
+            <td><input type="text" name="team1-card" value="0" id="team1-card" size="3" tabindex="3" /></td>
+            <td><input type="text" name="team1-points" value="" id="team1-points" size="3" tabindex="5" /></td>
+            <td rowspan="2"><input type="text" name="tossups" value="" id="tossups" size="2" tabindex="7" /></td>
+            <td rowspan="2"><input type="text" name="room" value="" id="room" tabindex="8" /></td>
+            <td rowspan="2">
+              <button id="save" tabindex="9">Save &rarr;</button>
+              <span id="team_success" style="display: none;">Saved!</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select id="team2" name="team2-id" tabindex="2"></select>
+            </td>
+            <td><input type="text" name="team2-card" value="0" id="team2-card" size="3" tabindex="4" /></td>
+            <td><input type="text" name="team2-points" value="" id="team2-points" size="3" tabindex="6" /></td>
+          </tr>
+        </table>
+      </div>
+    </form>
+    <h2 id="individuals">Pending Individual Scores</h2>
+    <div>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+    <p id="footer">
+      <img src="tournamentdirector.png" width="314" height="42" alt="Tournament Director" />
+    </p>
+  </div>
+  <div id="spinner">
+    <div><img src="ajax-loader.gif" width="32" height="32" alt="Loading..." /></div>
+  </div>
+  <script src="/_utils/script/json2.js"></script>
+  <script src="/_utils/script/jquery.js?1.3.1"></script>
+  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
+  <script src="/_utils/script/jquery.cookies.js"></script>
+  <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="shared.js"></script>
+  <script>
+  /* <![CDATA[ */
+  tournament = null;
+  $.CouchApp(function (app) {
+    var teams = {};
+    var loadRound = function() {
+      $('#spinner').show();
+      round = parseInt($('#team_round').val());
+      $('#round').text(round);
+
+      app.view('last_round_played', {
+        group: true,
+        success: function (response) {
+          $('#team1').html('');
+          $('#team2').html('');
+          var teams_accounted_for = 0;
+          $.each(response.rows, function (index, row) {
+            if (row.value[0] < round) {
+              var option = $('<option>');
+              option.attr('value', row.key);
+              option.text(teams[row.key].name);
+              $('#team1').append(option.clone());
+              $('#team2').append(option);
+            } else {
+              teams_accounted_for++;
+            }
+          });
+          $('#team_status').text(teams_accounted_for + '/128');
+          loadOpponents(round);
+        }
+      });
+    };
+    
+    var opponents = {};
+    var loadOpponents = function (round) {
+      app.view('next_opponent', {
+        startkey: [round],
+        endkey: [round, "ZZZZ"],
+        success: function (response) {
+          opponents = {};
+          $.each(response.rows, function (index, row) {
+            opponents[row.key[1]] = row.value;
+          });
+          updateBothTeams();
+          $('#spinner').hide();
+        }
+      });
+      
+    };
+    
+    loadSchools(function () {
+      teams = {};
+      $.each(schools, function (key, school) {
+        $.each(school.teams, function (key, team) {
+          teams[key] = team;
+        });
+      });
+      loadRound();
+    });
+    $('#team_round').change(loadRound);
+    
+    var updateBothTeams = function (event) {
+      var team = $('#team1').val();
+      var line;
+      if (opponents[team]) {
+        line = opponents[team];
+      } else {
+        line = ['','','','','',''];
+      }
+      $('#team2').val(line[0]);
+      $('#team1-card').val(line[1]);
+      $('#team2-card').val(line[2]);
+      $('#room').val(line[3]);
+      $('#game_id').val(line[4]);
+      $('#game_rev').val(line[5]);
+      updateName();
+    };
+    
+    $('#team1').change(updateBothTeams);
+
+    var updateName = function (event) {
+      $('#team1-name').val($('#team1').find(':selected').text());
+      $('#team2-name').val($('#team2').find(':selected').text());
+    };
+
+    $('#team2').change(updateName);
+    
+    var updateCards = function () {
+      var winnerCard = Math.min(parseInt($('#team1-card').val()), parseInt($('#team2-card').val()));
+      var loserCard = Math.max(parseInt($('#team1-card').val()), parseInt($('#team2-card').val()));
+      
+      if (parseInt($('team1-points')) > parseInt($('team2-points'))) {
+        var winner = [$('#team1').val(), $('#team1-name').val()];
+        var loser = [$('#team2').val(), $('#team2-name').val()];
+      } else {
+        var winner = [$('#team2').val(), $('#team2-name').val()];
+        var loser = [$('#team1').val(), $('#team1-name').val()];
+      }
+      
+      app.view('next_game_for_card', {
+        startkey: winnerCard,
+        endkey: winnerCard,
+        group: true,
+        success: function (response) {
+          if (response.rows[0]) {
+            var game = response.rows[0].value[1];
+            if (game.team1.card == winnerCard) {
+              game.team1.id = winner[0];
+              game.team1.name = winner[1];
+            } else if (game.team2.card == winnerCard) {
+              game.team2.id = winner[0];
+              game.team2.name = winner[1];
+            }
+            app.db.saveDoc(game);
+          }
+        }
+      });
+      app.view('next_game_for_card', {
+        startkey: loserCard,
+        endkey: loserCard,
+        group: true,
+        success: function (response) {
+          if (response.rows[0]) {
+            var game = response.rows[0].value[1];
+            if (game.team1.card == loserCard) {
+              game.team1.id = loser[0];
+              game.team1.name = loser[1];
+            } else if (game.team2.card == loserCard) {
+              game.team2.id = loser[0];
+              game.team2.name = loser[1];
+            }
+            app.db.saveDoc(game);
+          }
+        }
+      });
+    };
+    
+    var teamsForm = app.docForm('#team_form', {
+      fields: ['round', '_id', '_rev', 'team1-id', 'team1-card', 'team1-name', 'team1-points', 'team2-id', 'team2-card', 'team2-name', 'team2-points', 'room', 'tossups'],
+      success: function (response) {
+        $('#team_success').show().fadeOut(500);
+        updateCards();
+        loadRound();
+      },
+      beforeSave: function (doc) {
+        doc.round = parseInt(doc.round);
+        doc.entry_complete = true;
+        doc.type = 'game';
+        doc.team1.card = parseInt(doc.team1.card);
+        doc.team2.card = parseInt(doc.team2.card);
+        doc.team1.points = parseInt(doc.team1.points);
+        doc.team2.points = parseInt(doc.team2.points);
+        doc.tossups = parseInt(doc.tossups);
+      }
+    });
+
+  });
+  /* ]]> */
+  </script>
+</body>
+</html>

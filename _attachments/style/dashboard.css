@@ -5,8 +5,28 @@ body {
   text-align: center;
   font-size: 12px;
 }
-#submitter
-{
+
+#spinner {
+  position: fixed;
+  width: 30%;
+  height: 30%;
+  top: 35%;
+  left: 35%;
+  background-color: white;
+  border: 5px dashed #930;
+}
+
+#spinner div {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  margin-top: -16px;
+  margin-left: -16px;
+  width: 32px;
+  height: 32px;
+}
+
+#submitter {
   clear: both;
   width: 100%:
   text-align: center;
@@ -77,6 +97,10 @@ th {
   color: #FFF;
   border: 1px outset;
   padding: 3px;
+}
+
+#team_form td, #team_form th {
+  text-align: center;
 }
 
 td {
