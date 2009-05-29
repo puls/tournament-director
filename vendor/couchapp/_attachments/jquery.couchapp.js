@@ -138,7 +138,10 @@
             formToDeepJSON(formSelector, opts.fields, localFormDoc);
             return localFormDoc;
           },
-          fields: opts.fields
+          fields: opts.fields,
+          doc: function () {
+            return localFormDoc;
+          }
         }
         return instance;
       }

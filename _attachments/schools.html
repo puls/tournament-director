@@ -14,6 +14,7 @@
     <h2 id="schools">
       Schools
       <button class="add_school right">Add school</button>
+      <input type="search" id="search" value="" class="right" />
     </h2>
     <div>
       <div id="school_template" style="display: none;" class="school box">
@@ -25,7 +26,7 @@
         <p><b class="team_name"></b>: <span class="player_names"></span></p>
       </div>
       <form id="schools_form" style="display: none;">
-        <button class="delete_school right">Delete This School</button>
+        <button class="delete_school right">Remove This School</button>
 
         <input type="hidden" name="type" value="school" id="type" />
         <p><label for="name">School Name:</label><input type="text" name="name" value="" id="name" /></p>
@@ -35,8 +36,9 @@
         <button class="add_team">Add Team</button>
 
         <table class="team" style="display: none; margin-top: 15px;" id="team_form">
-          <tr><th colspan="3">
+          <tr><th colspan="4">
             <input type="text" name="team_name" value="" class="team_name" />
+            <button class="remove_team right">Remove This Team</button>
             <button class="add_player right">Add Player</button>
           </th></tr>
           <tr><th>Player Name</th><th>Year</th><th>Future School</th></tr>
@@ -51,6 +53,7 @@
               <option value="12">12 - Senior</option>
             </select></td>
             <td><input type="text" name="player_school" value="" class="player_school" /></td>
+            <td><button class="remove_player">Remove This Player</button></td>
           </tr>
         </table>
 
@@ -116,26 +119,27 @@
 
     updateListing();
 
-    var addTeam = function(key, team, fields) {
+    var addTeamToForm = function(key, team, fields) {
       var teamForm = $('#team_form').clone();
       teamForm.attr('id', key);
       teamForm.find('tr.player').remove();
       teamForm.find('.team_name').attr('name', 'teams-' + key + '-name');
       fields.push('teams-' + key + '-name');
       $.each(team.players, function (playerKey, player) {
-        addPlayer(teamForm, key, playerKey, fields);
+        addPlayerToForm(teamForm, key, playerKey, fields);
       });
       teamForm.show();
       $('#team_form').before(teamForm);
     };
     
-    var addPlayer = function(teamForm, key, playerKey, fields) {
+    var addPlayerToForm = function(teamForm, key, playerKey, fields) {
       var playerForm = $('#team_form tr.player').clone();
       var baseKey = 'teams-' + key + '-players-' + playerKey;
       ['name', 'year', 'school'].forEach(function (field) {
         playerForm.find('.player_' + field).attr('name', baseKey + '-' + field);
         fields.push(baseKey + '-' + field);
       });
+      playerForm.attr('id', playerKey);
       teamForm.append(playerForm);
     };
     
@@ -144,7 +148,9 @@
       var team = {players:{}};
       var key = randomID(32);
       team.players[randomID(32)] = {};
-      addTeam(key, team, schoolsForm.fields);
+      addTeamToForm(key, team, schoolsForm.fields);
+      var letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($('.team').length - 2, 1);
+      $('[name=teams-' + key + '-name]').val(currentFormSchool.name + " " + letter);
       currentFormSchool.teams[key] = team;
       return false;
     });
@@ -154,8 +160,25 @@
       var teamForm = $(this).parents('table.team:first');
       var key = teamForm.attr('id');
       var playerKey = randomID(32);
-      addPlayer(teamForm, key, playerKey, schoolsForm.fields);
+      addPlayerToForm(teamForm, key, playerKey, schoolsForm.fields);
       currentFormSchool.teams[key].players[playerKey] = {};
+      return false;
+    });
+    
+    $('button.remove_player').live('click', function (event) {
+      event.preventDefault();
+      var row = $(this).parents('tr:first');
+      var table = $(this).parents('table.team:first');
+      delete schoolsForm.doc().teams[table.attr('id')]['players'][row.attr('id')];
+      row.remove();
+      return false;
+    });
+    
+    $('button.remove_team').live('click', function (event) {
+      event.preventDefault();
+      var table = $(this).parents('table:first');
+      delete schoolsForm.doc().teams[table.attr('id')];
+      table.remove();
       return false;
     });
     
@@ -192,7 +215,7 @@
       $('#schools_form .team:not(#team_form)').remove();
       
       $.each(currentFormSchool.teams, function (key, team) {
-        addTeam(key, team, formOptions.fields);
+        addTeamToForm(key, team, formOptions.fields);
       });
       
       parent.after($('#schools_form'));
@@ -212,6 +235,8 @@
       $('#schools_form .team:not(#team_form)').remove();
       $('#schools_form').show();
       schoolsForm = app.docForm('form#schools_form', formOptions);
+      
+      $('.add_team').click();
     });
     
     $('.cancel').click(function (event) {
@@ -219,6 +244,26 @@
       successFunction();
       return false;
     });
+    
+    var search = function (event) {
+      var string = $('#search').val().toLowerCase();
+      if (string === '') {
+        $('.school:not(#school_template)').show();
+      } else {
+        $.each(schools, function (key, school) {
+          if (school.name.toLowerCase().indexOf(string) >= 0 || school.city.toLowerCase().indexOf(string) >= 0) {
+            $('#' + key).show();
+          } else {
+            $('#' + key).hide();
+          }
+        });
+      }
+    };
+    
+    $('#search').keyup(search);
+    $('#search').change(search);
+    $('#search').blur(search);
+    $('#search').click(search);
     
   });
   </script>
