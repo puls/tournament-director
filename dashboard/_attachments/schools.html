@@ -12,9 +12,9 @@
   <div id="container">
     <h1 id="tournament_name"></h1>
     <h2 id="schools">
-      Schools
       <button class="add_school right">Add school</button>
       <input type="search" id="search" value="" class="right" />
+      Schools
     </h2>
     <div>
       <div id="school_template" style="display: none;" class="school box">
@@ -70,6 +70,9 @@
       <img src="tournamentdirector.png" width="314" height="42" alt="Tournament Director" />
     </p>
   </div>
+  <div id="spinner">
+    <div><img src="ajax-loader.gif" width="32" height="32" alt="Loading..." /></div>
+  </div>
   <script src="/_utils/script/json2.js"></script>
   <script src="/_utils/script/jquery.js?1.3.1"></script>
   <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
@@ -81,6 +84,7 @@
   tournament = null;
   $.CouchApp(function (app) {
     var updateListing = function () {
+      startTask();
       loadSchools(function () {
         var element = $('#school_listing');
         element.html('');
@@ -90,7 +94,7 @@
           schoolMarkup.find('.name').text(school.name);
           schoolMarkup.find('.city').text(school.city);
           schoolMarkup.show();
-          var teams = school.teams || [];
+          var teams = school.teams || {};
           $.each(teams, function (index, team) {
             var teamMarkup = $('#team_template').clone();
             teamMarkup.attr('id', '');
@@ -108,6 +112,7 @@
         });
         
         $('.edit_button').click(editSchool);
+        stopTask();
       });
     };
 
@@ -119,7 +124,8 @@
       teamForm.find('tr.player').remove();
       teamForm.find('.team_name').attr('name', 'teams-' + key + '-name');
       fields.push('teams-' + key + '-name');
-      $.each(team.players, function (playerKey, player) {
+      var players = team.players || {};
+      $.each(players, function (playerKey, player) {
         addPlayerToForm(teamForm, key, playerKey, fields);
       });
       teamForm.show();
@@ -163,7 +169,7 @@
       event.preventDefault();
       var row = $(this).parents('tr:first');
       var table = $(this).parents('table.team:first');
-      delete schoolsForm.doc().teams[table.attr('id')]['players'][row.attr('id')];
+      delete schoolsForm.doc().teams[table.attr('id')].players[row.attr('id')];
       row.remove();
       return false;
     });
@@ -192,6 +198,8 @@
       form.unbind('submit');
       form.hide();
       $('#school_listing').before(form);
+      $('#search').val('');
+      search();
       updateListing();
     };
     

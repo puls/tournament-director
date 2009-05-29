@@ -19,12 +19,29 @@ $.CouchApp(function (app) {
       success: function (response) {
         schools = {};
         $.each(response.rows, function (index, row) {
+          row.value.teams = row.value.teams || {};
+          $.each(row.value.teams, function (index, team) {
+            team.players = team.players || {};
+          });
           schools[row.value._id] = row.value;
         });
         callback();
       }
     });
   };
+  
+  var tasksRunning = 0;
+  startTask = function () {
+    $('#spinner').fadeIn(500);
+    tasksRunning++;
+  }
+  
+  stopTask = function () {
+    tasksRunning--;
+    if (tasksRunning < 1) {
+      $('#spinner').fadeOut(500);
+    }
+  }
   
 /*  $('h2:not(:first) + div').hide();
   $('h2').click(function (event) {
