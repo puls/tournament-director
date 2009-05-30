@@ -6,6 +6,7 @@
 <head>
   <title>Tournament Director &rarr; Games</title>
   <link rel="stylesheet" href="style/dashboard.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="style/jquery.autocomplete.css" type="text/css" media="screen" charset="utf-8" />
 </head>
 
 <body>
@@ -13,11 +14,11 @@
     <h1 id="tournament_name"></h1>
     <form id="team_form">
       <h2 id="teams">
-        Enter Team Scores (<span id="team_status"></span>)
         <div class="right">
           <label for="round">Round:</label>
           <input name="round" id="team_round" value="1" />
         </div>
+        Enter Team Scores (<span id="team_status"></span>)
       </h2>
       <div>
         <input type="hidden" name="_id" value="" id="game_id" />
@@ -58,10 +59,86 @@
         </table>
       </div>
     </form>
-    <h2 id="individuals">Pending Individual Scores</h2>
-    <div>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </div>
+      <h2 id="individuals">
+        <input type="search" id="search" value="" class="right" />
+        Pending Individual Scores
+      </h2>
+      <div>
+        <ul id="indivs_list"></ul>
+        <form id="indivs_form" style="display: none;">
+          <div class="right">
+            <label for="tossups">Game Tossups: </label><input type="text" name="tossups" value="" id="indivs-tossups" size="3" />
+            
+          </div>
+          <h3 id="indivs-team1-name">
+            <label for="team1-points"></label>
+            <input type="text" name="team1-points" value="" id="indivs-team1-points" size="3" />
+          </h3>
+          <table id="indivs-team1">
+            <tr class="header">
+              <th>Player</th>
+              <th>Tossups</th>
+              <th>15</th>
+              <th>10</th>
+              <th>-5</th>
+              <th>Points</th>
+            </tr>
+            <tr class="entry">
+              <td><input type="text" name="team1-player1-name" value="" class="player-name" /></td>
+              <td><input type="text" size="3" name="team1-player1-tossups" value="" class="player-tossups" /></td>
+              <td><input type="text" size="3" name="team1-player1-15" value="" class="player-15" /></td>
+              <td><input type="text" size="3" name="team1-player1-10" value="" class="player-10" /></td>
+              <td><input type="text" size="3" name="team1-player1-neg" value="" class="player-neg" /></td>
+              <td class="player-points"></td>
+            </tr>
+            <tr class="totals">
+              <td>Totals</td>
+              <td class="total-tossups">0</td>
+              <td class="total-15">0</td>
+              <td class="total-10">0</td>
+              <td class="total-neg">0</td>
+              <td class="total-points">0</td>
+            </tr>
+          </table>
+
+          <h3 id="indivs-team2-name">
+            <label for="team2-points"></label>
+            <input type="text" name="team2-points" value="" id="indivs-team2-points" size="3" />
+          </h3>
+          <table id="indivs-team2">
+            <tr class="header">
+              <th>Player</th>
+              <th>Tossups</th>
+              <th>15</th>
+              <th>10</th>
+              <th>-5</th>
+              <th>Points</th>
+            </tr>
+            <tr class="entry">
+              <td><input type="text" name="team2-player1-name" value="" class="player-name" /></td>
+              <td><input type="text" size="3" name="team2-player1-tossups" value="" class="player-tossups" /></td>
+              <td><input type="text" size="3" name="team2-player1-15" value="" class="player-15" /></td>
+              <td><input type="text" size="3" name="team2-player1-10" value="" class="player-10" /></td>
+              <td><input type="text" size="3" name="team2-player1-neg" value="" class="player-neg" /></td>
+              <td class="player-points"></td>
+            </tr>
+            <tr class="totals">
+              <td>Totals</td>
+              <td class="total-tossups">0</td>
+              <td class="total-15">0</td>
+              <td class="total-10">0</td>
+              <td class="total-neg">0</td>
+              <td class="total-points">0</td>
+            </tr>
+          </table>
+
+          <button id="cancel">Cancel</button>
+          <button id="indivs-save">Save &rarr;</button>
+          
+          <!-- to swallow the focus -->
+          <input type="text" size="1" class="right" />
+        </form>
+      </div>
     <p id="footer">
       <img src="tournamentdirector.png" width="314" height="42" alt="Tournament Director" />
     </p>
@@ -74,6 +151,8 @@
   <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
   <script src="/_utils/script/jquery.cookies.js"></script>
   <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="jquery.calculation.js"></script>
+  <script src="jquery.autocomplete.js"></script>
   <script src="shared.js"></script>
   <script>
   /* <![CDATA[ */
@@ -81,10 +160,11 @@
   $.CouchApp(function (app) {
     var teams = {};
     var loadRound = function() {
-      $('#spinner').show();
+
       round = parseInt($('#team_round').val());
       $('#round').text(round);
 
+      startTask();
       app.view('last_round_played', {
         group: true,
         success: function (response) {
@@ -106,6 +186,27 @@
           loadOpponents(round);
         }
       });
+
+      startTask();
+      app.view('pending_indivs', {
+        success: function (response) {
+          var list = $('#indivs_list');
+          list.html('');
+          if (response.rows.length > 0) {
+            $.each(response.rows, function (key, row) {
+              var game = row.value;
+              var text = 'Round ' + game.round + ': ' + game.team1.name + ' ' + game.team1.points + ', ' + game.team2.name + ' ' + game.team2.points + ' in ' + game.room;
+              var link = $('<a>').attr('href', '#').text(text).bind('click', game, function (event) {
+                event.preventDefault();
+                editIndivs(event.data);
+                return false;
+              });
+              list.append($('<li>').append(link));
+            });
+            stopTask();
+          }
+        }
+      });
     };
     
     var opponents = {};
@@ -119,7 +220,7 @@
             opponents[row.key[1]] = row.value;
           });
           updateBothTeams();
-          $('#spinner').hide();
+          stopTask();
         }
       });
       
@@ -174,6 +275,7 @@
         var loser = [$('#team1').val(), $('#team1-name').val()];
       }
       
+      startTask();
       app.view('next_game_for_card', {
         startkey: winnerCard,
         endkey: winnerCard,
@@ -190,8 +292,11 @@
             }
             app.db.saveDoc(game);
           }
+          stopTask();
         }
       });
+      
+      startTask();
       app.view('next_game_for_card', {
         startkey: loserCard,
         endkey: loserCard,
@@ -208,6 +313,7 @@
             }
             app.db.saveDoc(game);
           }
+          stopTask();
         }
       });
     };
@@ -220,6 +326,7 @@
         loadRound();
       },
       beforeSave: function (doc) {
+        doc.tossups = parseInt(doc.tossups);
         doc.round = parseInt(doc.round);
         doc.entry_complete = true;
         doc.type = 'game';
@@ -227,8 +334,236 @@
         doc.team2.card = parseInt(doc.team2.card);
         doc.team1.points = parseInt(doc.team1.points);
         doc.team2.points = parseInt(doc.team2.points);
-        doc.tossups = parseInt(doc.tossups);
       }
+    });
+
+    var search = function (event) {
+      var string = $('#search').val().toLowerCase();
+      if (string === '') {
+        $('#indivs_list li').show();
+      } else {
+        $('#indivs_list li').each(function (index) {
+          var element = $(this);
+          if (element.text().toLowerCase().indexOf(string) >= 0) {
+            element.show();
+          } else {
+            element.hide();
+          }
+        });
+      }
+    };
+    
+    $('#search').keyup(search);
+    $('#search').change(search);
+    $('#search').blur(search);
+    $('#search').click(search);
+
+    var indivsForm = null;
+    var autocompleteOptions = {};
+    var playerNames = [];
+    var editIndivs = function (game) {
+      $('#indivs_list').slideUp();
+      $('#indivs_form').slideDown();
+      $('#search').fadeOut();
+      
+      indivsForm = app.docForm('#indivs_form', {
+        id: game._id,
+        fields: ['tossups', 'team1-points', 'team2-points'],
+        success: editSuccess,
+        onLoad: function (doc) {
+          $('#indivs-team1-name').find('label').text(doc.team1.name);
+          $('#indivs-team2-name').find('label').text(doc.team2.name);
+          
+          $('.player-name').unbind();
+          
+          autocompleteOptions = {
+            autoFill: true,
+            onItemSelect: function(li, input) {
+              input.closest('tr').find('.player-tossups').focus();
+            }
+          }
+          
+          playerNames[0] = [];
+          $.each(teams[doc.team1.id].players, function (key, player) {
+            playerNames[0].push(player.name);
+          });
+          $('#indivs-team1 .player-name').autocompleteArray(playerNames[0], autocompleteOptions);
+
+          playerNames[1] = [];
+          $.each(teams[doc.team2.id].players, function (key, player) {
+            playerNames[1].push(player.name);
+          });
+          $('#indivs-team2 .player-name').autocompleteArray(playerNames[1], autocompleteOptions);
+          
+          calcTotals();
+          $('#indivs-team1 input:text:first').focus();
+        },
+        beforeSave: function (doc) {
+          doc.tossups = parseInt(doc.tossups);
+          doc.team1.points = parseInt(doc.team1.points);
+          doc.team2.points = parseInt(doc.team2.points);
+          doc.indivs_complete = true;
+
+          doc.team1.players = {};
+          doc.team2.players = {};
+
+          var player_id = function (team_id, player_name) {
+            var result = randomID(32);
+            $.each(teams[team_id].players, function (key, player) {
+              if (player.name === player_name) {
+                result = key;
+                return false;
+              }
+            });
+            return result;
+          };
+
+          $('#indivs-team1 tr.entry').each(function (index) {
+            var row = $(this);
+            var name = row.find('.player-name').val();
+            var key = player_id(doc.team1.id, name);
+            doc.team1.players[key] = {
+              name: name,
+              id: key,
+              tossups: parseInt(row.find('.player-tossups').val()),
+              fifteens: parseInt(row.find('.player-15').val()),
+              tens: parseInt(row.find('.player-10').val()),
+              negs: parseInt(row.find('.player-neg').val()),
+            }
+          });
+
+          $('#indivs-team2 tr.entry').each(function (index) {
+            var row = $(this);
+            var name = row.find('.player-name').val();
+            var key = player_id(doc.team2.id, name);
+            doc.team2.players[key] = {
+              name: name,
+              id: key,
+              tossups: parseInt(row.find('.player-tossups').val()),
+              fifteens: parseInt(row.find('.player-15').val()),
+              tens: parseInt(row.find('.player-10').val()),
+              negs: parseInt(row.find('.player-neg').val()),
+            }
+          });
+        }
+      });
+    };
+    
+    var calcTotals = function () {
+      $('#indivs-team1, #indivs-team2').each(function (teamIndex) {
+        var table = $(this);
+        table.find('tr.entry').each(function (index) {
+          var row = $(this);
+          var points = 15 * parseInt(row.find('.player-15').val() || 0) +
+            10 * parseInt(row.find('.player-10').val() || 0) -
+             5 * parseInt(row.find('.player-neg').val() || 0);
+          row.find('.player-points').text(isNaN(points) ? '0' : points);
+        });
+        var totalTossups = table.find('.player-tossups').sum();
+        var totalTossupsField = table.find('.total-tossups');
+        totalTossupsField.text(totalTossups);
+        if (totalTossups != 4 * parseInt($('#indivs-tossups').val())) {
+          totalTossupsField.addClass('error');
+        } else {
+          totalTossupsField.removeClass('error');
+        }
+        table.find('.total-15').text(table.find('.player-15').sum());
+        table.find('.total-10').text(table.find('.player-10').sum());
+        table.find('.total-neg').text(table.find('.player-neg').sum());
+        var totalPoints = table.find('.player-points').sum();
+        var bonusPoints = parseInt($('#indivs-team' + (teamIndex + 1) + '-points').val()) - totalPoints || 0;
+        var totalPointsField = table.find('.total-points');
+        totalPointsField.text(totalPoints + ' / ' + bonusPoints);
+        if (bonusPoints < 0) {
+          totalPointsField.addClass('error');
+        } else {
+          totalPointsField.removeClass('error');
+        }
+      });
+    };
+    
+    $('.player-tossups, .player-15, .player-10, #indivs-team1-points, #indivs-team2-points, #indivs-tossups').change(calcTotals);
+
+    $('.player-tossups').blur(function (event) {
+      if ($(this).val() === '') {
+        $(this).val($('#indivs-tossups').val());
+        calcTotals();
+      }
+    });
+
+    $('.player-15').keyup(function (event) {
+      if ($(this).val() === '000') {
+        var row = $(this).parents('tr:first');
+        row.find('.player-15').val('0');
+        row.find('.player-10').val('0');
+        row.find('.player-neg').val('0');
+        calcTotals();
+        row.find('.player-neg').focus();
+      }
+    });
+
+    $('.player-neg').blur(function (event) {
+      var row = $(this).parents('tr:first');
+      
+      if (!row.next().hasClass('totals')) {
+        calcTotals();
+        return true;
+      }
+      
+      var advance = true;
+      var allBlank = true;
+      row.find('input:text:not(.player-tossups)').each(function (index) {
+        if ($(this).val() === '') {
+          advance = false;
+        } else {
+          allBlank = false;
+        }
+      });
+      var nextFocus = null;
+      var teamIndex = (row.parents('table:first').attr('id') === 'indivs-team1' ? 0 : 1);
+      if (advance) {
+        var newRow = row.clone(true);
+        newRow.find('input').val('');
+        newRow.find('.player-name').unbind().autocompleteArray(playerNames[teamIndex], autocompleteOptions);
+        
+        row.after(newRow);
+        nextFocus = newRow.find('.player-name');
+      } else if (allBlank && !row.prev().hasClass('header')) {
+        if (teamIndex === 0) {
+          nextFocus = $('#indivs-team2 input:text:first');
+        } else {
+          nextFocus = $('#indivs-team1 input:text:first');
+        }
+        row.remove();
+      } else {
+        nextFocus = row.find('.player-name');
+      }
+      calcTotals();
+      var element = nextFocus.get(0);
+      window.setTimeout(function () {
+        element.focus();
+      }, 1);
+    });
+    
+    var editSuccess = function () {
+      $('#indivs_form').unbind('submit');
+      
+      $('#search').fadeIn();
+      $('#indivs_list').slideDown();
+      $('#indivs_form').slideUp();
+      
+      $('#indivs_form table').each(function (index) {
+        $(this).find('tr.entry:not(:first)').remove();
+      });
+      $('#indivs_form input').val('');
+      
+      loadRound();
+    };
+    
+    $('#cancel').click(function (event) {
+      event.preventDefault();
+      editSuccess();
+      return false;
     });
 
   });

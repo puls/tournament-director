@@ -103,10 +103,18 @@ th {
   text-align: center;
 }
 
+#team_form select {
+  width: 200px;
+}
+
 td {
   background-color: #DDD;
   border: 1px dotted;
   padding: 3px;
+}
+
+td.error {
+  background-color: #D66;
 }
 
 #footer {
