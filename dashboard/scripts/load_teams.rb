@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'couchrest'
 require 'enumerator'
+require 'csv'
 
 db = CouchRest.database!('http://localhost:5984/qbtd')
 docs = {}
@@ -12,7 +13,7 @@ def to_id(name)
 end
 
 ARGF.each do |line|
-  (initial_card, team, city, state, small) = line.chomp.split(/;/)
+  (initial_card, team, city, state, small) = CSV.parse(line.chomp).first
   initial_card = initial_card.to_i
   school = if team.match(/ [A-Z]$/)
     team.sub(/ [A-Z]$/, '')
@@ -41,7 +42,7 @@ ARGF.each do |line|
     }
   end
   
-  game = db.view('qbtd-couch/next_game_for_card', :group => true, :startkey => initial_card, :endkey => initial_card)['rows'][0]['value'][1]
+  game = db.view('dashboard/next_game_for_card', :group => true, :startkey => initial_card, :endkey => initial_card)['rows'][0]['value'][1]
   if game['team1']['card'] == initial_card
     game['team1']['id'] = team_id
     game['team1']['name'] = team
