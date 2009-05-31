@@ -84,7 +84,7 @@
   tournament = null;
   $.CouchApp(function (app) {
     var updateListing = function () {
-      startTask();
+      startTask('school_listing');
       loadSchools(function () {
         var element = $('#school_listing');
         element.html('');
@@ -112,7 +112,7 @@
         });
         
         $('.edit_button').click(editSchool);
-        stopTask();
+        stopTask('school_listing');
       });
     };
 

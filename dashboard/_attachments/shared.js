@@ -31,12 +31,14 @@ $.CouchApp(function (app) {
   };
   
   var tasksRunning = 0;
-  startTask = function () {
+  startTask = function (name) {
+/*    console.log('starting ' + name);*/
     $('#spinner').fadeIn(500);
     tasksRunning++;
   }
   
-  stopTask = function () {
+  stopTask = function (name) {
+/*    console.log('stopping ' + name);*/
     tasksRunning--;
     if (tasksRunning < 1) {
       $('#spinner').fadeOut(500);

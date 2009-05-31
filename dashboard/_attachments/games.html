@@ -21,8 +21,8 @@
         Enter Team Scores (<span id="team_status"></span>)
       </h2>
       <div>
-        <input type="hidden" name="_id" value="" id="game_id" />
-        <input type="hidden" name="_rev" value="" id="game_rev" />
+        <!-- <input type="hidden" name="_id" value="" id="game_id" />
+        <input type="hidden" name="_rev" value="" id="game_rev" /> -->
         <input type="hidden" name="team1-name" value="" id="team1-name" />
         <input type="hidden" name="team2-name" value="" id="team2-name" />
         <table>
@@ -163,8 +163,9 @@
 
       round = parseInt($('#team_round').val());
       $('#round').text(round);
+      $('#team_form input:not(#team_round)').val('');
 
-      startTask();
+      startTask('last_round_played');
       app.view('last_round_played', {
         group: true,
         success: function (response) {
@@ -183,11 +184,12 @@
             }
           });
           $('#team_status').text(teams_accounted_for + '/128');
-          loadOpponents(round);
+          // loadOpponents(round);
+          stopTask('last_round_played');
         }
       });
 
-      startTask();
+      startTask('pending_indivs');
       app.view('pending_indivs', {
         success: function (response) {
           var list = $('#indivs_list');
@@ -203,8 +205,8 @@
               });
               list.append($('<li>').append(link));
             });
-            stopTask();
           }
+          stopTask('pending_indivs');
         }
       });
     };
@@ -220,7 +222,7 @@
             opponents[row.key[1]] = row.value;
           });
           updateBothTeams();
-          stopTask();
+          stopTask('last_round_played');
         }
       });
       
@@ -249,18 +251,19 @@
       $('#team1-card').val(line[1]);
       $('#team2-card').val(line[2]);
       $('#room').val(line[3]);
-      $('#game_id').val(line[4]);
-      $('#game_rev').val(line[5]);
+      // $('#game_id').val(line[4]);
+      // $('#game_rev').val(line[5]);
       updateName();
     };
     
-    $('#team1').change(updateBothTeams);
+    // $('#team1').change(updateBothTeams);
 
     var updateName = function (event) {
       $('#team1-name').val($('#team1').find(':selected').text());
       $('#team2-name').val($('#team2').find(':selected').text());
     };
 
+    $('#team1').change(updateName);
     $('#team2').change(updateName);
     
     var updateCards = function () {
@@ -275,7 +278,7 @@
         var loser = [$('#team1').val(), $('#team1-name').val()];
       }
       
-      startTask();
+      startTask('next_game_for_card');
       app.view('next_game_for_card', {
         startkey: winnerCard,
         endkey: winnerCard,
@@ -292,11 +295,11 @@
             }
             app.db.saveDoc(game);
           }
-          stopTask();
+          stopTask('next_game_for_card');
         }
       });
       
-      startTask();
+      startTask('next_game_for_card_2');
       app.view('next_game_for_card', {
         startkey: loserCard,
         endkey: loserCard,
@@ -313,16 +316,16 @@
             }
             app.db.saveDoc(game);
           }
-          stopTask();
+          stopTask('next_game_for_card_2');
         }
       });
     };
     
     var teamsForm = app.docForm('#team_form', {
-      fields: ['round', '_id', '_rev', 'team1-id', 'team1-card', 'team1-name', 'team1-points', 'team2-id', 'team2-card', 'team2-name', 'team2-points', 'room', 'tossups'],
+      fields: ['round', 'team1-id', 'team1-card', 'team1-name', 'team1-points', 'team2-id', 'team2-card', 'team2-name', 'team2-points', 'room', 'tossups'],
       success: function (response) {
         $('#team_success').show().fadeOut(500);
-        updateCards();
+        // updateCards();
         loadRound();
       },
       beforeSave: function (doc) {
