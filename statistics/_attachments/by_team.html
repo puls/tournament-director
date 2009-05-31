@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Team Standings</title>
+  <link rel="stylesheet" href="style/statistics.css" type="text/css" />
+</head>
+
+<body>
+  <h1>HSNCT 2009</h1>
+  <h2 id="team_name"></h2>
+
+  <table id="schedule">
+    <thead>
+      <tr>
+        <th>Round</th>
+        <th>Opponent</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+  
+  <table id="player" class="player" style="display: none;">
+    <thead>
+      <tr>
+        <th>Round</th>
+        <th>Opponent</th>
+        <th class="number">15</th>
+        <th class="number">10</th>
+        <th class="number">-5</th>
+        <th class="number">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+
+  <script src="/_utils/script/json2.js"></script>
+  <script src="/_utils/script/jquery.js?1.3.1"></script>
+  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
+  <script src="/_utils/script/jquery.cookies.js"></script>
+  <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="jquery.tablesorter.js"></script>
+  <script type="text/javascript" charset="utf-8">
+  /* <![CDATA[ */
+  $.CouchApp(function (app) {
+    var team_id = document.location.href.match(/#(.+)$/)[1];
+    if (team_id != '') {
+      app.view('by_team', {
+        startkey: [team_id],
+        endkey: [team_id, 'ZZZZZZZZZZ'],
+        success: function (response) {
+          var schedule = [];
+          var players = {};
+          $.each(response.rows, function (index, row) {
+            var key = row.key;
+            if (index === 0) {
+              $('#team_name').text(key[1]);
+              $('title').text(key[1]);
+            }
+            if (key[3] === 'team') {
+              schedule.push(row.value);
+            } else {
+              players[key[3]] = players[key[3]] || [];
+              players[key[3]].push(row.value);
+            }
+          });
+          $.each(schedule, function(index, game) {
+            var tr = $('<tr>');
+            tr.append($('<td>').text(game[0]));
+            tr.append($('<td>').text(game[1]));
+            var result = 'Loss';
+            if (game[2] > game[3]) {
+              result = 'Win';
+            }
+            tr.append($('<td>').html(result + ', ' + game[2] + '&ndash;' + game[3]));
+            $('#schedule tbody').append(tr);
+          });
+          $.each(players, function(name, player) {
+            var table = $('#player').clone();
+            table.attr('id', '');
+            $.each(player, function(index, game) {
+              var tr = $('<tr>');
+              tr.append($('<td>').text(game[0]));
+              tr.append($('<td>').text(game[1]));
+              tr.append($('<td>').addClass('number').text(game[3]));
+              tr.append($('<td>').addClass('number').text(game[4]));
+              tr.append($('<td>').addClass('number').text(game[5]));
+              tr.append($('<td>').addClass('number').text(15 * game[3] + 10 * game[4] - 5 * game[5]));
+              table.append(tr);
+            });
+            table.show();
+            $('#player').before(table);
+            table.before($('<h3>').text(name));
+          });
+        }
+      });
+    }
+  });
+  /* ]]> */
+  </script>
+</body>
+</html>
