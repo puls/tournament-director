@@ -6,11 +6,21 @@
 <head>
   <title>Player Stats</title>
   <link rel="stylesheet" href="style/statistics.css" type="text/css" />
+  <link rel="stylesheet" href="style/print.css" type="text/css" media="print" />
 </head>
 
 <body>
   <h1>HSNCT 2009</h1>
-  <h2>Player Stats</h2>
+  <div class="screen right">
+    <select id="year_select">
+      <option value="all">Everybody</option>
+      <option value="sr">Seniors only</option>
+      <option value="jr">Juniors only</option>
+      <option value="so">Sophomores only</option>
+      <option value="fr">Freshmen only</option>
+    </select>
+  </div>
+  <h2>Player Stats: Preliminary Rounds</h2>
   <table id="stats_table" class="standings">
     <thead>
     	<tr>
@@ -39,33 +49,75 @@
   <script type="text/javascript" charset="utf-8">
   /* <![CDATA[ */
   $.CouchApp(function (app) {
-    app.view('players', {
-      group: true,
-      success: function (response) {
-        $.each(response.rows, function (index, row) {
-          var tr = $('<tr>');
-          tr.append($('<td>').addClass('ordinal'));
-          tr.append($('<td>').addClass('name').text(row.key[1]).append($('<span>').text(' (' + row.key[0] + ')')));
-          var index = 0;
-          row.value.forEach(function (value) {
-            if (index == 1 || index == 7 || index == 8 || index == 9) {
-              value = value.toFixed(2);
-            }
-            if (index > 0 && index < 10) {
-              tr.append($('<td>').addClass('number').text(value));
-            }
-            index++;
+    
+    var years = {};
+    var loadYears = function () {
+      app.view('player_years', {
+        success: function (response) {
+          $.each(response.rows, function (index, row) {
+            years[row.key.join('-')] = row.value;
           });
-          $('tbody').append(tr);
-        });
-        $('#stats_table').tablesorter({
-          sortList: [[8, 1], [7, 1]]
-        });
-        $('.ordinal').each(function (index) {
-          $(this).text((index + 1) + '.');
-        });
+          loadPlayers();
+        }
+      });
+    };
+    loadYears();
+    
+    $('#year_select').change(function (event) {
+      var value = $(this).val();
+      $('tbody tr').show();
+      if (value !== 'all') {
+        $('tbody tr:not(.' + value + ')').hide();
       }
     });
+    
+    var loadPlayers = function () {
+      app.view('players', {
+        group: true,
+        success: function (response) {
+          response.rows.sort(function(a, b) {
+            if (a.value[2] < 100 && b.value[2] > 100) {
+              return 1;
+            }
+            if (a.value[2] > 100 && b.value[2] < 100) {
+              return -1;
+            }
+
+            if (a.value[7] === b.value[7]) {
+              return b.value[6] - a.value[6];
+            } else {
+              return b.value[7] - a.value[7];
+            }
+          });
+          $.each(response.rows, function (index, row) {
+            var tr = $('<tr>');
+            tr.append($('<td>').addClass('ordinal').text(index + 1));
+            var name = $('<td>').addClass('name').text(row.key[1]).append($('<span>').text(' (' + row.key[0] + ')'));
+            if (years[row.key.join('-')]) {
+              tr.addClass(years[row.key.join('-')].substring(0, 2).toLowerCase());
+            }
+            tr.append(name);
+            var index = 0;
+            row.value.forEach(function (value) {
+              if (index == 1 || index == 7 || index == 8 || index == 9) {
+                value = value.toFixed(2);
+              }
+              if (index > 0 && index < 10) {
+                tr.append($('<td>').addClass('number').text(value));
+              }
+              index++;
+            });
+            if (years[row.key.join('-')]) {
+              tr.addClass(years[row.key.join('-')].substring(0, 2).toLowerCase());
+            }
+            $('tbody').append(tr);
+          });
+          $('#stats_table').tablesorter({
+            sortList: [[0, 0]]
+          });
+        }
+      });
+    };
   });
   /* ]]> */
   </script>

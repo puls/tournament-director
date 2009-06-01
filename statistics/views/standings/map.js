@@ -1,5 +1,5 @@
 function (doc) {
-  if (doc.type && doc.type === 'game' && doc.entry_complete) {
+  if (doc.type && doc.type === 'game' && doc.entry_complete && doc.round < 16) {
     var team1win = (doc.team1.points > doc.team2.points);
     var team1points = (doc.team1.points == 1 ? 0 : doc.team1.points);
     var team2points = (doc.team2.points == 1 ? 0 : doc.team2.points);

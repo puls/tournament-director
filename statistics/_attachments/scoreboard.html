@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Schedule</title>
+  <link rel="stylesheet" href="style/statistics.css" type="text/css" />
+</head>
+
+<body>
+  <h1>HSNCT 2009</h1>
+  <h2>Schedule</h2>
+
+  <div id="round" class="round">
+    <h3></h3>
+
+  </div>
+
+  <script src="/_utils/script/json2.js"></script>
+  <script src="/_utils/script/jquery.js?1.3.1"></script>
+  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
+  <script src="/_utils/script/jquery.cookies.js"></script>
+  <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="jquery.tablesorter.js"></script>
+  <script type="text/javascript" charset="utf-8">
+  /* <![CDATA[ */
+  $.CouchApp(function (app) {
+    app.view('schedule', {
+      success: function (response) {
+        var round = $('#round').clone().show().attr('id', '');
+        var last_round = 1;
+        $.each(response.rows, function (index, row) {
+          var key = row.key;
+          if (key[0] !== last_round) {
+            $('#round').before(round);
+            round = $('#round').clone().show().attr('id', '');
+          }
+          var table = $('<table>');
+          table.append($('<tr>').append($('<td>')));
+        });
+        $('#round').before(round);
+      }
+    });
+  });
+  /* ]]> */
+  </script>
+</body>
+</html>

@@ -5,7 +5,7 @@ require 'couchrest'
 require 'enumerator'
 require 'csv'
 
-db = CouchRest.database!('http://10.0.1.4:5984/qbtd')
+db = CouchRest.database!('http://localhost:5984/qbtd')
 docs = {}
 
 def to_id(name)
