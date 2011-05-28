@@ -12,15 +12,14 @@
   <div id="container">
     <h1 id="tournament_name"></h1>
     <h2 id="schools">
-      <button class="add_school right">Add school</button>
       <input type="search" id="search" value="" class="right" />
       Schools
+      <button class="add_school mleft">Add school</button>
     </h2>
     <div>
       <div id="school_template" style="display: none;" class="school box">
         <button class="edit_button right">Edit</button>
-        <h3 class="name"></h3>
-        <h4><span class="city"></span></h4>
+        <h3 class="name"><span class="name"></span> <span class="city"></span></h3>
       </div>
       <div id="team_template" style="display: none;">
         <p><b class="team_name"></b>: <span class="player_names"></span></p>
@@ -90,8 +89,8 @@
         $.each(schools, function (key, school) {
           var schoolMarkup = $('#school_template').clone();
           schoolMarkup.attr('id', school._id);
-          schoolMarkup.find('.name').text(school.name);
-          schoolMarkup.find('.city').text(school.city);
+          schoolMarkup.find('span.name').text(school.name);
+          schoolMarkup.find('span.city').text(school.city);
           schoolMarkup.show();
           var teams = school.teams || {};
           $.each(teams, function (index, team) {

@@ -1,6 +1,6 @@
 body {
-  background-color: #005447;
-  color: #FFF;
+  background-color: #fff; /*#005447;*/
+  color: #000; /*#fff;*/
   font-family: "TradeGothic","Verdana",sans-serif;
   text-align: center;
   font-size: 12px;
@@ -28,7 +28,7 @@ body {
 
 #submitter {
   clear: both;
-  width: 100%:
+  width: 100%;
   text-align: center;
   font-size: 14px;
 }
@@ -37,10 +37,10 @@ body {
   width: 780px;
   margin: 75px auto;
   text-align: left;
-  background-color: #E7B98A;
+  background-color: #fff; /*#E7B98A;*/
   color: #222;
   padding: 0px 10px 20px 10px;
-  border: 1px outset #999;
+  /*border: 1px outset #999;*/
 }
 
 .box {
@@ -51,9 +51,20 @@ body {
   float: right;
 }
 
+.mleft {
+    margin-left: 2em;
+}
+
+.city {
+    color: #888;
+    font-size: 85%;
+    font-weight: normal;
+}
+
 button {
   color: #222;
   background-color: #DDD;
+  border: 1px solid #000;
 }
 
 input,select {
@@ -72,10 +83,10 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 3px;
   margin: 0px -10px;
-  background-color: #930;
-  color: #FFF;
+  background-color: #fff;/*#930;*/
+  color: #930;/*#FFF;*/
   padding: 10px;
-  border-bottom: 1px outset;
+  /*border-bottom: 1px outset;*/
   font-size: 30px;
 }
 
@@ -83,8 +94,8 @@ h2 {
   font-size: 24px;
   padding: 5px;
   margin: 0px -10px;
-  color: #FFF;
-  background-color: #339;
+  color: #339; /*#FFF;*/
+  background-color: #fff; /*#339;*/
 }
 
 table {
@@ -93,8 +104,8 @@ table {
 }
 
 th {
-  background-color: #000;
-  color: #FFF;
+  background-color: #ccc; /*#000;*/
+  color: #000; /*#fff;*/
   border: 1px outset;
   padding: 3px;
 }
@@ -108,7 +119,7 @@ th {
 }
 
 td {
-  background-color: #DDD;
+  background-color: #fff; /*#DDD;*/
   border: 1px dotted;
   padding: 3px;
 }
