@@ -1,6 +1,6 @@
 body {
-  background-color: #fff; /*#005447;*/
-  color: #000; /*#fff;*/
+  background-color: /*#fff;*/ #005447;
+  color: /*#000;*/ #fff;
   font-family: "TradeGothic","Verdana",sans-serif;
   text-align: center;
   font-size: 12px;
@@ -37,10 +37,10 @@ body {
   width: 780px;
   margin: 75px auto;
   text-align: left;
-  background-color: #fff; /*#E7B98A;*/
+  background-color: /*#fff;*/ #E7B98A;
   color: #222;
   padding: 0px 10px 20px 10px;
-  /*border: 1px outset #999;*/
+  border: 1px outset #999;
 }
 
 .box {
@@ -83,10 +83,10 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 3px;
   margin: 0px -10px;
-  background-color: #fff;/*#930;*/
-  color: #930;/*#FFF;*/
+  background-color: /*#fff;*/#930;
+  color: /*#930;*/#FFF;
   padding: 10px;
-  /*border-bottom: 1px outset;*/
+  border-bottom: 1px outset;
   font-size: 30px;
 }
 
@@ -94,8 +94,8 @@ h2 {
   font-size: 24px;
   padding: 5px;
   margin: 0px -10px;
-  color: #339; /*#FFF;*/
-  background-color: #fff; /*#339;*/
+  color: /*#339;*/ #FFF;
+  background-color: /*#fff;*/ #339;
 }
 
 table {
@@ -104,8 +104,8 @@ table {
 }
 
 th {
-  background-color: #ccc; /*#000;*/
-  color: #000; /*#fff;*/
+  background-color: /*#ccc;*/ #000;
+  color: /*#000;*/ #fff;
   border: 1px outset;
   padding: 3px;
 }
@@ -119,7 +119,7 @@ th {
 }
 
 td {
-  background-color: #fff; /*#DDD;*/
+  background-color: /*#fff;*/ #DDD;
   border: 1px dotted;
   padding: 3px;
 }
