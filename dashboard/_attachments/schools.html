@@ -232,7 +232,9 @@
         success: successFunction
       };
 
-      currentFormSchool = {};
+      currentFormSchool = {
+        teams: {},
+      };
       $('#schools_form .team:not(#team_form)').remove();
       $('#schools_form').show();
       schoolsForm = app.docForm('form#schools_form', formOptions);
