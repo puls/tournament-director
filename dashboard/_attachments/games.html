@@ -183,7 +183,7 @@
               teams_accounted_for++;
             }
           });
-          $('#team_status').text(teams_accounted_for + '/128');
+          $('#team_status').text(teams_accounted_for + '/140');
           // loadOpponents(round);
           stopTask('last_round_played');
         }
@@ -329,6 +329,8 @@
         loadRound();
       },
       beforeSave: function (doc) {
+        delete doc._id;
+        delete doc._rev;
         doc.tossups = parseInt(doc.tossups);
         doc.round = parseInt(doc.round);
         doc.entry_complete = true;
@@ -410,11 +412,11 @@
           doc.team1.players = {};
           doc.team2.players = {};
 
-          var player_id = function (team_id, player_name) {
-            var result = randomID(32);
+          var player_lookup = function (team_id, player_name) {
+            var result = {key:randomID(32), name:player_name};
             $.each(teams[team_id].players, function (key, player) {
-              if (player.name === player_name) {
-                result = key;
+              if (player.name.toLowerCase() === player_name.toLowerCase()) {
+                result = {key:key, name:player.name};
                 return false;
               }
             });
@@ -424,10 +426,10 @@
           $('#indivs-team1 tr.entry').each(function (index) {
             var row = $(this);
             var name = row.find('.player-name').val();
-            var key = player_id(doc.team1.id, name);
-            doc.team1.players[key] = {
-              name: name,
-              id: key,
+            var lookup = player_lookup(doc.team1.id, name);
+            doc.team1.players[lookup.key] = {
+              name: lookup.name,
+              id: lookup.key,
               tossups: parseInt(row.find('.player-tossups').val()),
               fifteens: parseInt(row.find('.player-15').val()),
               tens: parseInt(row.find('.player-10').val()),
@@ -438,10 +440,10 @@
           $('#indivs-team2 tr.entry').each(function (index) {
             var row = $(this);
             var name = row.find('.player-name').val();
-            var key = player_id(doc.team2.id, name);
-            doc.team2.players[key] = {
-              name: name,
-              id: key,
+            var lookup = player_lookup(doc.team2.id, name);
+            doc.team2.players[lookup.key] = {
+              name: lookup.name,
+              id: lookup.key,
               tossups: parseInt(row.find('.player-tossups').val()),
               fifteens: parseInt(row.find('.player-15').val()),
               tens: parseInt(row.find('.player-10').val()),
