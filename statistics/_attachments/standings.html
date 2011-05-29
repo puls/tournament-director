@@ -30,6 +30,7 @@
         <th class="number">(per game)</th>
         <th class="number">TUH</th>
         <th class="number">PP20H</th>
+        <th class="number">P/bonus</th>
       </tr>
     </thead>
     <tbody>
@@ -76,10 +77,13 @@
             tr.append($('<td>').append($('<a>').attr('href', 'by_team.html#' + row.key[1]).text(row.key[0])));
             var index = 0;
             row.value.forEach(function (value) {
-              if (index == 2 || index == 4 || index == 6 || index == 8) {
+              if (index === 2 || index === 4 || index === 6 || index === 8 || index === 11) {
                 value = value.toFixed(2);
               }
               index++;
+              if (index === 9 || index === 10) {
+                return;
+              }
               tr.append($('<td>').addClass('number').text(value));
             });
             if (smallSchools[row.key[0]]) {

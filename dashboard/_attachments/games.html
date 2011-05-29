@@ -14,10 +14,6 @@
     <h1 id="tournament_name"></h1>
     <form id="team_form">
       <h2 id="teams">
-        <div class="right">
-          <label for="round">Round:</label>
-          <input name="round" id="team_round" value="1" />
-        </div>
         Enter Team Scores (<span id="team_status"></span>)
       </h2>
       <div>
@@ -36,7 +32,7 @@
             <th></th>
           </tr>
           <tr>
-            <td rowspan="2" id="round">1</td>
+            <td rowspan="2" id="round"><input name="round" id="team_round" size="2" value="1" /></td>
             <td>
               <select id="team1" name="team1-id" tabindex="1"></select>
             </td>
@@ -149,7 +145,6 @@
   <script src="/_utils/script/json2.js"></script>
   <script src="/_utils/script/jquery.js?1.3.1"></script>
   <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
-  <script src="/_utils/script/jquery.cookies.js"></script>
   <script src="vendor/couchapp/jquery.couchapp.js"></script>
   <script src="jquery.calculation.js"></script>
   <script src="jquery.autocomplete.js"></script>
@@ -162,7 +157,6 @@
     var loadRound = function() {
 
       round = parseInt($('#team_round').val());
-      $('#round').text(round);
       $('#team_form input:not(#team_round)').val('');
 
       startTask('last_round_played');
@@ -378,6 +372,9 @@
         onLoad: function (doc) {
           $('#indivs-team1-name').find('label').text(doc.team1.name);
           $('#indivs-team2-name').find('label').text(doc.team2.name);
+
+          $('#indivs-team1-points').val(doc.team1.points);
+          $('#indivs-team2-points').val(doc.team2.points);
           
           $('.player-name').unbind();
           

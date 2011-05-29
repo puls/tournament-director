@@ -1,5 +1,5 @@
 function (keys, values, rereduce) {
-  var output = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var output = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   values.forEach(function (row) {
     for (var i = 0; i < row.length; i++) {
       output[i] += row[i];
@@ -19,5 +19,8 @@ function (keys, values, rereduce) {
   
   // pp20
   output[8] = 20 * output[3] / output[7];
+
+  // ppbonus
+  output[11] = (output[9] > 0 ? output[10] / output[9] : 0);
   return output;
 }

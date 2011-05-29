@@ -15,7 +15,9 @@ end
 team_count = ARGF.gets.to_i
 while (team_count > 0)
   player_count = ARGF.gets.to_i - 1
-  team = ARGF.gets.chomp
+  match = ARGF.gets.chomp.match /(.+?)( \[SS\])?$/
+  team = match[1]
+  small = !match[2].nil?
   team_id = to_id('team_' + team)
   school = team.match(/(.+?)( [A-Z])?$/)[1]
   players = {}
@@ -44,7 +46,7 @@ while (team_count > 0)
       '_id' => to_id('school_' + school),
       :type => 'school',
       :city => "",
-      :small => false,
+      :small => small,
       :teams => {
         team_id => {
           :name => team,
