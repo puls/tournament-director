@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>Schedule</title>
+  <title>Scoreboard</title>
   <link rel="stylesheet" href="style/statistics.css" type="text/css" />
 </head>
 
@@ -12,9 +12,9 @@
   <h1 id="tournament_name"></h1>
   <h2>Scoreboard</h2>
 
-  <div id="round" class="round">
+  <div id="round" class="roundscores" style="display:none;">
     <h3></h3>
-
+    <br class="clear" style="clear:both;" />
   </div>
 
   <script src="/_utils/script/json2.js"></script>
@@ -26,22 +26,46 @@
   <script type="text/javascript" charset="utf-8">
   /* <![CDATA[ */
   $.CouchApp(function (app) {
-    app.view('scoreboard', {
-      success: function (response) {
-        var round = $('#round').clone().show().attr('id', '');
-        var last_round = 1;
-        $.each(response.rows, function (index, row) {
-          var key = row.key;
-          if (key[0] !== last_round) {
-            $('#round').before(round);
-            round = $('#round').clone().show().attr('id', '');
-          }
-          var table = $('<table>');
-          table.append($('<tr>').append($('<td>')));
-        });
-        $('#round').before(round);
-      }
+    var smallSchools = {};
+    loadSmallSchools(function (result) {
+      smallSchools = result;
+      loadScoreboard();
     });
+
+    var loadScoreboard = function () {
+      app.view('scoreboard', {
+        success: function (response) {
+          var last_round = 0;
+          var round;
+          $.each(response.rows, function (index, row) {
+            var key = row.key;
+            if (key[0] !== last_round) {
+              $('#round').before(round);
+              round = $('#round').clone().show().attr('id', '');
+              last_round = key[0];
+              round.find('h3').text('Round ' + last_round);
+            }
+            var table = $('<table>');
+            if (key[2] > key[4]) {
+              table.append($('<tr class="row1">').append($('<td>').text(key[1])).append($('<td>').text(key[2])));
+              table.append($('<tr class="row2">').append($('<td>').text(key[3])).append($('<td>').text(key[4])));
+            } else {
+              table.append($('<tr class="row1">').append($('<td>').text(key[3])).append($('<td>').text(key[4])));
+              table.append($('<tr class="row2">').append($('<td>').text(key[1])).append($('<td>').text(key[2])));
+            }
+            if (key[0] > 16) {
+              if (typeof smallSchools[key[1]] !== 'undefined' && typeof smallSchools[key[3]] !== 'undefined') {
+                table.append($('<tr class="row3"><td colspan="2">Small Schools playoff</td></tr>'));
+              } else {
+                table.append($('<tr class="row3"><td colspan="2">&nbsp;</td></tr>'));
+              }
+            }
+            round.find('.clear').before(table);
+          });
+          $('#round').before(round);
+        }
+      });
+    }
   });
   /* ]]> */
   </script>

@@ -54,18 +54,10 @@
   $.CouchApp(function (app) {
     
     var smallSchools = {};
-    var loadSmallSchools = function () {
-      app.view('small_schools', {
-        success: function (response) {
-          $.each(response.rows, function (index, row) {
-            smallSchools[row.value] = true;
-          });
-          loadStandings();
-        }
-      })
-    }
-    
-    loadSmallSchools();
+    loadSmallSchools(function (result) {
+      smallSchools = result;
+      loadStandings();
+    });
     
     var loadStandings = function () {
       app.view('standings', {

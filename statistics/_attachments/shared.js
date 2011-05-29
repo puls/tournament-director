@@ -12,5 +12,17 @@ $.CouchApp(function (app) {
     });
   };
   updateTournament();
+  
+  loadSmallSchools = function (callback) {
+    var smallSchools = {};
+    app.view('small_schools', {
+      success: function (response) {
+        $.each(response.rows, function (index, row) {
+          smallSchools[row.value] = true;
+        });
+        callback(smallSchools);
+      }
+    });
+  }
 });
 
