@@ -5,11 +5,16 @@ require 'couchrest'
 require 'enumerator'
 require 'csv'
 
-db = CouchRest.database!('http://localhost:5984/hsnct11')
+db = CouchRest.database!('http://localhost:5984/msnct12')
 docs = {}
 
 def to_id(name)
   name.gsub(/\s+/, '_').downcase.gsub(/[^a-z0-9_]/,'')
+end
+
+bracket_map = {}
+CSV.foreach("/Users/puls/Desktop/brackets.csv") do |row|
+  bracket_map[row[0]] = row[1]
 end
 
 team_count = ARGF.gets.to_i
@@ -23,8 +28,9 @@ while (team_count > 0)
   players = {}
   while (player_count > 0)
     line = ARGF.gets.chomp
-    match = line.match(/([^\(]+)( \((\d+)\))?$/)
+    match = line.match(/([^\(]+)( \(([^)]+)\))?$/)
     player = match[1]
+    puts "for #{line}, player is #{player}"
     player_key = to_id('player_' + team + '_' + player)
     player_year = match[3]
     players[player_key] = {
@@ -38,8 +44,10 @@ while (team_count > 0)
   if docs[school]
     docs[school][:teams][team_id] = {
       :name => team,
-      :players => players
+      :players => players,
+      :bracket => bracket_map[team]
     }
+    puts "for #{team}, bracket is #{bracket_map[team]}"
   else
     docs[school] = {
       :name => school,
@@ -50,10 +58,12 @@ while (team_count > 0)
       :teams => {
         team_id => {
           :name => team,
-          :players => players
+          :players => players,
+          :bracket => bracket_map[team]
         }
       }
     }
+    puts "for #{team}, bracket is #{bracket_map[team]}"
   end
   
 end

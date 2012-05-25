@@ -11,15 +11,15 @@
 
 <body>
   <h1 id="tournament_name"></h1>
-  <div class="screen right">
+  <!-- <div class="screen right">
     <input id="small_checkbox" type="checkbox" name="small_checkbox" />
     <label for="small_checkbox">Small schools only</label>
-  </div>
+  </div> -->
   <h2>Preliminary Standings<span id="small_title" style="display: none;">: Small Schools</span></h2>
   <table id="standings_table" class="standings">
     <thead>
       <tr>
-        <th></th>
+        <th class="bracket"></th>
         <th>Team</th>
         <th class="number">W</th>
         <th class="number">L</th>
@@ -56,39 +56,80 @@
     var smallSchools = {};
     loadSmallSchools(function (result) {
       smallSchools = result;
-      loadStandings();
+      loadStandingsOuter();
     });
     
-    var loadStandings = function () {
+    var allScores = {};
+    var loadStandingsOuter = function () {
+      app.view('standings', {
+        group_level: 2,
+        success: function (response) {
+          $.each(response.rows, function (index, row) {
+            allScores[row.key[1]] = row;
+          });
+          loadStandingsInner();
+        }
+      });
+    }
+    
+    var loadStandingsInner = function () {
       app.view('standings', {
         group: true,
         success: function (response) {
+			if (!response.rows.length) {
+				return;
+			}
+          var allRows = {'Overall':[]};
+          $.each(tournament.brackets, function (index, bracket) {
+            // if (bracket.match(/^Playoff/)) {
+              allRows[bracket] = [];
+            // }
+          });
           $.each(response.rows, function (index, row) {
-            var tr = $('<tr>');
-            tr.append($('<td>').addClass('ordinal'));
-            tr.append($('<td>').append($('<a>').attr('href', 'by_team.html#' + row.key[1]).text(row.key[0])));
-            var index = 0;
-            row.value.forEach(function (value) {
-              if (index === 2 || index === 4 || index === 6 || index === 8 || index === 11) {
-                value = value.toFixed(2);
-              }
-              index++;
-              if (index === 10 || index === 11) {
-                return;
-              }
-              tr.append($('<td>').addClass('number').text(value));
-            });
-            if (smallSchools[row.key[0]]) {
-              tr.addClass('small');
+            if (typeof allRows[row.key[2]] !== 'undefined') {
+              allRows[row.key[2]].push(row.key[1]);
+              allRows['Overall'].push(row.key[1]);
             }
-            $('tbody').append(tr);
           });
-          $('#standings_table').tablesorter({
-            sortList: [[4, 1], [10, 1]]
+		  var allBrackets = tournament.brackets;
+		  allBrackets.push('Overall');
+          $.each(allBrackets, function (index, bracket) {
+            var rows = allRows[bracket];
+            if (!rows.length) {
+              return;
+            }
+            var newTable = $('#standings_table').clone().attr('id', '').addClass(bracket);
+            newTable.find('.bracket').text(bracket);
+            $.each(rows, function (index, team_id) {
+              var row = allScores[team_id];
+              var tr = $('<tr>');
+              tr.append($('<td>').addClass('ordinal'));
+              tr.append($('<td>').append($('<a>').attr('href', 'by_team.html#' + row.key[1]).text(row.key[0])));
+              var index = 0;
+              row.value.forEach(function (value) {
+                if (index === 2 || index === 4 || index === 6 || index === 8 || index === 11) {
+                  value = value.toFixed(2);
+                }
+                index++;
+                if (index === 10 || index === 11) {
+                  return;
+                }
+                tr.append($('<td>').addClass('number').text(value));
+              });
+              if (smallSchools[row.key[0]]) {
+                tr.addClass('small');
+              }
+              newTable.find('tbody').append(tr);
+            });
+            $('#standings_table').before(newTable);
+            newTable.tablesorter({
+              sortList: [[4, 1], [10, 1]]
+            });
+            newTable.find('.ordinal').each(function (index) {
+              $(this).text((index + 1) + '.');
+            });
           });
-          $('.ordinal').each(function (index) {
-            $(this).text((index + 1) + '.');
-          });
+          $('#standings_table').hide();
         }
       });
     }

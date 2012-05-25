@@ -25,10 +25,11 @@
           <tr>
             <th>Round</th>
             <th>Team</th>
-            <th>Card</th>
+            <!-- <th>Card</th> -->
             <th>Points</th>
             <th>Tossups</th>
             <th>Room</th>
+            <th>Bracket</th>
             <th></th>
           </tr>
           <tr>
@@ -36,12 +37,13 @@
             <td>
               <select id="team1" name="team1-id" tabindex="1"></select>
             </td>
-            <td><input type="text" name="team1-card" value="0" id="team1-card" size="3" tabindex="3" /></td>
+            <!-- <td><input type="text" name="team1-card" value="0" id="team1-card" size="3" tabindex="3" /></td> -->
             <td><input type="text" name="team1-points" value="" id="team1-points" size="3" tabindex="5" /></td>
             <td rowspan="2"><input type="text" name="tossups" value="" id="tossups" size="2" tabindex="7" /></td>
             <td rowspan="2"><input type="text" name="room" value="" id="room" tabindex="8" /></td>
+            <td rowspan="2"><select name="bracket" value="" id="bracket" tabindex="9" style="width: 100px"></select></td>
             <td rowspan="2">
-              <button id="save" tabindex="9">Save &rarr;</button>
+              <button id="save" tabindex="10">Save &rarr;</button>
               <span id="team_success" style="display: none;">Saved!</span>
             </td>
           </tr>
@@ -49,7 +51,7 @@
             <td>
               <select id="team2" name="team2-id" tabindex="2"></select>
             </td>
-            <td><input type="text" name="team2-card" value="0" id="team2-card" size="3" tabindex="4" /></td>
+            <!-- <td><input type="text" name="team2-card" value="0" id="team2-card" size="3" tabindex="4" /></td> -->
             <td><input type="text" name="team2-points" value="" id="team2-points" size="3" tabindex="6" /></td>
           </tr>
         </table>
@@ -177,9 +179,16 @@
               teams_accounted_for++;
             }
           });
-          $('#team_status').text(teams_accounted_for + '/140');
+          $('#team_status').text(teams_accounted_for + '/64');
           // loadOpponents(round);
           stopTask('last_round_played');
+          $('#bracket').html('');
+          $.each(tournament.brackets, function (index, bracket) {
+            var option = $('<option>');
+            option.text(bracket);
+            $('#bracket').append(option);
+          });
+          updateBothTeams();
         }
       });
 
@@ -235,22 +244,25 @@
     
     var updateBothTeams = function (event) {
       var team = $('#team1').val();
-      var line;
-      if (opponents[team]) {
-        line = opponents[team];
-      } else {
-        line = ['','','','','',''];
-      }
-      $('#team2').val(line[0]);
-      $('#team1-card').val(line[1]);
-      $('#team2-card').val(line[2]);
-      $('#room').val(line[3]);
+      // var line;
+      // if (opponents[team]) {
+      //   line = opponents[team];
+      // } else {
+      //   line = ['','','','','',''];
+      // }
+      // $('#team2').val(line[0]);
+      // $('#team1-card').val(line[1]);
+      // $('#team2-card').val(line[2]);
+      // $('#room').val(line[3]);
       // $('#game_id').val(line[4]);
       // $('#game_rev').val(line[5]);
-      updateName();
+      // updateName();
+      if (teams[team] && teams[team].bracket) {
+        $('#bracket').val("Playoffs");
+      }
     };
     
-    // $('#team1').change(updateBothTeams);
+    $('#team1').change(updateBothTeams);
 
     var updateName = function (event) {
       $('#team1-name').val($('#team1').find(':selected').text());
@@ -316,7 +328,7 @@
     };
     
     var teamsForm = app.docForm('#team_form', {
-      fields: ['round', 'team1-id', 'team1-card', 'team1-name', 'team1-points', 'team2-id', 'team2-card', 'team2-name', 'team2-points', 'room', 'tossups'],
+      fields: ['round', 'team1-id', 'team1-card', 'team1-name', 'team1-points', 'team2-id', 'team2-card', 'team2-name', 'team2-points', 'room', 'tossups', 'bracket'],
       success: function (response) {
         $('#team_success').show().fadeOut(500);
         // updateCards();

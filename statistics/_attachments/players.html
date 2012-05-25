@@ -14,12 +14,10 @@
   <div class="screen right">
     <select id="year_select">
       <option value="all">Everybody</option>
-      <option value="12">Seniors only</option>
-      <option value="11">Juniors only</option>
-      <option value="10">Sophomores only</option>
-      <option value="9">Freshmen only</option>
-      <option value="8">8<sup>th</sup> grade</option>
-      <option value="7">7<sup>th</sup> grade</option>
+      <option value="8">8th grade only</option>
+      <option value="7">7th grade only</option>
+      <option value="6">6th grade only</option>
+      <option value="5">5th grade only</option>
     </select>
   </div>
   <h2>Player Stats: Preliminary Rounds</h2>
@@ -94,10 +92,15 @@
           $.each(response.rows, function (index, row) {
             var tr = $('<tr>');
             tr.append($('<td>').addClass('ordinal').text(index + 1));
-            var name = $('<td>').addClass('name').text(row.key[1]).append($('<span>').text(' (' + row.key[0] + ')'));
+            var name = $('<td>').addClass('name').text(row.key[1]);
             if (years[row.key.join('-')]) {
-              tr.addClass(years[row.key.join('-')].substring(0, 2).toLowerCase());
+				var year = years[row.key.join('-')].substring(0, 2).toLowerCase();
+              tr.addClass(year);
+			  name.append($('<span>').addClass('year').text(' (' + year + ', '));
+            } else {
+  			  name.append($('<span>').addClass('year').text(' ('));
             }
+			name.append($('<span>').text(row.key[0] + ')'));
             tr.append(name);
             var index = 0;
             row.value.forEach(function (value) {

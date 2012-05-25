@@ -43,6 +43,47 @@ div.roundscores table {
 	margin: 0px 10px 10px 0px;
 }
 
+table.elimination {
+	border-spacing: 0px;
+}
+
+table.elimination td {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: bottom;
+	border: 1px solid #ccc;
+	border-top-width: 3px;
+}
+
+table.elimination td.alt-row {
+	border-top-width: 1px;
+	border-bottom-width: 3px;
+	vertical-align: top;
+}
+
+table.elimination td.bye {
+	background-color: #ccc;
+}
+
+table.elimination td div.text {
+	min-width: 150px;
+	width: 100%;
+/*	border-bottom: 1px solid black;*/
+}
+
+table.elimination td div.text .content {
+	padding: 2px 10px;
+}
+
+table.elimination td div.border-right {
+	border-right: 1px solid black;
+}
+
+table.elimination span.number {
+	float: right;
+	margin-left: 10px;
+}
+
 h1
 {
 	font-size: 36pt;
@@ -68,7 +109,7 @@ th
 	padding: 2pt 6pt;
 }
 
-td.number
+.number
 {
 	font-family: "Bitstream Vera Sans Mono",monospace;
 	text-align:right;

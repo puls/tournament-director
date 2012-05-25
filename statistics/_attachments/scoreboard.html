@@ -46,15 +46,15 @@
               round.find('h3').text('Round ' + last_round);
             }
             var table = $('<table>');
-            if (key[2] > key[4]) {
-              table.append($('<tr class="row1">').append($('<td>').text(key[1])).append($('<td>').text(key[2])));
-              table.append($('<tr class="row2">').append($('<td>').text(key[3])).append($('<td>').text(key[4])));
+            if (key[3] > key[6]) {
+              table.append($('<tr class="row1">').append($('<td>').text(key[2])).append($('<td>').text(key[3])));
+              table.append($('<tr class="row2">').append($('<td>').text(key[5])).append($('<td>').text(key[6])));
             } else {
-              table.append($('<tr class="row1">').append($('<td>').text(key[3])).append($('<td>').text(key[4])));
-              table.append($('<tr class="row2">').append($('<td>').text(key[1])).append($('<td>').text(key[2])));
+              table.append($('<tr class="row1">').append($('<td>').text(key[5])).append($('<td>').text(key[6])));
+              table.append($('<tr class="row2">').append($('<td>').text(key[2])).append($('<td>').text(key[3])));
             }
             if (key[0] > 16) {
-              if (typeof smallSchools[key[1]] !== 'undefined' && typeof smallSchools[key[3]] !== 'undefined') {
+              if (typeof smallSchools[key[2]] !== 'undefined' && typeof smallSchools[key[3]] !== 'undefined') {
                 table.append($('<tr class="row3"><td colspan="2">Small Schools playoff</td></tr>'));
               } else {
                 table.append($('<tr class="row3"><td colspan="2">&nbsp;</td></tr>'));

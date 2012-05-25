@@ -6,3 +6,12 @@ a, a:visited {
 .screen {
   display: none;
 }
+
+table * { 
+  page-break-after:avoid;
+  page-break-before:avoid;
+}
+
+table.Overall {
+	display: none;
+}

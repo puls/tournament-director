@@ -5,19 +5,19 @@ require 'couchrest'
 require 'enumerator'
 require 'csv'
 
-db = CouchRest.database!('http://localhost:5984/qbtd')
+db = CouchRest.database!('http://localhost:5984/msnct12')
 
-File.open('/Users/jim/Desktop/indstats', 'w') do |indstats|
-  File.open('/Users/jim/Desktop/scores', 'w') do |scores|
-    File.open('/Users/jim/Desktop/teams', 'w') do |teams|
+File.open('/Users/puls/Desktop/indstats', 'w') do |indstats|
+  File.open('/Users/puls/Desktop/scores', 'w') do |scores|
+    File.open('/Users/puls/Desktop/teams', 'w') do |teams|
       
       db.view('statistics/livestat')['rows'].each do |row|
         key = row['key']
         case key.shift
         when 'indstats'
-          indstats.puts CSV.generate_line(key.unshift(''))
+          indstats.puts CSV.generate_line(key)
         when 'scores'
-          scores.puts CSV.generate_line(key.unshift(''))
+          scores.puts CSV.generate_line(key)
         when 'teams'
           teams.puts CSV.generate_line(key)
         end

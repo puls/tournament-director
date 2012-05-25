@@ -6,18 +6,18 @@ function (doc) {
   
   if (doc.type) {
     if (doc.type === 'game' && doc.indivs_complete) {
-      emit(['scores', doc.round, to_id(doc.team1.name), to_id(doc.team2.name), doc.team1.points, doc.team2.points, doc.tossups], null);
+      emit(['scores', doc.bracket, doc.round, to_id(doc.team1.name), to_id(doc.team2.name), doc.team1.points, doc.team2.points, doc.tossups], null);
 
       for (var key in doc.team1.players) {
         var player = doc.team1.players[key];
         if (player.name && player.name != '') {
-          emit(['indstats', doc.round, to_id(doc.team1.name), to_id(doc.team2.name), player.name, doc.tossups, player.tossups, player.fifteens, player.tens, player.negs], null);
+          emit(['indstats', doc.bracket, doc.round, to_id(doc.team1.name), to_id(doc.team2.name), player.name, doc.tossups, player.tossups, player.fifteens, player.tens, player.negs], null);
         }
       }
       for (var key in doc.team2.players) {
         var player = doc.team2.players[key];
         if (player.name && player.name != '') {
-          emit(['indstats', doc.round, to_id(doc.team2.name), to_id(doc.team1.name), player.name, doc.tossups, player.tossups, player.fifteens, player.tens, player.negs], null);
+          emit(['indstats', doc.bracket, doc.round, to_id(doc.team2.name), to_id(doc.team1.name), player.name, doc.tossups, player.tossups, player.fifteens, player.tens, player.negs], null);
         }
       }
     }

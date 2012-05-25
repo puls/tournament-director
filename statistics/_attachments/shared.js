@@ -4,6 +4,9 @@ $.CouchApp(function (app) {
       success: function (doc) {
         tournament = doc;
         $('#tournament_name').text(tournament.name);
+    		if (tournament.flag_title) {
+    			$('.flag_title').text(tournament.flag_title);
+    		}
       },
       error: function (status, error, reason) {
         app.db.saveDoc({'_id': 'tournament'});

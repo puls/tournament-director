@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Playoffs</title>
+  <link rel="stylesheet" href="style/statistics.css" type="text/css" />
+</head>
+
+<body>
+  <h1 id="tournament_name"></h1>
+  <h2>Playoffs: Winners&rsquo; Bracket</h2>
+  <table id="losses0" class="elimination">
+  </table>
+  <h2>Playoffs: Losers&rsquo; Bracket</h2>
+  <table id="losses1" class="elimination">
+  </table>
+
+  <script src="/_utils/script/json2.js"></script>
+  <script src="/_utils/script/jquery.js?1.3.1"></script>
+  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
+  <script src="vendor/couchapp/jquery.couchapp.js"></script>
+  <script src="shared.js"></script>
+  <script type="text/javascript" charset="utf-8">
+  /* <![CDATA[ */
+  $.CouchApp(function (app) {
+    var lossesToElimination = 2;
+    seedsByLoss = [[]];
+    teamsBySeed = [];
+    
+    var range = function(min, max) {
+      var output = [];
+      for (var value = min; value <= max; value++) {
+        output.push(value);
+      }
+      return output;
+    }
+    
+    var fillOutSeedsByLoss = function (losses, round) {
+      var currentSeeds = seedsByLoss[losses][round];
+
+      var winners = range(currentSeeds[0], currentSeeds[currentSeeds.length / 2 - 1]);
+      if (seedsByLoss[losses][round + 1]) {
+        winners = seedsByLoss[losses][round + 1].concat(winners);
+      }
+      seedsByLoss[losses][round + 1] = winners;
+
+      var losers = range(currentSeeds[currentSeeds.length / 2], currentSeeds[currentSeeds.length - 1]);
+      if (!seedsByLoss[losses + 1]) {
+        seedsByLoss[losses + 1] = [];
+      }
+      if (seedsByLoss[losses + 1][round + 1]) {
+        losers = seedsByLoss[losses + 1][round + 1].concat(losers);
+      }
+      seedsByLoss[losses + 1][round + 1] = losers;
+
+      if (winners.length > 2) {
+        fillOutSeedsByLoss(losses, round + 1);
+      }
+    };
+    
+    var sortSeedsByLoss = function () {
+      for (var losses = 0; losses < seedsByLoss.length; losses++) {
+        var bracket = seedsByLoss[losses];
+        for (var round = bracket.length - 2; round >= 0 && bracket[round]; round--) {
+          var seeds = bracket[round];
+          var newSeeds = [];
+          while (seeds.length) {
+            var seedIndex = 0;
+            
+            // Special case: in the 1-loss bracket, swap the pairings
+            // in the second round to save a lot of people from quick
+            // repeat matches.
+            if (losses == 1 && round == 2 && seeds.length % 4 == 0) {
+              seedIndex = 1;
+            }
+            var index = bracket[round + 1].indexOf(seeds[seedIndex]);
+            newSeeds[index * 2] = seeds.splice(seedIndex, 1)[0];
+            newSeeds[index * 2 + 1] = seeds.pop();
+          }
+          bracket[round] = newSeeds;
+        }
+      }
+    };
+    
+    var loadPlayoffs = function () {
+      app.db.openDoc('playoffs', {
+        success: function (doc) {
+          // Save the initial seeding
+          teamsBySeed.push(doc.seeds);
+          
+          // Figure out which seeds are in which bracket round-by-round
+          seedsByLoss[0][0] = range(0, doc.seeds.length - 1);
+          for (var losses = 0; losses < lossesToElimination; losses++) {
+            fillOutSeedsByLoss(losses, losses);
+          }
+          seedsByLoss.length = lossesToElimination;
+          
+          // Figure out who plays whom round-by-round
+          sortSeedsByLoss();
+          for (var losses = 1; losses < lossesToElimination; losses++) {
+            seedsByLoss[losses].length = seedsByLoss[losses - 1].length + 1;
+          }
+          
+          generateTables(doc.startingRound);
+          loadScoreboard(doc.startingRound);
+        }
+      });
+    };
+    
+    var loadScoreboard = function (startingRound) {
+      app.view('scoreboard', {
+        startkey: [startingRound],
+        success: function (response) {
+          $.each(response.rows, function (index, resultRow) {
+            var row = resultRow.key;
+            var round = row[0] - startingRound;
+            var fillInBox = function (team_id, team_name, points, otherPoints) {
+              var seed = teamsBySeed[round].indexOf(team_id);
+              var cell = $('.round' + row[0] + '-seed' + seed);
+              cell.text((seed + 1) + '. ' + team_name);
+              cell.append($('<span>').addClass('number').text(points));
+              if (points > otherPoints) {
+                cell.css('font-weight', 'bold');
+              }
+              return seed;
+            };
+            var seed1 = fillInBox(row[1], row[2], row[3], row[6]);
+            var seed2 = fillInBox(row[4], row[5], row[6], row[3]);
+            if (!teamsBySeed[round + 1]) {
+              teamsBySeed[round + 1] = [];
+            }
+            teamsBySeed[round + 1][Math.min(seed1, seed2)] = (row[6] > row[3] ? row[4] : row[1]);
+            teamsBySeed[round + 1][Math.max(seed1, seed2)] = (row[6] > row[3] ? row[1] : row[4]);
+          });
+        }
+      });
+    }
+    
+    var generateTables = function (startingRound) {
+      for (var losses = 0; losses < seedsByLoss.length; losses++) {
+        var bracket = seedsByLoss[losses];
+        var table = $('#losses' + losses);
+        var tr = $('<tr>');
+        for (var column = 0; column < bracket.length; column++) {
+          if (!bracket[column]) continue;
+          tr.append($('<th>').text('Round ' + (startingRound + column)));
+        }
+        table.append(tr);
+        for (var row = 0; row < bracket[losses].length; row++) {
+          tr = $('<tr>');
+          for (var column = 0; column < bracket.length; column++) {
+            if (!bracket[column]) continue;
+            var round = bracket[column];
+            var rowspan = bracket[losses].length / round.length;
+            if (row % rowspan != 0) continue;
+            var td = $('<td>').attr('rowspan', rowspan);
+            var seed = round[row / rowspan];
+            if (typeof seed !== 'undefined') {
+              td.text(seed + 1);
+              td.addClass('content');
+              td.addClass('round' + (column + startingRound) + '-seed' + seed);
+              if (row % (rowspan * 2) != 0) {
+                td.addClass('alt-row');
+              }
+            } else {
+              td.addClass('bye');
+            }
+            tr.append(td);
+          }
+          table.append(tr);
+        }
+      }
+    };
+    loadPlayoffs();
+  });
+  /* ]]> */
+  </script>
+</body>
+</html>
