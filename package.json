@@ -1,0 +1,13 @@
+{
+  "name": "tournament-director",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt-macreload": "~0.1.3",
+    "grunt-contrib-coffee": "~0.6.5",
+    "coffee-script": "~1.6.2",
+    "grunt-contrib-watch": "~0.3.1",
+    "couchapp": "~0.9.1",
+    "grunt": "~0.4.1",
+    "grunt-couchapp": "~0.1.0"
+  }
+}
