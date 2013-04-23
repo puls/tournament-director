@@ -5,24 +5,32 @@
     <title>Tournament Director</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <style type="text/css">
+    .nav a { cursor: pointer; }
+    .container { margin-top: 1em; }
+    .score-form td { vertical-align: middle; }
+    form.modal { width: 950px; margin-left: -475px; }
+    </style>
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="application">
-      {{ partial "navigation" }}
-      {{ outlet }}
+      <div class="container">
+        {{ partial "navigation" }}
+        {{ outlet }}
+      </div>
     </script>
     <script type="text/x-handlebars" data-template-name="_navigation">
       <div class="navbar">
         <div class="navbar-inner">
-          <a class="brand" href="#">{{ name }}</a>
+          <span class="brand">{{ name }}</span>
           <ul class="nav">
-          {{#linkTo "rounds" tagName="li"}}
+          {{#linkTo "rounds" tagName="li" href=false}}
             <a {{bindAttr href="view.href"}}>Rounds</a>
           {{/linkTo}}
-          {{#linkTo "teams" tagName="li"}}
+          {{#linkTo "teams" tagName="li" href=false}}
             <a {{bindAttr href="view.href"}}>Teams</a>
           {{/linkTo}}
-          {{#linkTo "settings" tagName="li"}}
+          {{#linkTo "settings" tagName="li" href=false}}
             <a {{bindAttr href="view.href"}}>Settings</a>
           {{/linkTo}}
           </ul>
@@ -34,11 +42,16 @@
     </script>
     <script type="text/x-handlebars" data-template-name="settings">Settings</script>
     <script type="text/x-handlebars" data-template-name="teams">
-    Teams
+    <div style="float: left;">
+    <h1>Teams</h1>
+    <ul>
       {{#each school in controller}}
-        {{#linkTo "school" school}}{{ school.name }}{{/linkTo}}
+        <li>{{#linkTo "school" school}}{{ school.name }}{{/linkTo}}</li>
       {{/each}}
+    </ul>
+    </div>
       {{ outlet }}
+      <br style="clear: both;">
     </script>
     <script type="text/x-handlebars" data-template-name="school">
     School
@@ -46,11 +59,75 @@
         {{ name }}
       {{/each}}
     </script>
-    <script type="text/x-handlebars" data-template-name="rounds">Rounds</script>
+    <script type="text/x-handlebars" data-template-name="rounds">
+    <div class="row">
+      <div class="span3">
+        <div class="well well-small" style="padding: 8px 0">
+          <ul class="nav nav-list">
+            <li class="nav-header">Rounds</li>
+            {{#each controller}}
+              {{#linkTo "round" this tagName="li" href=false}}
+                <a {{bindAttr href="view.href"}}>Round {{ id }}</a>
+              {{/linkTo}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="span9">
+      <h3>Enter new game</h3>
+      {{ view App.ScoreForm }}
+      {{ outlet }}
+      </div>
+    </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="scoreForm">
+    {{#with view.game}}
+      <table class="table table-bordered">
+        <tr>
+          <td rowspan="2">{{view Ember.TextField valueBinding="round" class="round" style="width: 4em;" placeholder="Round" tabindex="1"}}</td>
+          <td>{{view Ember.Select class="team1" tabindex="2" valueBinding="team1.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Left Team"}}</td>
+          <td>{{view Ember.TextField valueBinding="team1.points" tabindex="4" placeholder="Pts" style="width: 4em;"}}</td>
+          <td>{{view Ember.TextField valueBinding="tossups" tabindex="6" placeholder="TUH" style="width: 2em;"}}</td>
+          <td>{{view Ember.TextField valueBinding="serial" tabindex="7" placeholder="Serial" style="width: 5em;"}}</td>
+          <td rowspan="2"><button type="submit" class="btn btn-primary">Submit</button></td>
+        </tr>
+        <tr>
+          <td>{{view Ember.Select class="team2" tabindex="3" valueBinding="team2.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Right Team"}}</td>
+          <td>{{view Ember.TextField valueBinding="team2.points" tabindex="5" placeholder="Pts" style="width: 4em;"}}</td>
+          <td colspan="2">{{view Ember.TextField valueBinding="room" tabindex="8" placeholder="Room" style="width: inherit"}}</td>
+        </tr>
+      </table>
+    {{/with}}
+    </script>
+    <script type="text/x-handlebars" data-template-name="editGame">
+    {{ view App.PlayersForm contentBinding="view.controller.content" }}
+    </script>
+    <script type="text/x-handlebars" data-template-name="playersForm">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>{{team1.name}} vs {{team2.name}}</h3>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <a {{action deleteGame}} class="btn btn-danger pull-left">Delete Game</a>
+        <a {{action cancel}} class="btn">Cancel</a>
+        <a {{action save}} class="btn btn-primary">Save</a>
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="round">
+    <h1>Games</h1>
+    <ul>
+      {{#each game in controller.games}}
+        <li>{{#linkTo "editGame" game}}{{ game.team1.name }} vs. {{ game.team2.name }}{{/linkTo}}</li>
+      {{/each}}
+    </ul>
+    {{ outlet }}
+    </script>
     <script type="text/javascript" src="/js/libs/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/js/libs/handlebars-1.0.0-rc.3.js"></script>
-    <script type="text/javascript" src="/js/libs/ember-1.0.0-rc.2.js"></script>
-    <script type="text/javascript" src="/js/libs/ember-data.js"></script>
+    <script type="text/javascript" src="/js/libs/ember-1.0.0-rc.3.js"></script>
     <script type="text/javascript" src="/js/libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
   </body>

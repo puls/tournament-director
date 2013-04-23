@@ -8,7 +8,7 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'client/js/app.js': 'client/js/*.coffee'
+          'client/js/app.js': 'client/coffee/{app,simplemodels}*'
         options:
           sourceMap: true
     macreload:
@@ -17,17 +17,18 @@ module.exports = (grunt) ->
         editor: 'sublime'
     watch:
       script:
-        files: '**/*.coffee',
+        files: ['client/coffee/*', 'server/**/*']
         tasks: 'default'
       style:
-        files: '**/*.less',
+        files: '**/*.less'
         tasks: 'default'
       html:
-        files: 'client/*.html',
+        files: 'client/*.html'
         tasks: 'default'
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-couchapp'
   grunt.loadNpmTasks 'grunt-macreload'
+  grunt.registerTask 'generate', 'Generate fake data', require './scripts/generate.coffee'
   grunt.registerTask 'default', ['coffee', 'couchapp']
