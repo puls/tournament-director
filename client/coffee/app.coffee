@@ -25,8 +25,8 @@ App.ApplicationRoute = Ember.Route.extend
 
 App.ApplicationController = Ember.ObjectController.extend()
 
-App.StandingsRoute = Ember.Route.extend()
-  # redirect: -> @transitionTo 'teamStandings'
+App.StandingsIndexRoute = Ember.Route.extend
+  redirect: -> @transitionTo 'teamStandings'
 
 App.TeamStandingsRoute = Ember.Route.extend
   model: -> App.Store.loadTeamStandings()
@@ -42,8 +42,8 @@ App.PlayerStandingsController = Ember.ArrayController.extend
   sortProperties: ['value.7','key.1']
   sortAscending: false
 
-App.IndexRoute = Ember.Route.extend()
-  # redirect: -> @transitionTo 'rounds'
+App.IndexRoute = Ember.Route.extend
+  redirect: -> @transitionTo 'rounds'
 
 App.TeamsRoute = Ember.Route.extend
   model: -> App.Store.loadSchools()
