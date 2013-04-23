@@ -104,6 +104,20 @@ App.Store =
 
     games
 
+  loadTeamStandings: ->
+    lines = Ember.ArrayProxy.create content: []
+    @loadView 'standings',
+      group: true
+      (data, status) -> lines.set 'content', data.rows.map (row) -> row
+    lines
+
+  loadPlayerStandings: ->
+    lines = Ember.ArrayProxy.create content: []
+    @loadView 'players',
+      group: true
+      (data, status) -> lines.set 'content', data.rows.map (row) -> row
+    lines
+
   classForType: (type) ->
     type = type[0].toUpperCase() + type.substr 1
     App[type]

@@ -15,14 +15,35 @@ App.Router.map ->
   @resource 'settings'
   @resource 'teams', ->
     @resource 'school', path: ':school_id'
+  @resource 'standings', ->
+    @resource 'teamStandings', path: 'teams'
+    @resource 'playerStandings', path: 'players'
+    @resource 'scoreboard'
 
 App.ApplicationRoute = Ember.Route.extend
   model: -> App.Store.loadTournament()
 
 App.ApplicationController = Ember.ObjectController.extend()
 
-App.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'rounds'
+App.StandingsRoute = Ember.Route.extend()
+  # redirect: -> @transitionTo 'teamStandings'
+
+App.TeamStandingsRoute = Ember.Route.extend
+  model: -> App.Store.loadTeamStandings()
+
+App.TeamStandingsController = Ember.ArrayController.extend
+  sortProperties: ['value.2','value.8']
+  sortAscending: false
+
+App.PlayerStandingsRoute = Ember.Route.extend
+  model: -> App.Store.loadPlayerStandings()
+
+App.PlayerStandingsController = Ember.ArrayController.extend
+  sortProperties: ['value.7','key.1']
+  sortAscending: false
+
+App.IndexRoute = Ember.Route.extend()
+  # redirect: -> @transitionTo 'rounds'
 
 App.TeamsRoute = Ember.Route.extend
   model: -> App.Store.loadSchools()
@@ -68,34 +89,3 @@ App.EditGameController = Ember.ObjectController.extend
       error: (xhr, status, error) -> alert status
       success: (data, status, xhr) => @hide()
 
-App.ScoreForm = Ember.View.extend
-  tagName: 'form'
-  templateName: 'scoreForm'
-  classNames: ['score-form', 'form-inline']
-
-  init: ->
-    @_super()
-    @set 'game', App.Game.create()
-
-  didInsertElement: -> @$('input:first').val(App.LatestRound).focus()
-
-  submit: (event) ->
-    event.preventDefault()
-    game = @get 'game'
-    game.saveScore
-      error: (xhr, status, error) -> alert status
-      success: (data, status, xhr) =>
-        @set 'game', App.Game.create()
-        controller = @get 'controller'
-        controller.reloadRounds()
-
-App.PlayersForm = Ember.View.extend
-  tagName: 'form'
-  templateName: 'playersForm'
-  classNames: 'modal fade in form-custom-field-modal'.w()
-  didInsertElement: ->
-     @$().modal 'show'
-     @$().on 'hide', =>
-      @get('controller').modalDidHide()
-  willDestroyElement: ->
-    @$().modal 'hide'

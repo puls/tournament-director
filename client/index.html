@@ -33,6 +33,9 @@
           {{#linkTo "settings" tagName="li" href=false}}
             <a {{bindAttr href="view.href"}}>Settings</a>
           {{/linkTo}}
+          {{#linkTo "standings" tagName="li" href=false}}
+            <a {{bindAttr href="view.href"}}>Statistics</a>
+          {{/linkTo}}
           </ul>
           <form class="navbar-search pull-right">
             <input type="text" class="search-query" placeholder="Search">
@@ -40,7 +43,97 @@
         </div>
       </div>
     </script>
-    <script type="text/x-handlebars" data-template-name="settings">Settings</script>
+    <script type="text/x-handlebars" data-template-name="standings">
+    <ul class="nav nav-tabs">
+      {{#linkTo "teamStandings" tagName="li" href=false}}
+        <a {{bindAttr href="view.href"}}>Standings</a>
+      {{/linkTo}}
+      {{#linkTo "playerStandings" tagName="li" href=false}}
+        <a {{bindAttr href="view.href"}}>Players</a>
+      {{/linkTo}}
+      {{#linkTo "scoreboard" tagName="li" href=false}}
+        <a {{bindAttr href="view.href"}}>Scoreboard</a>
+      {{/linkTo}}
+    </ul>
+    {{ outlet }}
+    </script>
+    <script type="text/x-handlebars" data-template-name="teamStandings">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Team</th>
+        <th class="number">W</th>
+        <th class="number">L</th>
+        <th class="number">Pct</th>
+        <th class="number">PF</th>
+        <th class="number">(per game)</th>
+        <th class="number">PA</th>
+        <th class="number">(per game)</th>
+        <th class="number">TUH</th>
+        <th class="number">PP20H</th>
+        <th class="number">P/bonus</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{ resetCounter 'standings' }}
+      {{#each controller.arrangedContent}}
+        <tr>
+          <td>{{ counter 'standings' }}.</td>
+          <td>{{ key.[0] }}</td>
+          <td>{{ value.[0] }}</td>
+          <td>{{ value.[1] }}</td>
+          <td>{{ fixedDecimal value.[2] }}</td>
+          <td>{{ value.[3] }}</td>
+          <td>{{ fixedDecimal value.[4] }}</td>
+          <td>{{ value.[5] }}</td>
+          <td>{{ fixedDecimal value.[6] }}</td>
+          <td>{{ value.[7] }}</td>
+          <td>{{ fixedDecimal value.[8] }}</td>
+          <td>{{ value.[9] }}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+      </table>
+    </script>
+    <script type="text/x-handlebars" data-template-name="playerStandings">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th class="number">GP</th>
+          <th class="number">TUH</th>
+          <th class="number">15</th>
+          <th class="number">10</th>
+          <th class="number">-5</th>
+          <th class="number">Pts</th>
+          <th class="number">PP20H</th>
+          <th class="number">TU/neg</th>
+          <th class="number">neg/20H</th>
+        </tr>
+      </thead>
+     <tbody>
+     {{ resetCounter 'standings' }}
+     {{#each controller.arrangedContent}}
+       <tr>
+         <td>{{ counter 'standings' }}.</td>
+         <td>{{ key.[1] }}, {{ key.[0] }}</td>
+         <td>{{ fixedDecimal value.[1] }}</td>
+         <td>{{ value.[2] }}</td>
+         <td>{{ value.[3] }}</td>
+         <td>{{ value.[4] }}</td>
+         <td>{{ value.[5] }}</td>
+         <td>{{ value.[6] }}</td>
+         <td>{{ fixedDecimal value.[7] }}</td>
+         <td>{{ fixedDecimal value.[8] }}</td>
+         <td>{{ fixedDecimal value.[9] }}</td>
+       </tr>
+     {{/each}}
+     </tbody>
+     </table>
+    </script>
+  <script type="text/x-handlebars" data-template-name="settings">Settings</script>
     <script type="text/x-handlebars" data-template-name="teams">
     <div style="float: left;">
     <h1>Teams</h1>

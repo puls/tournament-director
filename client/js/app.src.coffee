@@ -15,14 +15,35 @@ App.Router.map ->
   @resource 'settings'
   @resource 'teams', ->
     @resource 'school', path: ':school_id'
+  @resource 'standings', ->
+    @resource 'teamStandings', path: 'teams'
+    @resource 'playerStandings', path: 'players'
+    @resource 'scoreboard'
 
 App.ApplicationRoute = Ember.Route.extend
   model: -> App.Store.loadTournament()
 
 App.ApplicationController = Ember.ObjectController.extend()
 
-App.IndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'rounds'
+App.StandingsRoute = Ember.Route.extend()
+  # redirect: -> @transitionTo 'teamStandings'
+
+App.TeamStandingsRoute = Ember.Route.extend
+  model: -> App.Store.loadTeamStandings()
+
+App.TeamStandingsController = Ember.ArrayController.extend
+  sortProperties: ['value.2','value.8']
+  sortAscending: false
+
+App.PlayerStandingsRoute = Ember.Route.extend
+  model: -> App.Store.loadPlayerStandings()
+
+App.PlayerStandingsController = Ember.ArrayController.extend
+  sortProperties: ['value.7','key.1']
+  sortAscending: false
+
+App.IndexRoute = Ember.Route.extend()
+  # redirect: -> @transitionTo 'rounds'
 
 App.TeamsRoute = Ember.Route.extend
   model: -> App.Store.loadSchools()
@@ -68,37 +89,6 @@ App.EditGameController = Ember.ObjectController.extend
       error: (xhr, status, error) -> alert status
       success: (data, status, xhr) => @hide()
 
-App.ScoreForm = Ember.View.extend
-  tagName: 'form'
-  templateName: 'scoreForm'
-  classNames: ['score-form', 'form-inline']
-
-  init: ->
-    @_super()
-    @set 'game', App.Game.create()
-
-  didInsertElement: -> @$('input:first').val(App.LatestRound).focus()
-
-  submit: (event) ->
-    event.preventDefault()
-    game = @get 'game'
-    game.saveScore
-      error: (xhr, status, error) -> alert status
-      success: (data, status, xhr) =>
-        @set 'game', App.Game.create()
-        controller = @get 'controller'
-        controller.reloadRounds()
-
-App.PlayersForm = Ember.View.extend
-  tagName: 'form'
-  templateName: 'playersForm'
-  classNames: 'modal fade in form-custom-field-modal'.w()
-  didInsertElement: ->
-     @$().modal 'show'
-     @$().on 'hide', =>
-      @get('controller').modalDidHide()
-  willDestroyElement: ->
-    @$().modal 'hide'
 
 App.Model = Ember.Object.extend
   init: ->
@@ -206,6 +196,20 @@ App.Store =
 
     games
 
+  loadTeamStandings: ->
+    lines = Ember.ArrayProxy.create content: []
+    @loadView 'standings',
+      group: true
+      (data, status) -> lines.set 'content', data.rows.map (row) -> row
+    lines
+
+  loadPlayerStandings: ->
+    lines = Ember.ArrayProxy.create content: []
+    @loadView 'players',
+      group: true
+      (data, status) -> lines.set 'content', data.rows.map (row) -> row
+    lines
+
   classForType: (type) ->
     type = type[0].toUpperCase() + type.substr 1
     App[type]
@@ -251,3 +255,45 @@ App.Store =
       data: options
       success: success
       dataType: 'json'
+
+App.ScoreForm = Ember.View.extend
+  tagName: 'form'
+  templateName: 'scoreForm'
+  classNames: ['score-form', 'form-inline']
+
+  init: ->
+    @_super()
+    @set 'game', App.Game.create()
+
+  didInsertElement: -> @$('input:first').val(App.LatestRound).focus()
+
+  submit: (event) ->
+    event.preventDefault()
+    game = @get 'game'
+    game.saveScore
+      error: (xhr, status, error) -> alert status
+      success: (data, status, xhr) =>
+        @set 'game', App.Game.create()
+        controller = @get 'controller'
+        controller.reloadRounds()
+
+App.PlayersForm = Ember.View.extend
+  tagName: 'form'
+  templateName: 'playersForm'
+  classNames: 'modal fade in form-custom-field-modal'.w()
+  didInsertElement: ->
+     @$().modal 'show'
+     @$().on 'hide', =>
+      @get('controller').modalDidHide()
+  willDestroyElement: ->
+    @$().modal 'hide'
+
+Ember.Handlebars.registerBoundHelper 'fixedDecimal', (value, options) ->
+  new Handlebars.SafeString value.toFixed 2
+
+App.Counters = {}
+Ember.Handlebars.registerBoundHelper 'counter', (key, options) ->
+  new Handlebars.SafeString App.Counters[key] += 1
+Ember.Handlebars.registerBoundHelper 'resetCounter', (key, options) ->
+  App.Counters[key] = 0
+  ""
