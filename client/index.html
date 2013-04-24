@@ -81,16 +81,16 @@
         <tr>
           <td>{{ counter 'standings' }}.</td>
           <td>{{ key.[0] }}</td>
-          <td>{{ value.[0] }}</td>
-          <td>{{ value.[1] }}</td>
-          <td>{{ fixedDecimal value.[2] }}</td>
-          <td>{{ value.[3] }}</td>
-          <td>{{ fixedDecimal value.[4] }}</td>
-          <td>{{ value.[5] }}</td>
-          <td>{{ fixedDecimal value.[6] }}</td>
-          <td>{{ value.[7] }}</td>
-          <td>{{ fixedDecimal value.[8] }}</td>
-          <td>{{ value.[9] }}</td>
+          <td class="number">{{ value.[0] }}</td>
+          <td class="number">{{ value.[1] }}</td>
+          <td class="number">{{ fixedDecimal value.[2] }}</td>
+          <td class="number">{{ value.[3] }}</td>
+          <td class="number">{{ fixedDecimal value.[4] }}</td>
+          <td class="number">{{ value.[5] }}</td>
+          <td class="number">{{ fixedDecimal value.[6] }}</td>
+          <td class="number">{{ value.[7] }}</td>
+          <td class="number">{{ fixedDecimal value.[8] }}</td>
+          <td class="number">{{ fixedDecimal value.[11] }}</td>
         </tr>
       {{/each}}
       </tbody>
@@ -131,8 +131,23 @@
        </tr>
      {{/each}}
      </tbody>
-     </table>
-    </script>
+   </table>
+  </script>
+  <script type="text/x-handlebars" data-template-name="scoreboard">
+  {{#each round in controller.rounds}}
+    <h3>Round {{ round.id }}</h3>
+    <div class="row">
+    {{#each round.games}}
+      <div class="span4">
+        <table class="table table-condensed table-bordered">
+          <tr><td>{{ [1] }}</td><td>{{ [2] }}</td></tr>
+          <tr><td>{{ [3] }}</td><td>{{ [4] }}</td></tr>
+        </table>
+      </div>
+    {{/each}}
+    </div>
+  {{/each}}
+  </script>
   <script type="text/x-handlebars" data-template-name="settings">Settings</script>
     <script type="text/x-handlebars" data-template-name="teams">
     <div style="float: left;">
@@ -167,7 +182,7 @@
         </div>
       </div>
       <div class="span9">
-      <h3>Enter new game</h3>
+      <h3>Enter a new game</h3>
       {{ view App.ScoreForm }}
       {{ outlet }}
       </div>
@@ -198,10 +213,44 @@
     <script type="text/x-handlebars" data-template-name="playersForm">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>{{team1.name}} vs {{team2.name}}</h3>
+        <h3>Edit game</h3>
       </div>
       <div class="modal-body">
-
+        {{#each teams}}
+          <h4>{{name}}</h4>
+          <table class="table table-bordered">
+          <thead>
+          <tr class="header">
+            <th>Player</th>
+            <th>TUH</th>
+            <th>15</th>
+            <th>10</th>
+            <th>-5</th>
+            <th>Pts</th>
+          </tr>
+          </thead>
+          <tbody>
+          {{#each players}}
+            <tr>
+              <td>{{view Ember.TextField valueBinding="name"}}</td>
+              <td>{{view App.NumberField valueBinding="tossups" style="width: 3em;"}}</td>
+              <td>{{view App.NumberField valueBinding="fifteens" style="width: 3em;"}}</td>
+              <td>{{view App.NumberField valueBinding="tens" style="width: 3em;"}}</td>
+              <td>{{view App.NumberField valueBinding="negFives" style="width: 3em;"}}</td>
+              <td>{{points}}</td>
+            </tr>
+          {{/each}}
+          <tr>
+            <td>Total</td>
+            <td>{{playerTossups}}</td>
+            <td>{{fifteens}}</td>
+            <td>{{tens}}</td>
+            <td>{{negFives}}</td>
+            <td>{{points}}</td>
+          </tr>
+          </tbody>
+          </table>
+        {{/each}}
       </div>
       <div class="modal-footer">
         <a {{action deleteGame}} class="btn btn-danger pull-left">Delete Game</a>
@@ -210,7 +259,7 @@
       </div>
     </script>
     <script type="text/x-handlebars" data-template-name="round">
-    <h1>Games</h1>
+    <h3>Games from round {{ id }}</h3>
     <ul>
       {{#each game in controller.games}}
         <li>{{#linkTo "editGame" game}}{{ game.team1.name }} vs. {{ game.team2.name }}{{/linkTo}}</li>

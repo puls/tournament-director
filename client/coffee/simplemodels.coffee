@@ -29,8 +29,19 @@ App.Model = Ember.Object.extend
 App.Game = App.Model.extend
   init: ->
     @_super()
+    @wrapTeams()
+
+  setProperties: (properties) ->
+    @_super(properties)
+    @wrapTeams()
+
+  wrapTeams: ->
     for team in ['team1','team2']
-      @set team, App.TeamGame.create @get(team)
+      wrappedTeam = App.TeamGame.create @get(team)
+      @set team, wrappedTeam
+      wrappedTeam.wrapPlayers()
+
+  teams: (-> [@get('team1'), @get('team2')]).property 'team1','team2'
 
   scoreRepresentation: () ->
     representation = @getProperties 'round','tossups','room','serial'
@@ -43,6 +54,7 @@ App.Game = App.Model.extend
     representation.scoreEntered = true
     representation.playersEntered = false
     representation.type = 'game'
+    representation.tournament = 'tournament'
     representation._id = "game_#{@get 'round'}_#{@get 'team1.id'}_#{@get 'team2.id'}"
     representation
 
@@ -57,6 +69,8 @@ App.Game = App.Model.extend
 
   savePlayers: (options) ->
     representation = @scoreRepresentation()
+    for team in ['team1','team2']
+      representation[team].players = @get(team).get 'players'
     representation.playersEntered = true
     representation._rev = @get '_rev'
     Ember.$.ajax
@@ -72,7 +86,30 @@ App.Tournament = App.Model.extend()
 App.School = App.Model.extend()
 App.Round = Ember.Object.extend()
 App.Team = Ember.Object.extend()
-App.TeamGame = Ember.Object.extend()
+App.TeamGame = Ember.Object.extend
+  init: ->
+    @_super()
+    @wrapPlayers()
+
+  wrapPlayers: ->
+    playerObjects = @get 'players'
+    if playerObjects?
+      @set 'players', playerObjects.map (player) -> App.PlayerGame.create player
+
+  playerTossups: (-> @sum 'tossups').property 'players.@each.tossups'
+  tens: (-> @sum 'tens').property 'players.@each.tens'
+  fifteens: (-> @sum 'fifteens').property 'players.@each.fifteens'
+  negFives: (-> @sum 'negFives').property 'players.@each.negFives'
+  sum: (key) ->
+    players = @get('players')
+    if players?
+      players.reduce ((acc, item, index, enumerable) -> acc + item[key]), 0
+    else
+      0
+
+
+App.PlayerGame = Ember.Object.extend
+  points: (-> 10 * @get('tens') + 15 * @get('fifteens') - 5 * @get('negFives')).property 'tens','fifteens','negFives'
 
 App.Store =
   loadTournament: -> @loadObject 'tournament'
@@ -104,18 +141,20 @@ App.Store =
 
     games
 
-  loadTeamStandings: ->
+  rowsFromView: (view) ->
     lines = Ember.ArrayProxy.create content: []
-    @loadView 'standings',
+    @loadView view,
       group: true
-      (data, status) -> lines.set 'content', data.rows.map (row) -> row
+      (data, status) -> lines.set 'content', data.rows
     lines
+
+  loadTeamStandings: ->
 
   loadPlayerStandings: ->
     lines = Ember.ArrayProxy.create content: []
     @loadView 'players',
       group: true
-      (data, status) -> lines.set 'content', data.rows.map (row) -> row
+      (data, status) -> lines.set 'content', data.rows
     lines
 
   classForType: (type) ->

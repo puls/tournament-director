@@ -8,7 +8,7 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'client/js/app.js': 'client/coffee/{app,views,simplemodels}*'
+          'client/js/app.js': 'client/coffee/{app,views,simplemodels,statistics}*'
         options:
           sourceMap: true
     macreload:

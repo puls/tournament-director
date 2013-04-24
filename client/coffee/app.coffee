@@ -25,23 +25,6 @@ App.ApplicationRoute = Ember.Route.extend
 
 App.ApplicationController = Ember.ObjectController.extend()
 
-App.StandingsIndexRoute = Ember.Route.extend
-  redirect: -> @transitionTo 'teamStandings'
-
-App.TeamStandingsRoute = Ember.Route.extend
-  model: -> App.Store.loadTeamStandings()
-
-App.TeamStandingsController = Ember.ArrayController.extend
-  sortProperties: ['value.2','value.8']
-  sortAscending: false
-
-App.PlayerStandingsRoute = Ember.Route.extend
-  model: -> App.Store.loadPlayerStandings()
-
-App.PlayerStandingsController = Ember.ArrayController.extend
-  sortProperties: ['value.7','key.1']
-  sortAscending: false
-
 App.IndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'rounds'
 
@@ -82,7 +65,12 @@ App.EditGameController = Ember.ObjectController.extend
     @transitionToRoute 'round'
   modalDidHide: -> @hide()
   cancel: -> @hide()
-  save: -> alert 'save'
+  save: ->
+    game = @get 'content'
+    game.savePlayers
+      error: (xhr, status, error) -> alert status
+      success: (data, status, xhr) => @hide()
+
   deleteGame: ->
     game = @get 'content'
     game.deleteRecord

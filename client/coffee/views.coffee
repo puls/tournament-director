@@ -30,6 +30,13 @@ App.PlayersForm = Ember.View.extend
   willDestroyElement: ->
     @$().modal 'hide'
 
+App.NumberField = Ember.TextField.extend
+  type: 'number'
+  attributeBindings: ['min', 'max', 'step']
+  _elementValueDidChange: ->
+    @set 'value', parseInt @$().val(), 10
+
+
 Ember.Handlebars.registerBoundHelper 'fixedDecimal', (value, options) ->
   new Handlebars.SafeString value.toFixed 2
 
