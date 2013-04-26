@@ -54,7 +54,6 @@ module.exports = () ->
         player =
           name: faker.Name.findName()
           year: [9..12][rand 4]
-        player.id = to_id "player_#{team.id}_#{player.name}"
         team.players.push player
       team_count--
 

@@ -52,19 +52,34 @@ App.PlayersForm = Ember.View.extend
             endkey: JSON.stringify [team.get('name'), 'zzzzz']
             group: true
             (data, status) =>
-              @set key, data.rows.map (row) -> row.key[1]
+              players = {}
+              for row in data.rows
+                players[row.key[1]] = row.value
+              @set key, players
           )(key)
 
   autocompletePlayers: (team, text) ->
     key = @keyForTeam team
-    @get(key).filter (name) -> team.get('players').every (player) -> player.name isnt name
+    players = team.get 'players'
+    names = []
+    for own name, value of @get(key)
+      if (players.every (player) -> player.name isnt name)
+        names.push name
+    names
+
+  sortAutocomplete: (team, items) ->
+    key = @keyForTeam team
+    nameScores = @get key
+    items.sort (a, b) -> nameScores[a] - nameScores[b]
 
 App.NameField = Ember.TextField.extend
   didInsertElement: ->
     @get('parentView').loadPlayerNames()
     @$().typeahead
-      source: (text, callback) =>
-        @get('parentView').autocompletePlayers @get('team'), text, callback
+      sorter: (items) =>
+        @get('parentView').sortAutocomplete @get('team'), items
+      source: (text) =>
+        @get('parentView').autocompletePlayers @get('team'), text
 
 
 App.NumberField = Ember.TextField.extend
