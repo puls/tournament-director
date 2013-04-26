@@ -9,6 +9,23 @@ module.exports = views =
           for player in team.players
             emit [ team.name, player.name ], player.year
 
+  player_names:
+    map: (doc) ->
+      emit_names = (team) ->
+        for player in team.players
+          emit [team.name, player.name]
+      if doc.type
+        if doc.type is 'school'
+          emit_names team for team in doc.teams
+        if doc.type is 'game'
+          emit_names team for team in [doc.team1, doc.team2]
+    reduce: '_count'
+
+  pending_games:
+    map: (doc) ->
+      if doc.type and doc.type is 'game' and !doc.playersEntered
+        emit doc._id
+
   scoreboard:
     map: (doc) ->
       if doc.type and doc.type is 'game' and doc.scoreEntered

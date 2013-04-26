@@ -15,6 +15,7 @@ App.Model = Ember.Object.extend
       url: @url()
       type: 'GET'
       dataType: 'json'
+      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
       success: (data, status) =>
         @setProperties data
         @setID()
@@ -40,6 +41,7 @@ App.Game = App.Model.extend
       wrappedTeam = App.TeamGame.create @get(team)
       @set team, wrappedTeam
       wrappedTeam.wrapPlayers()
+    @ensureEmptyPlayerGames()
 
   teams: (-> [@get('team1'), @get('team2')]).property 'team1','team2'
 
@@ -58,6 +60,11 @@ App.Game = App.Model.extend
     representation._id = "game_#{@get 'round'}_#{@get 'team1.id'}_#{@get 'team2.id'}"
     representation
 
+  ensureEmptyPlayerGames: ->
+    for team in @get 'teams'
+      if team.get('players').every((player) -> player.get('name')?.length > 0)
+        team.get('players').pushObject App.PlayerGame.create tossups: @get 'tossups'
+
   saveScore: (options) ->
     Ember.$.ajax
       url: '/api/'
@@ -70,7 +77,7 @@ App.Game = App.Model.extend
   savePlayers: (options) ->
     representation = @scoreRepresentation()
     for team in ['team1','team2']
-      representation[team].players = @get(team).get 'players'
+      representation[team].players = @get(team).get 'playersWithNames'
     representation.playersEntered = true
     representation._rev = @get '_rev'
     Ember.$.ajax
@@ -84,7 +91,23 @@ App.Game = App.Model.extend
 
 App.Tournament = App.Model.extend()
 App.School = App.Model.extend()
-App.Round = Ember.Object.extend()
+App.Round = Ember.Object.extend
+  pending: false
+
+App.PendingGamesList = App.Round.extend
+  init: ->
+    @_super()
+    @reload()
+  id: 'pending'
+  pending: true
+  gameCount: (-> @get 'games.length').property 'games'
+  reload: ->
+    @set 'games', []
+    App.Store.loadView 'pending_games',
+      include_docs: true
+      (data, status) =>
+        @set 'games', data.rows.map (row) -> App.Game.create row.doc
+
 App.Team = Ember.Object.extend()
 App.TeamGame = Ember.Object.extend
   init: ->
@@ -95,20 +118,27 @@ App.TeamGame = Ember.Object.extend
     playerObjects = @get 'players'
     if playerObjects?
       @set 'players', playerObjects.map (player) -> App.PlayerGame.create player
+    else
+      @set 'players', []
+
+  playersWithNames: (-> @get('players').filter (player) -> player.get('name')?.length > 0).property 'players.@each.name'
 
   playerTossups: (-> @sum 'tossups').property 'players.@each.tossups'
   tens: (-> @sum 'tens').property 'players.@each.tens'
   fifteens: (-> @sum 'fifteens').property 'players.@each.fifteens'
   negFives: (-> @sum 'negFives').property 'players.@each.negFives'
+  tossupPoints: (-> @sum 'points').property 'players.@each.points'
+  bonusPoints: (-> @get('points') - @get('tossupPoints')).property 'tossupPoints', 'points'
   sum: (key) ->
-    players = @get('players')
-    if players?
-      players.reduce ((acc, item, index, enumerable) -> acc + item[key]), 0
-    else
-      0
+    @get('playersWithNames').reduce ((acc, item, index, enumerable) -> acc + item.get key), 0
 
 
 App.PlayerGame = Ember.Object.extend
+  init: ->
+    @_super()
+    for property in ['tens', 'fifteens', 'negFives', 'tossups']
+      if !@get property
+        @set property, 0
   points: (-> 10 * @get('tens') + 15 * @get('fifteens') - 5 * @get('negFives')).property 'tens','fifteens','negFives'
 
 App.Store =
@@ -148,15 +178,6 @@ App.Store =
       (data, status) -> lines.set 'content', data.rows
     lines
 
-  loadTeamStandings: ->
-
-  loadPlayerStandings: ->
-    lines = Ember.ArrayProxy.create content: []
-    @loadView 'players',
-      group: true
-      (data, status) -> lines.set 'content', data.rows
-    lines
-
   classForType: (type) ->
     type = type[0].toUpperCase() + type.substr 1
     App[type]
@@ -165,6 +186,7 @@ App.Store =
     proxy = Ember.ObjectProxy.create content: {}
     Ember.$.ajax "/api/#{id}",
       dataType: 'json'
+      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
       success: (data, status) =>
         proxy.set 'content', @classForType(data.type).create data
     proxy
@@ -200,5 +222,6 @@ App.Store =
   loadView: (view, options, success) ->
     Ember.$.ajax "/api/_design/app/_view/#{view}",
       data: options
+      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
       success: success
       dataType: 'json'

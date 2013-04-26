@@ -11,6 +11,12 @@
     .score-form td { vertical-align: middle; }
     form.modal { width: 950px; margin-left: -475px; }
     </style>
+    <style type="text/css" media="screen">
+    .printonly { display: none; }
+    </style>
+    <style type="text/css" media="print">
+    .navbar, .nav { display: none; }
+    </style>
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="application">
@@ -38,7 +44,7 @@
           {{/linkTo}}
           </ul>
           <form class="navbar-search pull-right">
-            <input type="text" class="search-query" placeholder="Search">
+            <input type="text" class="search-query" placeholder="Search doesn't work yet">
           </form>
         </div>
       </div>
@@ -58,6 +64,7 @@
     {{ outlet }}
     </script>
     <script type="text/x-handlebars" data-template-name="teamStandings">
+    <h1 class="printonly">Team Standings</h1>
     <table class="table table-striped">
     <thead>
       <tr>
@@ -97,6 +104,7 @@
       </table>
     </script>
     <script type="text/x-handlebars" data-template-name="playerStandings">
+    <h1 class="printonly">Player Standings</h1>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -134,6 +142,7 @@
    </table>
   </script>
   <script type="text/x-handlebars" data-template-name="scoreboard">
+  <h1 class="printonly">Scoreboard</h1>
   {{#each round in controller.rounds}}
     <h3>Round {{ round.id }}</h3>
     <div class="row">
@@ -172,7 +181,12 @@
       <div class="span3">
         <div class="well well-small" style="padding: 8px 0">
           <ul class="nav nav-list">
-            <li class="nav-header">Rounds</li>
+            {{#with controller.pendingGames }}
+            {{#linkTo "round" this tagName="li" href=false}}
+              <a {{bindAttr href="view.href"}}>Pending Games <span class="badge badge-info pull-right">{{ gameCount }}</span></a>
+            {{/linkTo}}
+            <li class="divider"></li>
+            {{/with}}
             {{#each controller}}
               {{#linkTo "round" this tagName="li" href=false}}
                 <a {{bindAttr href="view.href"}}>Round {{ id }}</a>
@@ -208,7 +222,7 @@
     {{/with}}
     </script>
     <script type="text/x-handlebars" data-template-name="editGame">
-    {{ view App.PlayersForm contentBinding="view.controller.content" }}
+    {{ view App.PlayersForm }}
     </script>
     <script type="text/x-handlebars" data-template-name="playersForm">
       <div class="modal-header">
@@ -216,8 +230,8 @@
         <h3>Edit game</h3>
       </div>
       <div class="modal-body">
-        {{#each teams}}
-          <h4>{{name}}</h4>
+        {{#each team in teams}}
+          <h4>{{ team.name }} <span class="pull-right">{{ team.points }}</span></h4>
           <table class="table table-bordered">
           <thead>
           <tr class="header">
@@ -230,23 +244,23 @@
           </tr>
           </thead>
           <tbody>
-          {{#each players}}
+          {{#each player in team.players}}
             <tr>
-              <td>{{view Ember.TextField valueBinding="name"}}</td>
-              <td>{{view App.NumberField valueBinding="tossups" style="width: 3em;"}}</td>
-              <td>{{view App.NumberField valueBinding="fifteens" style="width: 3em;"}}</td>
-              <td>{{view App.NumberField valueBinding="tens" style="width: 3em;"}}</td>
-              <td>{{view App.NumberField valueBinding="negFives" style="width: 3em;"}}</td>
-              <td>{{points}}</td>
+              <td>{{view App.NameField valueBinding="player.name" teamBinding="team" class="player"}}</td>
+              <td>{{view App.NumberField valueBinding="player.tossups" min="0" maxBinding="tossups" style="width: 3em;"}}</td>
+              <td>{{view App.NumberField valueBinding="player.fifteens" min="0" maxBinding="tossups" style="width: 3em;"}}</td>
+              <td>{{view App.NumberField valueBinding="player.tens" min="0" maxBinding="tossups" style="width: 3em;"}}</td>
+              <td>{{view App.NumberField valueBinding="player.negFives" min="0" maxBinding="tossups" style="width: 3em;"}}</td>
+              <td>{{ player.points }}</td>
             </tr>
           {{/each}}
           <tr>
             <td>Total</td>
-            <td>{{playerTossups}}</td>
-            <td>{{fifteens}}</td>
-            <td>{{tens}}</td>
-            <td>{{negFives}}</td>
-            <td>{{points}}</td>
+            <td>{{ team.playerTossups }}</td>
+            <td>{{ team.fifteens }}</td>
+            <td>{{ team.tens }}</td>
+            <td>{{ team.negFives }}</td>
+            <td>{{ team.tossupPoints }} / {{ team.bonusPoints }}</td>
           </tr>
           </tbody>
           </table>
@@ -259,10 +273,17 @@
       </div>
     </script>
     <script type="text/x-handlebars" data-template-name="round">
-    <h3>Games from round {{ id }}</h3>
+    {{#if pending}}
+      <h3>Pending Games</h3>
+    {{else}}
+      <h3>Games from round {{ id }}</h3>
+    {{/if}}
     <ul>
       {{#each game in controller.games}}
-        <li>{{#linkTo "editGame" game}}{{ game.team1.name }} vs. {{ game.team2.name }}{{/linkTo}}</li>
+        <li>
+          {{#if pending}}Round {{game.round}}: {{/if}}
+          {{#linkTo "editGame" game}}{{ game.team1.name }} vs. {{ game.team2.name }}{{/linkTo}}
+        </li>
       {{/each}}
     </ul>
     {{ outlet }}
@@ -270,7 +291,7 @@
     <script type="text/javascript" src="/js/libs/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/js/libs/handlebars-1.0.0-rc.3.js"></script>
     <script type="text/javascript" src="/js/libs/ember-1.0.0-rc.3.js"></script>
-    <script type="text/javascript" src="/js/libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/libs/bootstrap.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
   </body>
 </html>
