@@ -1,8 +1,8 @@
 module.exports = () ->
   done = @async()
   request = require 'request'
-  util = require 'util'
   faker = require 'faker2'
+  to_id = require './to_id'
 
   database = 'http://localhost:5984/qbtd'
 

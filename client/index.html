@@ -10,6 +10,7 @@
     .container { margin-top: 1em; }
     .score-form td { vertical-align: middle; }
     form.modal { width: 950px; margin-left: -475px; }
+    .modal-header .close { margin-left: 1em; }
     </style>
     <style type="text/css" media="screen">
     .printonly { display: none; }
@@ -227,11 +228,14 @@
     <script type="text/x-handlebars" data-template-name="playersForm">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <span class="pull-right">
+        Tossups: {{view App.NumberField valueBinding="tossups" style="width: 3em;"}}
+        </span>
         <h3>Edit game</h3>
       </div>
       <div class="modal-body">
         {{#each team in teams}}
-          <h4>{{ team.name }} <span class="pull-right">{{ team.points }}</span></h4>
+          <h4>{{ team.name }} {{view App.NumberField valueBinding="team.points" style="width: 3em;" class="pull-right"}}</h4>
           <table class="table table-bordered">
           <thead>
           <tr class="header">
