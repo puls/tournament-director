@@ -91,6 +91,14 @@ App.NumberField = Ember.TextField.extend
     @set 'value', number
     @$().val number
 
+App.FilterForm = Ember.View.extend
+  tagName: 'form'
+  templateName: 'filterForm'
+  classNames: ['pull-right','filterForm']
+  eventManager:
+    change: (event, view) ->
+      view.get('controller').updateFilters()
+
 Ember.Handlebars.registerBoundHelper 'fixedDecimal', (value, options) ->
   new Handlebars.SafeString value.toFixed 2
 

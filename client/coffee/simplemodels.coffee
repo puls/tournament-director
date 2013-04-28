@@ -171,11 +171,10 @@ App.Store =
 
     games
 
-  rowsFromView: (view) ->
+  rowsFromView: (view, options) ->
     lines = Ember.ArrayProxy.create content: []
-    @loadView view,
-      group: true
-      (data, status) -> lines.set 'content', data.rows
+    options = $.extend {group: true}, options
+    @loadView view, options, (data, status) -> lines.set 'content', data.rows
     lines
 
   classForType: (type) ->

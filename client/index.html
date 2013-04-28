@@ -10,13 +10,16 @@
     .container { margin-top: 1em; }
     .score-form td { vertical-align: middle; }
     form.modal { width: 950px; margin-left: -475px; }
+    form.filterForm { margin-bottom: 0; }
+    .filterForm input { width: 2em; margin: 0; }
     .modal-header .close { margin-left: 1em; }
     </style>
     <style type="text/css" media="screen">
     .printonly { display: none; }
     </style>
     <style type="text/css" media="print">
-    .navbar, .nav { display: none; }
+    .navbar, .nav, .filterForm { display: none; }
+    .table td { padding: 2px; }
     </style>
   </head>
   <body>
@@ -127,7 +130,7 @@
      {{#each controller.arrangedContent}}
        <tr>
          <td>{{ counter 'standings' }}.</td>
-         <td>{{ key.[1] }}, {{ key.[0] }}</td>
+         <td>{{ key.[1] }}, {{ key.[0] }} ({{key.[2]}})</td>
          <td>{{ fixedDecimal value.[1] }}</td>
          <td>{{ value.[2] }}</td>
          <td>{{ value.[3] }}</td>
@@ -160,21 +163,27 @@
   </script>
   <script type="text/x-handlebars" data-template-name="settings">Settings</script>
     <script type="text/x-handlebars" data-template-name="teams">
-    <div style="float: left;">
-    <h1>Teams</h1>
+    {{#each school in controller}}
+    {{#each team in school.teams}}
+    <h2>{{ team.name }}</h2>
     <ul>
-      {{#each school in controller}}
-        <li>{{#linkTo "school" school}}{{ school.name }}{{/linkTo}}</li>
-      {{/each}}
+    {{#each player in team.players}}
+    <li>{{ player.name }}</li>
+    {{/each}}
     </ul>
-    </div>
-      {{ outlet }}
-      <br style="clear: both;">
+    {{/each}}
+    {{/each}}
     </script>
     <script type="text/x-handlebars" data-template-name="school">
-    School
       {{#each controller.teams}}
+      <h3>
         {{ name }}
+        </h3>
+      <ul>
+      {{#each players}}
+      <li>{{ name }}</li>
+      {{/each}}
+      </ul>
       {{/each}}
     </script>
     <script type="text/x-handlebars" data-template-name="rounds">
@@ -230,6 +239,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <span class="pull-right">
         Tossups: {{view App.NumberField valueBinding="tossups" style="width: 3em;"}}
+        &nbsp; &nbsp; &nbsp;
+        Serial: {{view Ember.TextField valueBinding="serial" style="width: 5em;"}}
         </span>
         <h3>Edit game</h3>
       </div>
@@ -280,17 +291,25 @@
     {{#if pending}}
       <h3>Pending Games</h3>
     {{else}}
-      <h3>Games from round {{ id }}</h3>
+      <h3>{{ games.length }} games from round {{ id }}</h3>
     {{/if}}
     <ul>
       {{#each game in controller.games}}
         <li>
-          {{#if pending}}Round {{game.round}}: {{/if}}
-          {{#linkTo "editGame" game}}{{ game.team1.name }} vs. {{ game.team2.name }}{{/linkTo}}
+          {{#if pending}}
+            Round {{ game.round }}:
+          {{else}}
+            {{ game.serial }}:
+          {{/if}}
+          {{#linkTo "editGame" game}}{{ game.team1.name }} vs. {{ game.team2.name }}{{/linkTo}} in {{ game.room }}
         </li>
       {{/each}}
     </ul>
     {{ outlet }}
+    </script>
+    <script type="text/x-handlebars" data-template-name="filterForm">
+      {{view Ember.Checkbox checkedBinding="filterRounds"}}
+      Rounds {{view App.NumberField valueBinding="minRound"}} to {{view App.NumberField valueBinding="maxRound"}}
     </script>
     <script type="text/javascript" src="/js/libs/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/js/libs/handlebars-1.0.0-rc.3.js"></script>

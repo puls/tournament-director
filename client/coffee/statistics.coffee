@@ -1,3 +1,10 @@
+App.StandingsRoute = Ember.Route.extend
+  model: -> Ember.Object.create({filterRounds: false, minRound: 0, maxRound: 0})
+
+App.StandingsController = Ember.ObjectController.extend
+  updateFilters: ->
+    console.log "Filter on: #{@get 'filterRounds'}; min #{@get 'minRound'} max #{@get 'maxRound'}"
+
 App.StandingsIndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'teamStandings'
 
@@ -10,10 +17,29 @@ App.TeamStandingsController = Ember.ArrayController.extend
 
 App.PlayerStandingsRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'players'
+  setupController: (controller, model) ->
+    controller.set 'allYears', App.Store.rowsFromView 'player_years'
 
 App.PlayerStandingsController = Ember.ArrayController.extend
   sortProperties: ['value.7','key.1']
   sortAscending: false
+
+  addYears: (->
+    if @get('allYears.length') == 0 or @get('content.length') == 0
+      return
+    allYears = @get 'allYears.content'
+    yearOptions = []
+    @forEach (player) ->
+      console.log "Adding year to #{player.key[1]}"
+      index = 0
+      spliceIndex = -1
+      for row in allYears
+        if player.key[0] == row.key[0] and player.key[1] == row.key[1]
+          player.key[2] = row.value
+          allYears.splice index, 1
+          break
+        index += 1
+  ).observes 'allYears.content', 'content'
 
 App.ScoreboardRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'scoreboard'

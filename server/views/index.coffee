@@ -8,6 +8,7 @@ module.exports = views =
         for team in doc.teams
           for player in team.players
             emit [ team.name, player.name ], player.year
+    reduce: '_sum'
 
   player_names:
     map: (doc) ->
