@@ -82,6 +82,7 @@ App.EditGameController = Ember.ObjectController.extend
   save: ->
     game = @get 'content'
     game.savePlayers
+      validationError: (message) -> alert message
       error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
       success: (data, status, xhr) => @hide()
 

@@ -13,6 +13,7 @@ App.ScoreForm = Ember.View.extend
     event.preventDefault()
     game = @get 'game'
     game.saveScore
+      validationError: (message) -> alert message
       error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
       success: (data, status, xhr) =>
         @set 'game', App.Game.create()

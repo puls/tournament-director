@@ -18,11 +18,14 @@ lastSchool = null
 while teamCount > 0
   teamCount -= 1
   lineCount = parseInt lines.shift(), 10
-  team = name: lines.shift(), players: []
-  team.id = to_id(team.name)
+  teamName = lines.shift()
+  match = teamName.match /((.+?)( [A-Z])?)( team_id:(\d+))?$/
 
-  match = team.name.match /(.+?)( [A-Z])?$/
-  schoolName = match[1]
+  team = name: match[1], players: []
+  team._id = to_id(team.name)
+  team.id = parseInt match[5], 10
+
+  schoolName = match[2]
   unless lastSchool?.name == schoolName
     lastSchool =
       name: schoolName
@@ -35,10 +38,11 @@ while teamCount > 0
 
   lineCount -= 1
   while lineCount > 0
-    match = lines.shift().match /(.+?)( \((\d+)\))?$/
+    match = lines.shift().match /(.+?)( \((\d+)\))?( team_member_id:(\d+))?$/
     team.players.push
       name: match[1]
       year: parseInt match[3], 10
+      id: parseInt match[5], 10
     lineCount -= 1
 
 request.del database, (error, response, body) ->

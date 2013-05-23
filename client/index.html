@@ -130,7 +130,7 @@
      {{#each controller.arrangedContent}}
        <tr>
          <td>{{ counter 'standings' }}.</td>
-         <td>{{ key.[1] }}, {{ key.[0] }} ({{key.[2]}})</td>
+         <td>{{ key.[1] }}, {{ key.[0] }} {{#if key.[2]}}({{key.[2]}}){{/if}}</td>
          <td>{{ fixedDecimal value.[1] }}</td>
          <td>{{ value.[2] }}</td>
          <td>{{ value.[3] }}</td>

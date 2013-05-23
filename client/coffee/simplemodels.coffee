@@ -65,16 +65,68 @@ App.Game = App.Model.extend
       if team.get('players').every((player) -> player.get('name')?.length > 0)
         team.get('players').pushObject App.PlayerGame.create tossups: @get 'tossups'
 
+  validateScore: ->
+    return 'Round cannot be blank' unless @get 'round'
+    return 'Left team cannot be blank' unless @get 'team1.id'
+    return 'Right team cannot be blank' unless @get 'team2.id'
+    return 'Left score cannot be blank' unless @get 'team1.points'
+    return 'Right score cannot be blank' unless @get 'team2.points'
+    return 'Tossups cannot be blank' unless @get 'tossups'
+    return 'Serial cannot be blank' unless @get 'serial'
+    return 'Room cannot be blank' unless @get 'room'
+
+    tossups = parseInt @get('tossups'), 10
+    return 'Tossups must be more than 10' if tossups < 10
+    return 'Tossups must be less than 30' if tossups > 30
+
+    leftScore = parseInt @get('team1.points'), 10
+    return 'Left team points must be a multiple of 5' if leftScore % 5 isnt 0
+
+    rightScore = parseInt @get('team2.points'), 10
+    return 'Right team points must be a multiple of 5' if rightScore % 5 isnt 0
+
   saveScore: (options) ->
+    message = @validateScore()
+    return options.validationError(message) if message?
+    representation = @scoreRepresentation()
     Ember.$.ajax
       url: '/api/'
       type: 'POST'
-      data: JSON.stringify @scoreRepresentation()
+      data: JSON.stringify representation
       contentType: 'application/json'
       error: options.error
       success: options.success
 
+  validatePlayers: ->
+    gameTossups = @get 'tossups'
+    for teamKey in ['team1', 'team2']
+      team = @get teamKey
+      players = team.get 'playersWithNames'
+      seatsFilled = Math.min 4, players.length
+      expectedTossups = seatsFilled * gameTossups
+      return "#{team.name} players heard more than #{expectedTossups} tossups" if team.get('tossups') > expectedTossups
+      return "#{team.name} players heard less than #{expectedTossups} tossups" if team.get('tossups') < expectedTossups
+
+      return "#{team.name} had less than zero bonus points" if team.get('bonusPoints') < 0
+
+      pointsPerBonus = team.get('bonusPoints') / team.get('bonusesHeard')
+      return "#{team.name} averaged #{pointsPerBonus} points per bonus" if pointsPerBonus > 30
+
+      for player in players
+        playerTossups = player.get 'tossups'
+        if playerTossups > gameTossups
+          return "#{team.name}: #{player.name} heard more tossups (#{playerTossups}) than the team did (#{gameTossups})"
+        if player.get('answered') > playerTossups
+          return "#{team.name}: #{player.name} answered more tossups (#{player.get 'answered'}) than he/she heard (#{playerTossups})"
+
+
   savePlayers: (options) ->
+    message = @validateScore()
+    return options.validationError(message) if message?
+
+    message = @validatePlayers()
+    return options.validationError(message) if message?
+
     representation = @scoreRepresentation()
     for team in ['team1','team2']
       representation[team].players = @get(team).get 'playersWithNames'
@@ -128,6 +180,7 @@ App.TeamGame = Ember.Object.extend
   fifteens: (-> @sum 'fifteens').property 'players.@each.fifteens'
   negFives: (-> @sum 'negFives').property 'players.@each.negFives'
   tossupPoints: (-> @sum 'points').property 'players.@each.points'
+  bonusesHeard: (-> @sum('tens') + @sum('fifteens')).property 'tens', 'fifteens'
   bonusPoints: (-> @get('points') - @get('tossupPoints')).property 'tossupPoints', 'points'
   sum: (key) ->
     @get('playersWithNames').reduce ((acc, item, index, enumerable) -> acc + item.get key), 0
@@ -140,6 +193,7 @@ App.PlayerGame = Ember.Object.extend
       if !@get property
         @set property, 0
   points: (-> 10 * @get('tens') + 15 * @get('fifteens') - 5 * @get('negFives')).property 'tens','fifteens','negFives'
+  answered: (-> @get('tens') + @get('fifteens') + @get('negFives')).property 'tens','fifteens','negFives'
 
 App.Store =
   loadTournament: -> @loadObject 'tournament'

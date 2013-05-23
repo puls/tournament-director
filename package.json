@@ -9,7 +9,10 @@
     "couchapp": "~0.9.1",
     "grunt": "~0.4.1",
     "grunt-couchapp": "~0.1.0",
-    "faker2": "~0.5.0",
-    "request": "~2.16.6"
+    "faker2": "~0.5.0"
+  },
+  "dependencies": {
+    "request": "~2.16.6",
+    "csv": "~0.3.0"
   }
 }
