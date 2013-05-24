@@ -9,12 +9,13 @@
     .nav a { cursor: pointer; }
     .container { margin-top: 1em; }
     .score-form td { vertical-align: middle; }
-    form.modal { width: 950px; margin-left: -475px; }
+    form.modal { width: 800px; margin-left: -400px; }
     form.filterForm { margin-bottom: 0; }
     .non-fixed-modal { position: absolute; }
     .non-fixed-modal .modal-body { max-height: none; }
     .filterForm input { width: 2em; margin: 0; }
     .modal-header .close { margin-left: 1em; }
+    input.team-score { width: 3em; margin-bottom: 10px; }
     </style>
     <style type="text/css" media="screen">
     .printonly { display: none; }
@@ -41,9 +42,6 @@
           {{/linkTo}}
           {{#linkTo "teams" tagName="li" href=false}}
             <a {{bindAttr href="view.href"}}>Teams</a>
-          {{/linkTo}}
-          {{#linkTo "settings" tagName="li" href=false}}
-            <a {{bindAttr href="view.href"}}>Settings</a>
           {{/linkTo}}
           {{#linkTo "standings" tagName="li" href=false}}
             <a {{bindAttr href="view.href"}}>Statistics</a>
@@ -248,7 +246,10 @@
       </div>
       <div class="modal-body">
         {{#each team in teams}}
-          <h4>{{ team.name }} {{view App.NumberField valueBinding="team.points" style="width: 3em;" class="pull-right"}}</h4>
+          <div class="row">
+            {{view App.NumberField valueBinding="team.points" class="pull-right team-score"}}
+            <h4 class="span9">{{ team.name }}</h4>
+          </div>
           <table class="table table-bordered">
           <thead>
           <tr class="header">

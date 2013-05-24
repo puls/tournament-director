@@ -30,5 +30,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-couchapp'
   grunt.loadNpmTasks 'grunt-macreload'
-  grunt.registerTask 'generate', 'Generate fake data', require './scripts/generate.coffee'
+  grunt.registerTask 'generateData', 'Generate fake data', require './scripts/generate.coffee'
   grunt.registerTask 'default', ['coffee', 'couchapp']
+  grunt.registerTask 'generate', ['generateData', 'coffee', 'couchapp']

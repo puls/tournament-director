@@ -1,7 +1,7 @@
 module.exports =
 
   map: (doc) ->
-    if doc.type and doc.type is 'game' and doc.scoreEntered# and doc.round isnt 8
+    if doc.type and doc.type is 'game' and doc.scoreEntered
       team1win = (doc.team1.points > doc.team2.points)
       team1points = (if doc.team1.points is 1 then 0 else doc.team1.points)
       team2points = (if doc.team2.points is 1 then 0 else doc.team2.points)

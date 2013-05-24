@@ -24,7 +24,7 @@ App.PlayersForm = Ember.View.extend
   tagName: 'form'
   templateName: 'playersForm'
   contentBinding: 'controller.content'
-  classNames: 'modal fade in form-custom-field-modal non-fixed-modal'.w()
+  classNames: 'modal fade in form-custom-field-modal non-fixed-modal form-inline'.w()
 
   didInsertElement: ->
     @$().modal 'show'
