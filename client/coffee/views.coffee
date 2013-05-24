@@ -24,7 +24,7 @@ App.PlayersForm = Ember.View.extend
   tagName: 'form'
   templateName: 'playersForm'
   contentBinding: 'controller.content'
-  classNames: 'modal fade in form-custom-field-modal'.w()
+  classNames: 'modal fade in form-custom-field-modal non-fixed-modal'.w()
 
   didInsertElement: ->
     @$().modal 'show'
@@ -87,10 +87,15 @@ App.NumberField = Ember.TextField.extend
   type: 'number'
   attributeBindings: ['min', 'max', 'step']
   _elementValueDidChange: ->
-    number = parseInt @$().val(), 10
+    originalValue = @$().val()
+    number = parseInt originalValue, 10
     number = if isNaN(number) then 0 else number
     @set 'value', number
-    @$().val number
+    if originalValue != number.toString()
+      @$().val number
+
+  focusIn: (event, view) ->
+    @$().select()
 
 App.FilterForm = Ember.View.extend
   tagName: 'form'
