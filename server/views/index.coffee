@@ -41,6 +41,12 @@ module.exports = views =
         for team in doc.teams
           emit team.id, team.name
 
+  moderators:
+    map: (doc) ->
+      if doc.type and doc.type is 'game' and doc.scoreEntered
+        emit [ doc.tossups, doc.room ], 1
+    reduce: '_count'
+
 
 for filename in fs.readdirSync __dirname
   continue if filename == path.basename __filename

@@ -69,11 +69,14 @@ App.Game = App.Model.extend
     return 'Round cannot be blank' unless @get 'round'
     return 'Left team cannot be blank' unless @get 'team1.id'
     return 'Right team cannot be blank' unless @get 'team2.id'
-    return 'Left score cannot be blank' unless @get 'team1.points'
-    return 'Right score cannot be blank' unless @get 'team2.points'
+    return 'Left score cannot be blank' unless @get('team1.points')?.toString().length
+    return 'Right score cannot be blank' unless @get('team2.points')?.toString().length
     return 'Tossups cannot be blank' unless @get 'tossups'
     return 'Serial cannot be blank' unless @get 'serial'
     return 'Room cannot be blank' unless @get 'room'
+
+    return 'Round must be greater than 0'  if @get('round') <= 0
+    return 'Round must be less than 30'  if @get('round') > 30
 
     tossups = parseInt @get('tossups'), 10
     return 'Tossups must be more than 10' if tossups < 10

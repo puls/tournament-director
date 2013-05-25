@@ -216,7 +216,7 @@
     {{#with view.game}}
       <table class="table table-bordered">
         <tr>
-          <td rowspan="2">{{view Ember.TextField valueBinding="round" class="round" style="width: 4em;" placeholder="Round" tabindex="1"}}</td>
+          <td rowspan="2">{{view App.NumberField valueBinding="round" class="round" style="width: 3em;" placeholder="Round" tabindex="1"}}</td>
           <td>{{view Ember.Select class="team1" tabindex="2" valueBinding="team1.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Left Team"}}</td>
           <td>{{view Ember.TextField valueBinding="team1.points" tabindex="4" placeholder="Pts" style="width: 4em;"}}</td>
           <td>{{view Ember.TextField valueBinding="tossups" tabindex="6" placeholder="TUH" style="width: 2em;"}}</td>
@@ -247,7 +247,7 @@
       <div class="modal-body">
         {{#each team in teams}}
           <div class="row">
-            {{view App.NumberField valueBinding="team.points" class="pull-right team-score"}}
+            {{view App.NumberField valueBinding="team.points" step="5" class="pull-right team-score"}}
             <h4 class="span9">{{ team.name }}</h4>
           </div>
           <table class="table table-bordered">

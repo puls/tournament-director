@@ -27,7 +27,8 @@ App.PlayersForm = Ember.View.extend
   classNames: 'modal fade in form-custom-field-modal non-fixed-modal form-inline'.w()
 
   didInsertElement: ->
-    @$().modal 'show'
+    @$().modal
+      backdrop: 'static'
     @$('input:first').focus()
     @$().on 'hide', =>
       @get('controller').modalDidHide()

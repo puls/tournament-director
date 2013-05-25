@@ -19,11 +19,12 @@ while teamCount > 0
   teamCount -= 1
   lineCount = parseInt lines.shift(), 10
   teamName = lines.shift()
-  match = teamName.match /((.+?)( [A-Z])?)( team_id:(\d+))?$/
+  match = teamName.match /((.+?)( [A-Z])?)( \(SS\))?( team_id:(\d+))?$/
 
   team = name: match[1], players: []
   team._id = to_id(team.name)
-  team.id = parseInt match[5], 10
+  team.id = parseInt match[6], 10
+  team.small = match[4]?.length > 0
 
   schoolName = match[2]
   unless lastSchool?.name == schoolName
@@ -32,6 +33,7 @@ while teamCount > 0
       tournament: 'tournament'
       teams: []
       type: 'school'
+      small: team.small
       _id: "school_#{to_id schoolName}"
     docs.push lastSchool
   lastSchool.teams.push team
