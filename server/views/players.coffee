@@ -1,7 +1,7 @@
 module.exports =
 
   map: (doc) ->
-    if doc.type and doc.type is "game" and doc.playersEntered and doc.round < 17
+    if doc.type and doc.type is "game" and doc.playersEntered and !doc.playoffs
       for player in doc.team1.players
         emit [ doc.team1.name, player.name ], [ doc.tossups, 0, player.tossups, player.fifteens, player.tens, player.negFives, 15 * player.fifteens + 10 * player.tens - 5 * player.negFives, 0, 0, 0, 1 ]  if player.name isnt ""
       for player in doc.team2.players

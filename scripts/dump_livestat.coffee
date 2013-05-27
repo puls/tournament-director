@@ -2,7 +2,7 @@ request = require 'request'
 csv = require 'csv'
 fs = require 'fs'
 
-database = 'http://localhost:5984/qbtd'
+database = require './database'
 
 outputDir = process.argv.pop()
 
@@ -20,7 +20,7 @@ request.get "#{database}/_design/app/_view/livestat", (error, response, body) ->
       when '_players' then teamMemberLookup[row.key.join ''] = row.value
       when 'indstats'
         playerName = row.key[4]
-        row.key[4] = teamMemberLookup[row.key[2] + playerName] ? row.key[4]
+        row.key[4] = teamMemberLookup[row.key[2] + playerName] ? playerName
         indstatsFile.write row.key
 
   indstatsFile.end()

@@ -4,7 +4,7 @@ module.exports = () ->
   faker = require 'faker2'
   to_id = require './to_id'
 
-  database = 'http://localhost:5984/qbtd'
+  database = require './database'
 
   round_count = 15
   team_count = 240

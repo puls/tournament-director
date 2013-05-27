@@ -2,7 +2,7 @@ fs = require 'fs'
 to_id = require './to_id'
 request = require 'request'
 
-database = 'http://localhost:5984/qbtd'
+database = require './database'
 
 theWholeEnchilada = fs.readFileSync process.argv.pop(), encoding: 'utf8'
 lines = theWholeEnchilada.split "\n"
