@@ -67,6 +67,11 @@
     </ul>
     {{ outlet }}
     </script>
+    <script type="text/x-handlebars" data-template-name="teamPerformance">
+      {{#each controller.arrangedContent}}
+        {{this}}
+      {{/each}}
+    </script>
     <script type="text/x-handlebars" data-template-name="teamStandings">
     <h1 class="printonly">Team Standings</h1>
     <table class="table table-striped team-standings">
@@ -91,7 +96,9 @@
       {{#each controller.arrangedContent}}
         <tr {{bindAttr class="key.2:small"}}>
           <td>{{ counter 'standings' }}.</td>
-          <td>{{ key.[0] }}</td>
+          <td>
+            {{#linkTo "teamPerformance" key.[1]}}{{ key.[0] }}: {{ key.[1] }}{{/linkTo}}
+          </td>
           <td class="number">{{ value.[0] }}</td>
           <td class="number">{{ value.[1] }}</td>
           <td class="number">{{ fixedDecimal value.[2] }}</td>

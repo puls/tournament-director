@@ -19,6 +19,7 @@ App.Router.map ->
     @resource 'teamStandings', path: 'teams'
     @resource 'playerStandings', path: 'players'
     @resource 'scoreboard'
+    @resource 'teamPerformance', path: 'team/:team_id'
 
 App.ApplicationRoute = Ember.Route.extend
   model: -> App.Store.loadTournament()

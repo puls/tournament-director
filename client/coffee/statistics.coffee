@@ -81,3 +81,12 @@ App.ScoreboardController = Ember.ArrayController.extend
     rounds
   ).property 'content.@each'
 
+App.TeamPerformanceRoute = Ember.Route.extend
+  model: (params) ->
+    teamID = parseInt params.team_id, 10
+    App.Store.rowsFromView 'by_team',
+      startkey: JSON.stringify [teamID]
+      endkey: JSON.stringify [teamID, {}]
+      group: false
+
+App.TeamPerformanceController = Ember.ArrayController.extend()
