@@ -15,8 +15,8 @@ module.exports =
       for key, player of doc.team2.players
         tossups2 += player.fifteens + player.tens
         bonuspoints2 -= (15 * player.fifteens + 10 * player.tens - 5 * player.negFives)
-      emit [doc.team1.name, doc.team1.id, doc.bracket], [(if team1win then 1 else 0), (if team1win then 0 else 1), 0, team1points, 0, team2points, 0, doc.tossups, 0, tossups1, bonuspoints1, 0]
-      emit [doc.team2.name, doc.team2.id, doc.bracket], [(if team1win then 0 else 1), (if team1win then 1 else 0), 0, team2points, 0, team1points, 0, doc.tossups, 0, tossups2, bonuspoints2, 0]
+      emit [doc.team1.name, doc.team1.id], [(if team1win then 1 else 0), (if team1win then 0 else 1), 0, team1points, 0, team2points, 0, doc.tossups, 0, tossups1, bonuspoints1, 0]
+      emit [doc.team2.name, doc.team2.id], [(if team1win then 0 else 1), (if team1win then 1 else 0), 0, team2points, 0, team1points, 0, doc.tossups, 0, tossups2, bonuspoints2, 0]
 
   reduce: (keys, values, rereduce) ->
     output = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

@@ -69,7 +69,7 @@
     </script>
     <script type="text/x-handlebars" data-template-name="teamStandings">
     <h1 class="printonly">Team Standings</h1>
-    <table class="table table-striped">
+    <table class="table table-striped team-standings">
     <thead>
       <tr>
         <th></th>
@@ -89,7 +89,7 @@
       <tbody>
       {{ resetCounter 'standings' }}
       {{#each controller.arrangedContent}}
-        <tr>
+        <tr {{bindAttr class="key.2:small"}}>
           <td>{{ counter 'standings' }}.</td>
           <td>{{ key.[0] }}</td>
           <td class="number">{{ value.[0] }}</td>
@@ -109,7 +109,7 @@
     </script>
     <script type="text/x-handlebars" data-template-name="playerStandings">
     <h1 class="printonly">Player Standings</h1>
-    <table class="table table-striped">
+    <table class="table table-striped player-standings">
       <thead>
         <tr>
           <th></th>
@@ -128,7 +128,7 @@
      <tbody>
      {{ resetCounter 'standings' }}
      {{#each controller.arrangedContent}}
-       <tr>
+       <tr {{bindAttr class="key.2"}}>
          <td>{{ counter 'standings' }}.</td>
          <td>{{ key.[1] }}, {{ key.[0] }} {{#if key.[2]}}({{key.[2]}}){{/if}}</td>
          <td>{{ fixedDecimal value.[1] }}</td>

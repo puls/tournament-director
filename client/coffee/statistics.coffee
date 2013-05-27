@@ -10,10 +10,28 @@ App.StandingsIndexRoute = Ember.Route.extend
 
 App.TeamStandingsRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'standings'
+  setupController: (controller, model) ->
+    controller.set 'smallSchools', App.Store.rowsFromView 'small_schools'
 
 App.TeamStandingsController = Ember.ArrayController.extend
   sortProperties: ['value.2','value.8']
   sortAscending: false
+  addSmall: (->
+    if @get('smallSchools.length') == 0
+      console.log 'No small schools, bailing'
+      return
+
+    if @get('content.length') == 0
+      console.log 'No teams, bailing'
+      return
+
+    smallSchools = @get 'smallSchools.content'
+    schoolsMap = {}
+    for row in smallSchools
+      schoolsMap[row.key] = true
+    @forEach (team) ->
+      team.key[2] = schoolsMap[team.key[1]]?
+  ).observes 'smallSchools.content', 'content'
 
 App.PlayerStandingsRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'players'
@@ -25,8 +43,14 @@ App.PlayerStandingsController = Ember.ArrayController.extend
   sortAscending: false
 
   addYears: (->
-    if @get('allYears.length') == 0 or @get('content.length') == 0
+    if @get('allYears.length') == 0
+      console.log 'No player years, bailing'
       return
+
+    if @get('content.length') == 0
+      console.log 'No players, bailing'
+      return
+
     allYears = @get 'allYears.content'
     yearOptions = []
     @forEach (player) ->
