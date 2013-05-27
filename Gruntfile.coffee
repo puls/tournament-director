@@ -11,10 +11,6 @@ module.exports = (grunt) ->
           'client/js/app.js': 'client/coffee/{app,views,simplemodels,statistics}*'
         options:
           sourceMap: true
-    macreload:
-      normal:
-        browser: 'chrome'
-        editor: 'sublime'
     watch:
       script:
         files: ['client/coffee/*', 'server/**/*']
@@ -29,7 +25,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-couchapp'
-  grunt.loadNpmTasks 'grunt-macreload'
   grunt.registerTask 'generateData', 'Generate fake data', require './scripts/generate.coffee'
   grunt.registerTask 'default', ['coffee', 'couchapp']
   grunt.registerTask 'generate', ['generateData', 'coffee', 'couchapp']
