@@ -1,0 +1,12 @@
+.navbar
+  .navbar-inner
+    span.brand = name
+    ul.nav
+      linkTo "rounds" tagName="li" href=false
+        a href=view.href Rounds
+      linkTo "teams" tagName="li" href=false
+        a href=view.href Teams
+      linkTo "standings" tagName="li" href=false
+        a href=view.href Statistics
+    form.navbar-search.pull-right
+      input.search-query type="text" placeholder="Search doesn't work yet"
