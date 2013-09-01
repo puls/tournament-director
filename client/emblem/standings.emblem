@@ -1,0 +1,8 @@
+ul.nav.nav-tabs
+  linkTo "teamStandings" tagName="li" href=false
+    a href=view.href Standings
+  linkTo "playerStandings" tagName="li" href=false
+    a href=view.href Players
+  linkTo "scoreboard" tagName="li" href=false
+    a href=view.href Scoreboard
+outlet

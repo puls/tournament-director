@@ -1,0 +1,10 @@
+.nav a { cursor: pointer; }
+.container { margin-top: 1em; }
+.score-form td { vertical-align: middle; }
+form.modal { width: 800px; margin-left: -400px; }
+form.filterForm { margin-bottom: 0; }
+.non-fixed-modal { position: absolute; }
+.non-fixed-modal .modal-body { max-height: none; }
+.filterForm input { width: 2em; margin: 0; }
+.modal-header .close { margin-left: 1em; }
+input.team-score { width: 3em; margin-bottom: 10px; }

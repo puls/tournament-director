@@ -1,0 +1,5 @@
+each controller.teams
+  h3 = name
+  ul
+    each players
+      li = name

@@ -1,0 +1,2 @@
+Ember.Checkbox checkedBinding="filterRounds"
+| Rounds {{view App.NumberField valueBinding="minRound"}} to {{view App.NumberField valueBinding="maxRound"}}

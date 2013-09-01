@@ -230,7 +230,7 @@ App.Store =
 
   rowsFromView: (view, options) ->
     lines = Ember.ArrayProxy.create content: []
-    options = $.extend {group: true}, options unless options.group?
+    options = $.extend {group: true}, options unless options?.group
     @loadView view, options, (data, status) -> lines.set 'content', data.rows
     lines
 

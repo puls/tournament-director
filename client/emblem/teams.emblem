@@ -1,0 +1,6 @@
+each school in controller
+  each team in school.teams
+    h2 = team.name
+    ul
+      each player in team.players
+        li = player.name

@@ -1,0 +1,33 @@
+h1.printonly Player Standings
+table.table.table-striped.player-standings
+  thead
+    tr
+      th
+      th Player
+      th.number GP
+      th.number TUH
+      th.number 15
+      th.number 10
+      th.number -5
+      th.number Pts
+      th.number P/20H
+      th.number TU/neg
+      th.number neg/20H
+  tbody
+    resetCounter 'standings'
+    each controller.arrangedContent
+      tr class=key.2
+        td = counter 'standings'
+        td
+          | {{ key.1 }}, {{ key.0 }}
+          if key.2
+            |  ({{ key.2 }})
+        td = fixedDecimal value.1
+        td = value.2
+        td = value.3
+        td = value.4
+        td = value.5
+        td = value.6
+        td = fixedDecimal value.7
+        td = fixedDecimal value.8
+        td = fixedDecimal value.9

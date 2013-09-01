@@ -1,0 +1,46 @@
+.modal-header
+  button type="button" class="close" data-dismiss="modal" aria-hidden="true" &times;
+  span.pull-right
+    | Tossups: {{view App.NumberField valueBinding="tossups" style="width: 3em;"}}
+    | &nbsp; &nbsp; &nbsp;
+    | Serial: {{view Ember.TextField valueBinding="serial" style="width: 5em;"}}
+  h3 Edit game
+.modal-body
+  each team in teams
+    .row
+      App.NumberField valueBinding="team.points" step="5" class="pull-right team-score"
+      h4.span9 = team.name
+    table.table.table-bordered
+      thead
+        tr.header
+          th Player
+          th TUH
+          th 15
+          th 10
+          th -5
+          th Pts
+      tbody
+        each player in team.players
+          tr
+            td
+              App.NameField valueBinding="player.name" teamBinding="team" class="player"
+            td
+              App.NumberField valueBinding="player.tossups" min="0" maxBinding="tossups" style="width: 3em;"
+            td
+              App.NumberField valueBinding="player.fifteens" min="0" maxBinding="tossups" style="width: 3em;"
+            td
+              App.NumberField valueBinding="player.tens" min="0" maxBinding="tossups" style="width: 3em;"
+            td
+              App.NumberField valueBinding="player.negFives" min="0" maxBinding="tossups" style="width: 3em;"
+            td = player.points
+        tr
+          td Total
+          td = team.playerTossups
+          td = team.fifteens
+          td = team.tens
+          td = team.negFives
+          td {{ team.tossupPoints }} / {{ team.bonusPoints }}
+.modal-footer
+  a.btn.btn-danger.pull-left click="deleteGame" Delete Game
+  a.btn click="cancel" Cancel
+  a.btn.btn-primary click="save" Save

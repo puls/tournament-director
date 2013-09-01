@@ -26,7 +26,7 @@ module.exports = (grunt) ->
 
     watch:
       script:
-        files: ['client/coffee/*', 'server/**/*']
+        files: ['client/coffee/*', 'client/emblem/*', 'server/**/*']
         tasks: 'default'
       style:
         files: '**/*.less'
@@ -40,5 +40,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-emblem'
   grunt.loadNpmTasks 'grunt-couchapp'
   grunt.registerTask 'generateData', 'Generate fake data', require './scripts/generate.coffee'
-  grunt.registerTask 'default', ['coffee', 'couchapp', 'emblem']
+  grunt.registerTask 'default', ['coffee', 'emblem', 'couchapp']
   grunt.registerTask 'generate', ['generateData', 'default']

@@ -1,0 +1,15 @@
+if pending
+  h3 Pending Games
+else
+  h3 {{ games.length }} games from round {{ id }}
+ul
+  each game in controller.games
+    li
+      if pending
+        | Round {{ game.round }}: 
+      else
+        | {{ game.serial }}: 
+      linkTo "editGame" game
+        | {{ game.team1.name }} vs. {{ game.team2.name }}
+      |  in {{ game.room }}
+outlet

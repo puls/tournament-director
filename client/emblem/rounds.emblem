@@ -1,0 +1,18 @@
+.row
+  .span3
+    .well.well-small style="padding: 8px 0px"
+      ul.nav.nav-list
+        with controller.pendingGames
+          linkTo 'round' this tagName='li' href=false
+            a href=view.href
+              | Pending Games
+              span.badge.badge-info.pull-right = gameCount
+          li.divider
+        each controller
+          linkTo 'round' this tagName='li' href=false
+            a href=view.href
+              | Round {{ id }}
+  .span9
+    h3 Enter a new game
+    App.ScoreForm
+    outlet

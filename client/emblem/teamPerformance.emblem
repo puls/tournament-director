@@ -1,0 +1,2 @@
+each controller.arrangedContent
+  | {{this}}
