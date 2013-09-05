@@ -1,14 +1,13 @@
 h1.printonly Scoreboard
-each round in countroller.rounds
+each round in controller.rounds
   h3 Round {{ round.id }}
   .row
     each round.games
       .span4
-        | Game
         table.table.table-condensed.table-bordered
           tr
-            td = [1]
-            td = [2]
+            td = 1
+            td = 2
           tr
-            td = [3]
-            td = [4]
+            td = 3
+            td = 4
