@@ -2,3 +2,8 @@ app.js
 app.map
 app.src.coffee
 templates.js
+libs/ember.js
+libs/emblem.js
+libs/emblem.min.js
+libs/handlebars.js
+libs/jquery.js

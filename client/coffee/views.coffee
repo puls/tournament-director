@@ -38,7 +38,7 @@ App.PlayersForm = Ember.View.extend
 
   eventManager: Ember.Object.create
     focusOut: (event, view) ->
-      game = view.get('controller').get 'content'
+      game = view.nearestWithProperty('content').get 'content'
       game.ensureEmptyPlayerGames()
 
   keyForTeam: (team) -> "playerNames_#{team.get('id')}"

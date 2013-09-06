@@ -11,6 +11,7 @@ App.StandingsIndexRoute = Ember.Route.extend
 App.TeamStandingsRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'standings'
   setupController: (controller, model) ->
+    @_super controller, model
     controller.set 'smallSchools', App.Store.rowsFromView 'small_schools'
 
 App.TeamStandingsController = Ember.ArrayController.extend
@@ -36,6 +37,7 @@ App.TeamStandingsController = Ember.ArrayController.extend
 App.PlayerStandingsRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'players'
   setupController: (controller, model) ->
+    @_super controller, model
     controller.set 'allYears', App.Store.rowsFromView 'player_years'
 
 App.PlayerStandingsController = Ember.ArrayController.extend

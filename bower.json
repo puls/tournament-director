@@ -1,0 +1,23 @@
+{
+  "name": "tournament-director",
+  "version": "1.1.0",
+  "homepage": "http://tournamentdirector.org",
+  "authors": [
+    "Jim Puls <jim@nondifferentiable.com>"
+  ],
+  "main": "client/app.coffee",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "ember": "~1.0.0",
+    "emblem": "~0.3.2"
+  }
+}

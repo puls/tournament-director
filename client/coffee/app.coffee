@@ -1,5 +1,3 @@
-Ember.LOG_BINDINGS = true
-
 window.App = Ember.Application.create()
 
 Ember.TextSupport.reopen
@@ -38,6 +36,7 @@ App.TeamsController = Ember.ArrayController.extend
 App.RoundsRoute = Ember.Route.extend
   model: -> App.Store.loadRounds()
   setupController: (controller, model) ->
+    @_super controller, model
     App.Store.loadSchoolsIfEmpty()
     unless controller.get('pendingGames')?
       controller.set 'pendingGames', App.PendingGamesList.create()
@@ -58,6 +57,7 @@ App.RoundRoute = Ember.Route.extend
     else
       App.Round.create id: params.round_id
   setupController: (controller, model) ->
+    @_super controller, model
     controller.reloadGames()
     App.LatestRound = model.id unless model.id is 'pending'
 
