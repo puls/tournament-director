@@ -2,21 +2,21 @@ with view.game
   table.table.table-bordered
     tr
       td rowspan="2"
-        App.NumberField valueBinding="round" class="round" style="width: 3em;" placeholder="Round" tabindex="1"
+        App.NumberField valueBinding="round" class="round form-control" style="width: 5em;" placeholder="Round" tabindex="1"
       td
-        Ember.Select class="team1" tabindex="2" valueBinding="team1.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Left Team"
+        Ember.Select class="team1 form-control" tabindex="2" valueBinding="team1.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Left Team"
       td
-        Ember.TextField valueBinding="team1.points" tabindex="4" placeholder="Pts" style="width: 4em;"
+        Ember.TextField valueBinding="team1.points" tabindex="4" placeholder="Pts" style="width: 6em;" class="form-control"
       td
-        Ember.TextField valueBinding="tossups" tabindex="6" placeholder="TUH" style="width: 2em;"
+        Ember.TextField valueBinding="tossups" tabindex="6" placeholder="TUH" style="width: 4em;" class="form-control"
       td
-        Ember.TextField valueBinding="serial" tabindex="7" placeholder="Serial" style="width: 5em;"
+        Ember.TextField valueBinding="serial" tabindex="7" placeholder="Serial" style="width: 7em;" class="form-control"
       td rowspan="2"
         button type="submit" class="btn btn-primary" Submit
     tr
       td
-        Ember.Select class="team2" tabindex="3" valueBinding="team2.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Right Team"
+        Ember.Select class="team2 form-control" tabindex="3" valueBinding="team2.id" contentBinding="App.Store.allTeams" optionValuePath="content.id" optionLabelPath="content.name" prompt="Right Team"
       td
-        Ember.TextField valueBinding="team2.points" tabindex="5" placeholder="Pts" style="width: 4em;"
+        Ember.TextField valueBinding="team2.points" tabindex="5" placeholder="Pts" style="width: 6em;" class="form-control"
       td colspan="2"
-        Ember.TextField valueBinding="room" tabindex="8" placeholder="Room" style="width: inherit"
+        Ember.TextField valueBinding="room" tabindex="8" placeholder="Room" class="form-control"

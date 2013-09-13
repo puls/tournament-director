@@ -1,12 +1,19 @@
-.navbar
-  .navbar-inner
-    span.brand = name
-    ul.nav
+nav.navbar.navbar-default role="navigation"
+  .navbar-header
+    button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse"
+      span.sr-only Toggle Navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand href="#" = name
+  .collapse.navbar-collapse.navbar-ex1-collapse
+    ul.nav.navbar-nav
       linkTo "rounds" tagName="li" href=false
         a href=view.href Rounds
       linkTo "teams" tagName="li" href=false
         a href=view.href Teams
       linkTo "standings" tagName="li" href=false
         a href=view.href Statistics
-    form.navbar-search.pull-right
-      input.search-query type="text" placeholder="Search doesn't work yet"
+    form.navbar-form.navbar-right role="search"
+      .form-group
+        input.form-control type="text" placeholder="Search doesn't work yet"

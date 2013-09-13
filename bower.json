@@ -18,6 +18,8 @@
   "dependencies": {
     "jquery": "~2.0.3",
     "ember": "~1.0.0",
-    "emblem": "~0.3.2"
+    "emblem": "~0.3.2",
+    "bootstrap": "~3.0.0",
+    "typeahead.js": "~0.9.3"
   }
 }

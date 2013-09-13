@@ -3,7 +3,7 @@ each round in controller.rounds
   h3 Round {{ round.id }}
   .row
     each round.games
-      .span4
+      .col-md-4
         table.table.table-condensed.table-bordered
           tr
             td = 1

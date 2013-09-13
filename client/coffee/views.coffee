@@ -2,6 +2,7 @@ App.ScoreForm = Ember.View.extend
   tagName: 'form'
   templateName: 'scoreForm'
   classNames: ['score-form', 'form-inline']
+  ariaRole: 'form'
 
   init: ->
     @_super()
@@ -24,13 +25,14 @@ App.PlayersForm = Ember.View.extend
   tagName: 'form'
   templateName: 'playersForm'
   contentBinding: 'controller.content'
-  classNames: 'modal fade in form-custom-field-modal non-fixed-modal form-inline'.w()
+  ariaRole: 'dialog'
+  classNames: 'modal fade form-inline'.w()
 
   didInsertElement: ->
     @$().modal
       backdrop: 'static'
     @$('input:first').focus()
-    @$().on 'hide', =>
+    @$().on 'hide.bs.modal', =>
       @get('controller').modalDidHide()
 
   willDestroyElement: ->
@@ -60,7 +62,7 @@ App.PlayersForm = Ember.View.extend
               @set key, players
           )(key)
 
-  autocompletePlayers: (team, text) ->
+  autocompletePlayers: (team) ->
     key = @keyForTeam team
     players = team.get 'players'
     names = []
@@ -75,14 +77,20 @@ App.PlayersForm = Ember.View.extend
     items.sort (a, b) -> nameScores[a] - nameScores[b]
 
 App.NameField = Ember.TextField.extend
-  didInsertElement: ->
-    @get('parentView').loadPlayerNames()
-    @$().typeahead
-      sorter: (items) =>
-        @get('parentView').sortAutocomplete @get('team'), items
-      source: (text) =>
-        @get('parentView').autocompletePlayers @get('team'), text
+  didInsertElement: -> @get('parentView').loadPlayerNames()
 
+  focusIn: (event) ->
+    return if @get 'hasTypeahead'
+    @set 'hasTypeahead', true
+    team = @get 'team'
+    parent = @get 'parentView'
+    names = parent.autocompletePlayers team
+    @$().typeahead local: names
+    @$().focus()
+
+  focusOut: (event) ->
+    @$().typeahead 'destroy'
+    @set 'hasTypeahead', false
 
 App.NumberField = Ember.TextField.extend
   type: 'number'
