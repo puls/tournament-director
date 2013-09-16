@@ -67,7 +67,6 @@ module.exports = () ->
     fisherYates team_ids
     fisherYates rooms
     for i in [1..games_per_round]
-      console.log "room is #{rooms[i - 1]}"
       game =
         type: 'game'
         tournament: 'tournament'
@@ -79,23 +78,49 @@ module.exports = () ->
         tossups: [17..24][rand 8]
         team1:
           id: team_ids[2 * i]
-          points: 5 * rand 140
+          points: 0
           players: []
         team2:
           id: team_ids[2 * i + 1]
-          points: 5 * rand 140
+          points: 0
           players: []
       ['team1', 'team2'].forEach (team_key) ->
         game[team_key].name = all_teams[game[team_key].id].name
         game[team_key]._id = all_teams[game[team_key].id]._id
         for own player_id, player of all_teams[game[team_key].id].players
-          game[team_key].players.push
+          player =
             id: player_id
             name: player.name
             tossups: game.tossups
-            fifteens: [0..1][rand 2]
-            tens: [0..3][rand 4]
-            negFives: [0..3][rand 4]
+            fifteens: 0
+            tens: 0
+            negFives: 0
+          game[team_key].players.push player
+
+      for question in [1..game.tossups]
+        hasNeg = (rand(4) == 1)
+        hasFifteen = (rand(5) == 1)
+        answerTeam = if rand(2) == 1 then 'team1' else 'team2'
+
+        if hasNeg
+          negPlayer = rand 4
+          game[answerTeam].players[negPlayer].negFives += 1
+          game[answerTeam].points -= 5
+          answerTeam = if answerTeam is 'team1' then 'team2' else 'team1'
+
+        continue if rand(10) == 1 # Question went dead
+
+        answerPlayer = rand 4
+
+        if hasFifteen
+          game[answerTeam].players[answerPlayer].fifteens += 1
+          game[answerTeam].points += 15
+        else
+          game[answerTeam].players[answerPlayer].tens += 1
+          game[answerTeam].points += 10
+
+        game[answerTeam].points += [0,10,20,30][rand 4]
+
 
       game._id = "game_#{game.round}_#{game.team1._id}_#{game.team2._id}"
       games.push game
