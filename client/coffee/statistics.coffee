@@ -17,6 +17,11 @@ App.TeamStandingsRoute = Ember.Route.extend
 App.TeamStandingsController = Ember.ArrayController.extend
   sortProperties: ['value.2','value.8']
   sortAscending: false
+  sort: (key) ->
+    App.Counters['standings'] = 0
+    @set 'sortAscending', key is 'key.0'
+    @set 'sortProperties', [key]
+
   addSmall: (->
     if @get('smallSchools.length') == 0
       console.log 'No small schools, bailing'
@@ -44,6 +49,11 @@ App.PlayerStandingsController = Ember.ArrayController.extend
   sortProperties: ['value.7','key.1']
   sortAscending: false
 
+  sort: (key) ->
+    App.Counters['standings'] = 0
+    @set 'sortAscending', key is 'key.1'
+    @set 'sortProperties', [key]
+
   addYears: (->
     if @get('allYears.length') == 0
       console.log 'No player years, bailing'
@@ -56,7 +66,6 @@ App.PlayerStandingsController = Ember.ArrayController.extend
     allYears = @get 'allYears.content'
     yearOptions = []
     @forEach (player) ->
-      console.log "Adding year to #{player.key[1]}"
       index = 0
       spliceIndex = -1
       for row in allYears
@@ -65,7 +74,7 @@ App.PlayerStandingsController = Ember.ArrayController.extend
           allYears.splice index, 1
           break
         index += 1
-  ).observes 'allYears.content', 'content'
+  )#.observes 'allYears.content', 'content'
 
 App.ScoreboardRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'scoreboard'

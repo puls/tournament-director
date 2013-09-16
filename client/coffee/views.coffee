@@ -123,3 +123,39 @@ Ember.Handlebars.registerBoundHelper 'counter', (key, options) ->
 Ember.Handlebars.registerBoundHelper 'resetCounter', (key, options) ->
   App.Counters[key] = 0
   ""
+
+App.TeamStandingsRowView = Ember.View.extend
+  tagName: 'tr'
+  click: (event) -> alert "clicked row for #{@get('team').key[0]}"
+
+  render: (buffer) ->
+    team = @get 'team'
+    key = team.key
+    value = team.value
+    counter = App.Counters['standings'] += 1
+
+    buffer.push "<td>#{counter}.</td><td>#{key[0]}</td>"
+    for index in [0..8]
+      if index in [2,4,6,8]
+        buffer.push "<td>#{value[index].toFixed 2}</td>"
+      else
+        buffer.push "<td>#{value[index]}</td>"
+    buffer.push "<td>#{value[11].toFixed 2}</td>"
+
+App.PlayerStandingsRowView = Ember.View.extend
+  tagName: 'tr'
+  click: (event) -> alert "clicked row for #{@get('player').key[1]}"
+
+  render: (buffer) ->
+    # Don't dynamically bind anything within the row as a performance optimization
+    player = @get 'player'
+    key = player.key
+    value = player.value
+    counter = App.Counters['standings'] += 1
+
+    buffer.push "<td>#{counter}.</td><td>#{key[1]}, #{key[0]}</td>"
+    buffer.push "<td>#{value[1].toFixed 2}</td>"
+    for index in [2..6]
+      buffer.push "<td>#{value[index]}</td>"
+    for index in [7..9]
+      buffer.push "<td>#{value[index].toFixed 2}</td>"

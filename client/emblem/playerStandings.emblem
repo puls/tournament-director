@@ -1,33 +1,18 @@
 h1.printonly Player Standings
 table.table.table-striped.player-standings
-  thead
-    tr
-      th
-      th Player
-      th.number GP
-      th.number TUH
-      th.number 15
-      th.number 10
-      th.number -5
-      th.number Pts
-      th.number P/20H
-      th.number TU/neg
-      th.number neg/20H
+  thead: tr
+    th
+    th: a click="sort 'key.1'" Player
+    th.number: a click="sort 'value.1'" GP
+    th.number: a click="sort 'value.2'" TUH
+    th.number: a click="sort 'value.3'" 15
+    th.number: a click="sort 'value.4'" 10
+    th.number: a click="sort 'value.5'" -5
+    th.number: a click="sort 'value.6'" Pts
+    th.number: a click="sort 'value.7'" P/20H
+    th.number: a click="sort 'value.8'" TU/neg
+    th.number: a click="sort 'value.9'" neg/20H
   tbody
     resetCounter 'standings'
     each controller.arrangedContent
-      tr class=key.2
-        td = counter 'standings'
-        td
-          | {{ key.1 }}, {{ key.0 }}
-          if key.2
-            |  ({{ key.2 }})
-        td = fixedDecimal value.1
-        td = value.2
-        td = value.3
-        td = value.4
-        td = value.5
-        td = value.6
-        td = fixedDecimal value.7
-        td = fixedDecimal value.8
-        td = fixedDecimal value.9
+      App.PlayerStandingsRowView playerBinding=this

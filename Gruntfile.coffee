@@ -10,7 +10,7 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'client/js/app.js': 'client/coffee/{app,views,simplemodels,statistics}*'
+          'client/js/app.js': 'client/coffee/*'
         options:
           sourceMap: true
 

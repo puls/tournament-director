@@ -1,5 +1,5 @@
 .rounds-list .list-group { border: 1px solid #ddd; border-radius: 0px; }
-.rounds-list .list-group-item { cursor: pointer; padding: 3px 20px; border: none; margin-bottom: 0px; }
+.rounds-list .list-group-item { padding: 4px 20px; border: none; margin-bottom: 0px; }
 .rounds-list .list-group-item.pending { border-bottom: 1px solid #ddd; }
 .list-group-item.active a { color: inherit; }
 .container { margin-top: 1em; }
@@ -11,3 +11,4 @@ form.filterForm { margin-bottom: 0; }
 .filterForm input { width: 2em; margin: 0; }
 .modal-header .close { margin-left: 1em; }
 input.team-score { width: 3em; margin-bottom: 10px; }
+a { cursor: pointer; }
