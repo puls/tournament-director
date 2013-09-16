@@ -43,6 +43,9 @@ App.EditGameController = Ember.ObjectController.extend
   hide: ->
     @controllerFor('rounds').reloadRounds()
     @transitionToRoute 'round'
+
+    # We've removed the modal's element by the time the hidden event triggers, so do its side effects manually.
+    $(document.body).removeClass 'modal-open'
   modalDidHide: -> @hide()
   cancel: -> @hide()
   save: ->

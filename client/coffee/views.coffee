@@ -31,6 +31,7 @@ App.PlayersForm = Ember.View.extend
   didInsertElement: ->
     @$().modal
       backdrop: 'static'
+      keyboard: false
     @$('input:first').focus()
     @$().on 'hide.bs.modal', =>
       @get('controller').modalDidHide()
