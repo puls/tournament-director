@@ -9,7 +9,7 @@ ul
         | Round {{ game.round }}: 
       else
         | {{ game.serial }}: 
-      linkTo "editGame" game
+      link-to "editGame" game
         | {{ game.team1.name }} vs. {{ game.team2.name }}
       |  in {{ game.room }}
 outlet

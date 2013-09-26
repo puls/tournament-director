@@ -8,11 +8,11 @@ nav.navbar.navbar-default role="navigation"
     a.navbar-brand href="#" = name
   .collapse.navbar-collapse.navbar-ex1-collapse
     ul.nav.navbar-nav
-      linkTo "rounds" tagName="li" href=false
+      link-to "rounds" tagName="li" href=false
         a href=view.href Rounds
-      linkTo "teams" tagName="li" href=false
+      link-to "teams" tagName="li" href=false
         a href=view.href Teams
-      linkTo "standings" tagName="li" href=false
+      link-to "standings" tagName="li" href=false
         a href=view.href Statistics
     form.navbar-form.navbar-right role="search"
       .form-group

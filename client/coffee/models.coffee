@@ -163,7 +163,39 @@ App.PendingGamesList = App.Round.extend
       (data, status) =>
         @set 'games', data.rows.map (row) -> App.Game.create row.doc
 
-App.Team = Ember.Object.extend()
+App.Team = Ember.Object.extend
+  loadPerformance: ->
+    id = @get 'id'
+    @set 'performanceData', App.Store.rowsFromView 'by_team',
+      startkey: [id]
+      endkey: [id, {}]
+      group: false
+  games: (->
+    data = @get('performanceData').get 'content'
+    games = []
+    lastGame = null
+    @set 'name', data[0].key[1] if data.length > 0
+    for row in data
+      if lastGame?.id isnt row.id
+        lastGame = id: row.id
+        games.push lastGame
+      if row.key[3] is 'team'
+        lastGame.round = row.key[2]
+        lastGame.opponent = row.value[0]
+        lastGame.points = row.value[1]
+        lastGame.opponentPoints = row.value[2]
+        lastGame.tossups = row.value[3]
+        lastGame.win = row.value[1] > row.value[2]
+        lastGame.loss = row.value[1] < row.value[2]
+      else
+        player = row.value[1..]
+        player.unshift row.key[3]
+        player.push 15 * player[2] + 10 * player[3] - 5 * player[4]
+        lastGame.players ?= []
+        lastGame.players.push player
+    games
+  ).property('performanceData.content')
+
 App.TeamGame = Ember.Object.extend
   init: ->
     @_super()
@@ -217,8 +249,8 @@ App.Store =
     games = Ember.ArrayProxy.create content: []
 
     @loadView 'scoreboard',
-      startkey: JSON.stringify [round_id]
-      endkey: JSON.stringify [round_id, {}]
+      startkey: [round_id]
+      endkey: [round_id, {}]
       include_docs: true
       reduce: false
       (data, status) =>
@@ -266,7 +298,7 @@ App.Store =
 
     @loadView 'by_type',
       include_docs: true
-      key: JSON.stringify ['tournament', type]
+      key: ['tournament', type]
       (data, status) =>
         objects.set 'content', data.rows.map (row) =>
           thisType = row.doc.type
@@ -276,6 +308,9 @@ App.Store =
     objects
 
   loadView: (view, options, success) ->
+    for optionKey in 'startkey endkey key'.w()
+      if typeof options[optionKey] == 'object'
+        options[optionKey] = JSON.stringify options[optionKey]
     Ember.$.ajax "/api/_design/app/_view/#{view}",
       data: options
       error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason

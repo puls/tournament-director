@@ -1,2 +1,26 @@
-each controller.arrangedContent
-  | {{this}}
+h1 = name
+each game in games
+  h3
+    | Round {{ game.round }}: 
+    if game.win
+      | Win against {{ game.opponent }}, {{ game.points }}&ndash;{{ game.opponentPoints }}
+    else
+      | Loss to {{ game.opponent }}, {{ game.opponentPoints }}&ndash;{{ game.points }}
+  table.table.table-striped.team-performance
+    thead
+      tr
+        th Player
+        th TUH
+        th 15
+        th 10
+        th -5
+        th Total
+    tbody
+      each game.players
+        tr
+          td = 0
+          td = 1
+          td = 2
+          td = 3
+          td = 4
+          td = 5

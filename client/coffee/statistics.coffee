@@ -13,6 +13,11 @@ App.TeamStandingsRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super controller, model
     controller.set 'smallSchools', App.Store.rowsFromView 'small_schools'
+  actions: 
+    showTeam: (view) ->
+      team = view.get 'team'
+      teamKey = team.key[1]
+      @transitionTo 'teamPerformance', teamKey
 
 App.TeamStandingsController = Ember.ArrayController.extend
   sortProperties: ['value.2','value.8']
@@ -76,6 +81,8 @@ App.PlayerStandingsController = Ember.ArrayController.extend
         index += 1
   )#.observes 'allYears.content', 'content'
 
+  showPlayer: (player) -> alert "showing player"
+
 App.ScoreboardRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'scoreboard'
 
@@ -94,10 +101,7 @@ App.ScoreboardController = Ember.ArrayController.extend
 
 App.TeamPerformanceRoute = Ember.Route.extend
   model: (params) ->
-    teamID = parseInt params.team_id, 10
-    App.Store.rowsFromView 'by_team',
-      startkey: JSON.stringify [teamID]
-      endkey: JSON.stringify [teamID, {}]
-      group: false
-
-App.TeamPerformanceController = Ember.ArrayController.extend()
+    App.Team.create id: parseInt params.team_id, 10
+  setupController: (controller, model) ->
+    @_super controller, model
+    model.loadPerformance()

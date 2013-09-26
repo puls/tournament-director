@@ -125,9 +125,12 @@ Ember.Handlebars.registerBoundHelper 'resetCounter', (key, options) ->
   App.Counters[key] = 0
   ""
 
-App.TeamStandingsRowView = Ember.View.extend
+App.TeamStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
   tagName: 'tr'
-  click: (event) -> alert "clicked row for #{@get('team').key[0]}"
+  classNameBindings: ['teamKeyClassName']
+  action: 'showTeam'
+  click: (event) -> @triggerAction actionContext: this
+  teamKeyClassName: (-> 'team-' + @get 'team.key.1').property('team.key.1')
 
   render: (buffer) ->
     team = @get 'team'
@@ -143,9 +146,10 @@ App.TeamStandingsRowView = Ember.View.extend
         buffer.push "<td>#{value[index]}</td>"
     buffer.push "<td>#{value[11].toFixed 2}</td>"
 
-App.PlayerStandingsRowView = Ember.View.extend
+App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
   tagName: 'tr'
-  click: (event) -> alert "clicked row for #{@get('player').key[1]}"
+  action: 'showPlayer'
+  click: (event) -> @triggerAction actionContext: @get 'player'
 
   render: (buffer) ->
     # Don't dynamically bind anything within the row as a performance optimization
