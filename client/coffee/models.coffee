@@ -37,22 +37,32 @@ App.Game = App.Model.extend
     @wrapTeams()
 
   wrapTeams: ->
-    for team in ['team1','team2']
+    for team in ['team1', 'team2']
       wrappedTeam = App.TeamGame.create @get(team)
       @set team, wrappedTeam
       wrappedTeam.wrapPlayers()
     @ensureEmptyPlayerGames()
 
-  teams: (-> [@get('team1'), @get('team2')]).property 'team1','team2'
+  teams: (-> [@get('team1'), @get('team2')]).property 'team1', 'team2'
+  hasOvertime: (-> @get('overtimeTossups') > 0).property 'overtimeTossups'
+
+  clearOvertime: (->
+    if @get('overtimeTossups') == 0
+      for team in ['team1', 'team2']
+        for player in @get "#{team}.players"
+          player.set 'overtime', {}
+          player.setDefaultZeroes()
+  ).observes 'overtimeTossups'
 
   scoreRepresentation: () ->
-    representation = @getProperties 'round','tossups','room','serial'
-    for team in ['team1','team2']
-      representation[team] = @get(team).getProperties 'id','points'
+    representation = @getProperties 'round', 'tossups', 'room', 'serial', 'overtimeTossups'
+    for team in ['team1', 'team2']
+      representation[team] = @get(team).getProperties 'id', 'points'
       representation[team].points = parseInt representation[team].points, 10
       representation[team].name = App.Store.teamLookup[representation[team].id].get 'name'
-    for key in ['round','tossups']
+    for key in ['round', 'tossups']
       representation[key] = parseInt representation[key], 10
+    representation.overtimeTossups = 0 unless representation.overtimeTossups
     representation.scoreEntered = true
     representation.playersEntered = false
     representation.type = 'game'
@@ -63,7 +73,10 @@ App.Game = App.Model.extend
   ensureEmptyPlayerGames: ->
     for team in @get 'teams'
       if team.get('players').every((player) -> player.get('name')?.length > 0)
-        team.get('players').pushObject App.PlayerGame.create tossups: @get 'tossups'
+        team.get('players').pushObject App.PlayerGame.create
+          tossups: @get 'tossups'
+          overtime:
+            tossups: @get 'overtimeTossups'
 
   validateScore: ->
     return 'Round cannot be blank' unless @get 'round'
@@ -79,8 +92,9 @@ App.Game = App.Model.extend
     return 'Round must be less than 30'  if @get('round') > 30
 
     tossups = parseInt @get('tossups'), 10
+    overtimeTossups = parseInt @get('overtimeTossups'), 10
     return 'Tossups must be more than 10' if tossups < 10
-    return 'Tossups must be less than 30' if tossups > 30
+    return 'Regulation tossups must be less than 27' if tossups - overtimeTossups > 26
 
     leftScore = parseInt @get('team1.points'), 10
     return 'Left team points must be a multiple of 5' if leftScore % 5 isnt 0
@@ -102,6 +116,7 @@ App.Game = App.Model.extend
 
   validatePlayers: ->
     gameTossups = @get 'tossups'
+    overtimeTossups = @get 'overtimeTossups'
     for teamKey in ['team1', 'team2']
       team = @get teamKey
       players = team.get 'playersWithNames'
@@ -117,10 +132,13 @@ App.Game = App.Model.extend
 
       for player in players
         playerTossups = player.get 'tossups'
+        playerOvertimeTossups = player.get 'overtime.tossups'
         if playerTossups > gameTossups
           return "#{team.name}: #{player.name} heard more tossups (#{playerTossups}) than the team did (#{gameTossups})"
         if player.get('answered') > playerTossups
           return "#{team.name}: #{player.name} answered more tossups (#{player.get 'answered'}) than he/she heard (#{playerTossups})"
+        if playerOvertimeTossups > overtimeTossups
+          return "#{team.name}: #{player.name} heard more overtime tossups (#{playerOvertimeTossups}) than the team did (#{overtimeTossups})"
 
 
   savePlayers: (options) ->
@@ -131,7 +149,7 @@ App.Game = App.Model.extend
     return options.validationError(message) if message?
 
     representation = @scoreRepresentation()
-    for team in ['team1','team2']
+    for team in ['team1', 'team2']
       representation[team].players = @get(team).get 'playersWithNames'
     representation.playersEntered = true
     representation._rev = @get '_rev'
@@ -194,7 +212,7 @@ App.Team = Ember.Object.extend
         lastGame.players ?= []
         lastGame.players.push player
     games
-  ).property('performanceData.content')
+  ).property 'performanceData.content'
 
 App.TeamGame = Ember.Object.extend
   init: ->
@@ -215,20 +233,27 @@ App.TeamGame = Ember.Object.extend
   fifteens: (-> @sum 'fifteens').property 'players.@each.fifteens'
   negFives: (-> @sum 'negFives').property 'players.@each.negFives'
   tossupPoints: (-> @sum 'points').property 'players.@each.points'
-  bonusesHeard: (-> @sum('tens') + @sum('fifteens')).property 'tens', 'fifteens'
+  bonusesHeard: (-> @sum('tens') + @sum('fifteens') - @sum('overtime.tens') - @sum('overtime.fifteens')).property 'tens', 'fifteens', 'overtime.tens', 'overtime.fifteens'
   bonusPoints: (-> @get('points') - @get('tossupPoints')).property 'tossupPoints', 'points'
   sum: (key) ->
     @get('playersWithNames').reduce ((acc, item, index, enumerable) -> acc + item.get key), 0
 
-
 App.PlayerGame = Ember.Object.extend
   init: ->
     @_super()
+    @setDefaultZeroes()
+
+  setDefaultZeroes: ->
     for property in ['tens', 'fifteens', 'negFives', 'tossups']
       if !@get property
         @set property, 0
-  points: (-> 10 * @get('tens') + 15 * @get('fifteens') - 5 * @get('negFives')).property 'tens','fifteens','negFives'
-  answered: (-> @get('tens') + @get('fifteens') + @get('negFives')).property 'tens','fifteens','negFives'
+      if !@get 'overtime'
+        @set 'overtime', {}
+      if !@get "overtime.#{property}"
+        @set "overtime.#{property}", 0
+
+  points: (-> 10 * @get('tens') + 15 * @get('fifteens') - 5 * @get('negFives')).property 'tens', 'fifteens', 'negFives'
+  answered: (-> @get('tens') + @get('fifteens') + @get('negFives')).property 'tens', 'fifteens', 'negFives'
 
 App.Store =
   loadTournament: -> @loadObject 'tournament'

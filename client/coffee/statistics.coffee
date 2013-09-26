@@ -20,7 +20,7 @@ App.TeamStandingsRoute = Ember.Route.extend
       @transitionTo 'teamPerformance', teamKey
 
 App.TeamStandingsController = Ember.ArrayController.extend
-  sortProperties: ['value.2','value.8']
+  sortProperties: ['value.2', 'value.8']
   sortAscending: false
   sort: (key) ->
     App.Counters['standings'] = 0
@@ -51,7 +51,7 @@ App.PlayerStandingsRoute = Ember.Route.extend
     controller.set 'allYears', App.Store.rowsFromView 'player_years'
 
 App.PlayerStandingsController = Ember.ArrayController.extend
-  sortProperties: ['value.7','key.1']
+  sortProperties: ['value.7', 'key.1']
   sortAscending: false
 
   sort: (key) ->

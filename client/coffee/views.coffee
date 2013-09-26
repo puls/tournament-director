@@ -32,7 +32,9 @@ App.PlayersForm = Ember.View.extend
     @$().modal
       backdrop: 'static'
       keyboard: false
-    @$('input:first').focus()
+    @$().on 'shown.bs.modal', =>
+      @loadPlayerNames ->
+        @$('input.player:first').focus()
     @$().on 'hide.bs.modal', =>
       @get('controller').modalDidHide()
 
@@ -46,11 +48,13 @@ App.PlayersForm = Ember.View.extend
 
   keyForTeam: (team) -> "playerNames_#{team.get('id')}"
 
-  loadPlayerNames: ->
+  loadPlayerNames: (cb) ->
     for team in @get 'content.teams'
       if team.get('id')?
         key = @keyForTeam team
-        if !@get(key)?
+        if @get(key)?
+          cb()
+        else
           @set key, []
           ((key) => App.Store.loadView 'player_names',
             startkey: JSON.stringify [team.get 'name']
@@ -61,6 +65,7 @@ App.PlayersForm = Ember.View.extend
               for row in data.rows
                 players[row.key[1]] = row.value
               @set key, players
+              cb()
           )(key)
 
   autocompletePlayers: (team) ->
@@ -78,7 +83,7 @@ App.PlayersForm = Ember.View.extend
     items.sort (a, b) -> nameScores[a] - nameScores[b]
 
 App.NameField = Ember.TextField.extend
-  didInsertElement: -> @get('parentView').loadPlayerNames()
+  classNames: 'form-control'.w()
 
   focusIn: (event) ->
     return if @get 'hasTypeahead'
@@ -95,7 +100,8 @@ App.NameField = Ember.TextField.extend
 
 App.NumberField = Ember.TextField.extend
   type: 'number'
-  attributeBindings: ['min', 'max', 'step']
+  classNames: 'form-control'.w()
+  attributeBindings: 'min max step'.w()
   _elementValueDidChange: ->
     originalValue = @$().val()
     number = parseInt originalValue, 10
@@ -110,7 +116,7 @@ App.NumberField = Ember.TextField.extend
 App.FilterForm = Ember.View.extend
   tagName: 'form'
   templateName: 'filterForm'
-  classNames: ['pull-right','filterForm']
+  classNames: ['pull-right', 'filterForm']
   eventManager:
     change: (event, view) ->
       view.get('controller').updateFilters()
@@ -140,7 +146,7 @@ App.TeamStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
 
     buffer.push "<td>#{counter}.</td><td>#{key[0]}</td>"
     for index in [0..8]
-      if index in [2,4,6,8]
+      if index in [2, 4, 6, 8]
         buffer.push "<td>#{value[index].toFixed 2}</td>"
       else
         buffer.push "<td>#{value[index]}</td>"

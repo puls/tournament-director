@@ -3,12 +3,18 @@
 .rounds-list .list-group-item.pending { border-bottom: 1px solid #ddd; }
 .list-group-item.active a { color: inherit; }
 .container { margin-top: 1em; }
-.score-form td { vertical-align: middle; }
+
+form .table thead > tr > th, form .table tbody > tr > th, form .table tfoot > tr > th, form .table thead > tr > td, form .table tbody > tr > td, form .table tfoot > tr > td { vertical-align: middle; }
 form .modal-dialog { width: 800px; }
+form .modal-dialog h3 { margin: 0px; }
+tr.overtime td { background-color: #f9f9f9; }
+.player-form-controls input { margin-top: -3px; }
+tr.player-row .tt-hint { padding: 6px 12px; border-width: 1px; }
+tr.player-row span.twitter-typeahead { width: 100%; }
+
 form.filterForm { margin-bottom: 0; }
-.non-fixed-modal { position: absolute; }
-.non-fixed-modal .modal-body { max-height: none; }
 .filterForm input { width: 2em; margin: 0; }
 .modal-header .close { margin-left: 1em; }
 input.team-score { width: 3em; margin-bottom: 10px; }
 a { cursor: pointer; }
+

@@ -6,14 +6,14 @@ module.exports = () ->
 
   database = require './database'
 
-  round_count = 15
+  round_count = 16
   team_count = 240
   games_per_round = 80
   all_teams = {}
   team_ids = []
   schools = []
   games = []
-  rooms = faker.definitions.street_suffix()
+  rooms = faker.definitions.street_suffix()[0...games_per_round]
 
   to_id = (name) -> name.toLowerCase().replace /[^a-z0-9]+/g,'_'
 
@@ -66,22 +66,23 @@ module.exports = () ->
   for num in [1..round_count]
     fisherYates team_ids
     fisherYates rooms
-    for i in [1..games_per_round]
+    for gameIndex in [0...games_per_round]
       game =
         type: 'game'
         tournament: 'tournament'
         round: num
         scoreEntered: true
         playersEntered: true
-        serial: "#{num}-#{i}"
-        room: rooms[i - 1]
+        serial: "#{num}-#{gameIndex + 1}"
+        room: rooms[gameIndex]
         tossups: [17..24][rand 8]
+        overtimeTossups: 0
         team1:
-          id: team_ids[2 * i]
+          id: team_ids[2 * gameIndex]
           points: 0
           players: []
         team2:
-          id: team_ids[2 * i + 1]
+          id: team_ids[2 * gameIndex + 1]
           points: 0
           players: []
       ['team1', 'team2'].forEach (team_key) ->
@@ -97,7 +98,15 @@ module.exports = () ->
             negFives: 0
           game[team_key].players.push player
 
-      for question in [1..game.tossups]
+      game._id = "game_#{game.round}_#{game.team1._id}_#{game.team2._id}"
+
+      allPlayers = (cb) ->
+        for player in game.team1.players
+          cb player
+        for player in game.team2.players
+          cb player
+
+      playTossup = (incrementOvertime = false) ->
         hasNeg = (rand(4) == 1)
         hasFifteen = (rand(5) == 1)
         answerTeam = if rand(2) == 1 then 'team1' else 'team2'
@@ -105,24 +114,49 @@ module.exports = () ->
         if hasNeg
           negPlayer = rand 4
           game[answerTeam].players[negPlayer].negFives += 1
+          game[answerTeam].players[negPlayer].overtime.negFives += 1 if incrementOvertime
           game[answerTeam].points -= 5
           answerTeam = if answerTeam is 'team1' then 'team2' else 'team1'
 
-        continue if rand(10) == 1 # Question went dead
+        return false if rand(10) == 1 # Question went dead
 
         answerPlayer = rand 4
 
         if hasFifteen
           game[answerTeam].players[answerPlayer].fifteens += 1
+          game[answerTeam].players[answerPlayer].overtime.fifteens += 1 if incrementOvertime
           game[answerTeam].points += 15
         else
           game[answerTeam].players[answerPlayer].tens += 1
+          game[answerTeam].players[answerPlayer].overtime.tens += 1 if incrementOvertime
           game[answerTeam].points += 10
 
-        game[answerTeam].points += [0,10,20,30][rand 4]
+        answerTeam
 
+      for question in [1..game.tossups]
+        answerTeam = playTossup false
+        game[answerTeam].points += [0,10,20,30][rand 4] if answerTeam
 
-      game._id = "game_#{game.round}_#{game.team1._id}_#{game.team2._id}"
+      if game.team1.points == game.team2.points
+
+        allPlayers (player) ->
+          player.overtime =
+            tossups: 0
+            fifteens: 0
+            tens: 0
+            negFives: 0
+
+        while game.team1.points == game.team2.points or game.overtimeTossups < 3 # Tied, play overtime
+          playTossup true
+          game.overtimeTossups += 1
+
+        game.tossups += game.overtimeTossups
+        allPlayers (player) ->
+          player.tossups += game.overtimeTossups
+          player.overtime.tossups += game.overtimeTossups
+
+        console.log "Played overtime for #{game.overtimeTossups} tossups in #{game._id}"
+
       games.push game
 
   docs = schools.concat games

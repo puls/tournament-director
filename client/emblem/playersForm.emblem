@@ -2,20 +2,25 @@
   .modal-content
     .modal-header
       button type="button" class="close" data-dismiss="modal" aria-hidden="true" &times;
-      span.pull-right
-        | Tossups: {{view App.NumberField valueBinding="tossups" style="width: 3em;"}}
+      span.pull-right.player-form-controls
+        | Tossups: {{view App.NumberField valueBinding="tossups" style="width: 4em;"}}
         | &nbsp; &nbsp; &nbsp;
-        | Serial: {{view Ember.TextField valueBinding="serial" style="width: 5em;"}}
+        | OT: {{view App.NumberField valueBinding="overtimeTossups" style="width: 4em;"}}
+        | &nbsp; &nbsp; &nbsp;
+        | Serial: {{view Ember.TextField class="form-control" valueBinding="serial" style="width: 5em;"}}
       h3 Edit game
     .modal-body
       each team in teams
         .row
-          App.NumberField valueBinding="team.points" step="5" class="pull-right team-score" style="width: 5em;"
           h4.col-md-9 = team.name
+          span.col-md-3 style="text-align: right;"
+            App.NumberField valueBinding="team.points" step="5" class="team-score" style="width: 5em;"
         table.table.table-bordered
           thead
             tr.header
               th Player
+              if hasOvertime
+                th
               th TUH
               th 15
               th 10
@@ -23,20 +28,40 @@
               th Pts
           tbody
             each player in team.players
-              tr
+              tr.player-row
+                if hasOvertime
+                  td rowspan="2"
+                    App.NameField valueBinding="player.name" teamBinding="team" class="player"
+                else
+                  td
+                    App.NameField valueBinding="player.name" teamBinding="team" class="player"
+                if hasOvertime
+                  td: i Total
                 td
-                  App.NameField valueBinding="player.name" teamBinding="team" class="player"
+                  App.NumberField valueBinding="player.tossups" min="0" maxBinding="tossups" style="width: 4em;"
                 td
-                  App.NumberField valueBinding="player.tossups" min="0" maxBinding="tossups" style="width: 3em;"
+                  App.NumberField valueBinding="player.fifteens" min="0" maxBinding="tossups" style="width: 4em;"
                 td
-                  App.NumberField valueBinding="player.fifteens" min="0" maxBinding="tossups" style="width: 3em;"
+                  App.NumberField valueBinding="player.tens" min="0" maxBinding="tossups" style="width: 4em;"
                 td
-                  App.NumberField valueBinding="player.tens" min="0" maxBinding="tossups" style="width: 3em;"
-                td
-                  App.NumberField valueBinding="player.negFives" min="0" maxBinding="tossups" style="width: 3em;"
+                  App.NumberField valueBinding="player.negFives" min="0" maxBinding="tossups" style="width: 4em;"
                 td = player.points
+              if hasOvertime
+                tr.overtime
+                  td: i Overtime
+                  td
+                    App.NumberField valueBinding="player.overtime.tossups" min="0" maxBinding="tossups" style="width: 4em;"
+                  td
+                    App.NumberField valueBinding="player.overtime.fifteens" min="0" maxBinding="tossups" style="width: 4em;"
+                  td
+                    App.NumberField valueBinding="player.overtime.tens" min="0" maxBinding="tossups" style="width: 4em;"
+                  td
+                    App.NumberField valueBinding="player.overtime.negFives" min="0" maxBinding="tossups" style="width: 4em;"
+                  td
             tr
               td Total
+              if hasOvertime
+                td
               td = team.playerTossups
               td = team.fifteens
               td = team.tens
