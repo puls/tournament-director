@@ -14,8 +14,8 @@ App.Router.map ->
   @resource 'teams', ->
     @resource 'school', path: ':school_id'
   @resource 'standings', ->
-    @resource 'teamStandings', path: 'teams'
-    @resource 'teamPerformance', path: 'teams/:team_id'
+    @resource 'teamStandings', path: 'teams', ->
+      @resource 'teamPerformance', path: ':team_id'
     @resource 'playerStandings', path: 'players'
     @resource 'scoreboard'
 

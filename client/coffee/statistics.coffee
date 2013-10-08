@@ -8,7 +8,7 @@ App.StandingsController = Ember.ObjectController.extend
 App.StandingsIndexRoute = Ember.Route.extend
   redirect: -> @transitionTo 'teamStandings'
 
-App.TeamStandingsRoute = Ember.Route.extend
+App.TeamStandingsIndexRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'standings'
   setupController: (controller, model) ->
     @_super controller, model
@@ -19,7 +19,7 @@ App.TeamStandingsRoute = Ember.Route.extend
       teamKey = team.key[1]
       @transitionTo 'teamPerformance', teamKey
 
-App.TeamStandingsController = Ember.ArrayController.extend
+App.TeamStandingsIndexController = Ember.ArrayController.extend
   sortProperties: ['value.2', 'value.8']
   sortAscending: false
   sort: (key) ->

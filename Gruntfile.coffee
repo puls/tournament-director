@@ -21,7 +21,7 @@ module.exports = (grunt) ->
     emblem:
       compile:
         files:
-          'client/js/templates.js': 'client/emblem/*'
+          'client/js/templates.js': 'client/**/*.emblem'
       options:
         root: 'client/emblem/'
         dependencies:
@@ -32,7 +32,7 @@ module.exports = (grunt) ->
 
     watch:
       script:
-        files: ['client/coffee/*', 'client/emblem/*', 'client/css/*', 'server/**/*']
+        files: ['client/coffee/*', 'client/emblem/**', 'client/css/*', 'server/**/*']
         tasks: 'default'
       style:
         files: '**/*.less'
