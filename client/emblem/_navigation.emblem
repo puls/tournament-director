@@ -16,4 +16,4 @@ nav.navbar.navbar-default role="navigation"
         a href=view.href Statistics
     form.navbar-form.navbar-right role="search"
       .form-group
-        input.form-control type="text" placeholder="Search doesn't work yet"
+        input.form-control.main-search type="text" placeholder="Search"

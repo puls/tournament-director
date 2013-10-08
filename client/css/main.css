@@ -12,6 +12,13 @@ tr.overtime td { background-color: #f9f9f9; }
 tr.player-row .tt-hint { padding: 6px 12px; border-width: 1px; }
 tr.player-row span.twitter-typeahead { width: 100%; }
 
+.pending-sm { display: none; }
+.pending-md { display: inherit; }
+@media (min-width: 768px) and (max-width: 991px) {
+  .pending-sm { display: inherit; }
+  .pending-md { display: none; }
+}
+
 form.filterForm { margin-bottom: 0; }
 .filterForm input { width: 2em; margin: 0; }
 .modal-header .close { margin-left: 1em; }
