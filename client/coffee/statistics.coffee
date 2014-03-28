@@ -81,7 +81,11 @@ App.PlayerStandingsController = Ember.ArrayController.extend
         index += 1
   )#.observes 'allYears.content', 'content'
 
-  showPlayer: (player) -> alert "showing player"
+  actions: 
+    showPlayer: (view) ->
+      player = view.get 'player'
+      teamKey = player.key[2]
+      @transitionTo 'teamPerformance', teamKey
 
 App.ScoreboardRoute = Ember.Route.extend
   model: -> App.Store.rowsFromView 'scoreboard'

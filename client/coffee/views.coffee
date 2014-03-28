@@ -155,7 +155,7 @@ App.TeamStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
 App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
   tagName: 'tr'
   action: 'showPlayer'
-  click: (event) -> @triggerAction actionContext: @get 'player'
+  click: (event) -> @triggerAction actionContext: this
 
   render: (buffer) ->
     # Don't dynamically bind anything within the row as a performance optimization
