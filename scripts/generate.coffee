@@ -6,7 +6,7 @@ module.exports = () ->
 
   database = require './database'
 
-  round_count = 16
+  round_count = 15
   team_count = 240
   games_per_round = 80
   all_teams = {}
@@ -64,7 +64,14 @@ module.exports = () ->
       team_count--
 
   for num in [1..round_count]
-    fisherYates team_ids
+    if num % 3 == 1
+      fisherYates team_ids
+      effectiveTeamIDs = team_ids[0...games_per_round * 2]
+    else if num % 3 == 2
+      effectiveTeamIDs = team_ids[games_per_round...games_per_round * 3]
+    else
+      effectiveTeamIDs = team_ids.filter (element, index) -> index < games_per_round || index >= 2 * games_per_round
+    fisherYates effectiveTeamIDs
     fisherYates rooms
     for gameIndex in [0...games_per_round]
       game =
@@ -78,11 +85,11 @@ module.exports = () ->
         tossups: [17..24][rand 8]
         overtimeTossups: 0
         team1:
-          id: team_ids[2 * gameIndex]
+          id: effectiveTeamIDs[2 * gameIndex]
           points: 0
           players: []
         team2:
-          id: team_ids[2 * gameIndex + 1]
+          id: effectiveTeamIDs[2 * gameIndex + 1]
           points: 0
           players: []
       ['team1', 'team2'].forEach (team_key) ->

@@ -1,1 +1,1 @@
-module.exports = 'http://localhost:5984/qbtd'
+module.exports = 'http://admin:admin@localhost:5984/qbtd'

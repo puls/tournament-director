@@ -4,7 +4,7 @@ module.exports = (grunt) ->
 
     couchapp:
       qbtd:
-        db: 'http://localhost:5984/qbtd'
+        db: require './scripts/database'
         app: 'server/server.coffee'
 
     coffee:
