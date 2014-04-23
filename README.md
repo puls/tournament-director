@@ -13,7 +13,7 @@ Tournament Director is an app for running quizbowl tournaments.
 
 ## Installation (basic)
 
-Tournament Director is a [CouchApp](http://docs.couchdb.org/en/latest/couchapp) written in [CoffeeScript](http://coffeescript.org) with [Bootstrap](http://getbootstrap.com).
+Tournament Director is a [CouchApp](http://docs.couchdb.org/en/latest/couchapp) written in [CoffeeScript](http://coffeescript.org) with [Ember](http://emberjs.com) and [Bootstrap](http://getbootstrap.com).
 
 To install and run it locally, the distribution includes a configuration file for working with [Vagrant](http://www.vagrantup.com), which is a generally good practice for server development. Once you have Vagrant installed and running, simply run `vagrant up` from the project's root level.
 
