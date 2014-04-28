@@ -15,4 +15,4 @@ table.table.table-striped.player-standings
   tbody
     resetCounter 'standings'
     each controller.arrangedContent
-      App.PlayerStandingsRowView playerBinding=this
+      App.PlayerStandingsRowView playerBinding="this"

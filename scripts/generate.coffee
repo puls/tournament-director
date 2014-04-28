@@ -1,4 +1,4 @@
-module.exports = () ->
+module.exports = ->
   done = @async()
   request = require 'request'
   faker = require 'faker2'

@@ -14,10 +14,6 @@ module.exports = (grunt) ->
         options:
           sourceMap: true
 
-    bower:
-      dev:
-        dest: 'client/js/libs'
-
     emblem:
       compile:
         files:
@@ -28,7 +24,22 @@ module.exports = (grunt) ->
           jquery: 'client/js/libs/jquery.js'
           ember: 'client/js/libs/ember.js'
           emblem: 'client/js/libs/emblem.js'
-          handlebars: 'client/js/libs/handlebars.js'
+          handlebars: 'bower_components/handlebars/handlebars.js'
+
+    copy:
+      main:
+        cwd: 'bower_components'
+        src: [
+          'bootstrap/dist/js/*'
+          'ember/ember.*'
+          'emblem/dist/*'
+          'handlebars/handlebars.runtime.*'
+          'jquery/dist/*.js'
+          'typeahead.js/dist/typeahead.jquery.*'
+        ]
+        dest: 'client/js/libs/'
+        flatten: true
+        expand: true
 
     watch:
       script:
@@ -42,6 +53,7 @@ module.exports = (grunt) ->
         tasks: 'default'
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-emblem'
   grunt.loadNpmTasks 'grunt-couchapp'

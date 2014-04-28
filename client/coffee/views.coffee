@@ -43,8 +43,8 @@ App.PlayersForm = Ember.View.extend
 
   eventManager: Ember.Object.create
     focusOut: (event, view) ->
-      game = view.nearestWithProperty('content').get 'content'
-      game.ensureEmptyPlayerGames()
+      game = view.nearestWithProperty('content')?.get 'content'
+      game?.ensureEmptyPlayerGames()
 
   keyForTeam: (team) -> "playerNames_#{team.get('id')}"
 
@@ -68,13 +68,13 @@ App.PlayersForm = Ember.View.extend
               cb()
           )(key)
 
-  autocompletePlayers: (team) ->
+  autocompletePlayers: (team, query) ->
     key = @keyForTeam team
     players = team.get 'players'
     names = []
     for own name, value of @get(key)
       if (players.every (player) -> player.name isnt name)
-        names.push name
+        names.push value: name
     names
 
   sortAutocomplete: (team, items) ->
@@ -85,18 +85,15 @@ App.PlayersForm = Ember.View.extend
 App.NameField = Ember.TextField.extend
   classNames: 'form-control'.w()
 
-  focusIn: (event) ->
-    return if @get 'hasTypeahead'
-    @set 'hasTypeahead', true
+  didInsertElement: (event) ->
     team = @get 'team'
     parent = @get 'parentView'
-    names = parent.autocompletePlayers team
-    @$().typeahead local: names
-    @$().focus()
+    @$().typeahead {},
+      source: (query, cb) -> cb parent.autocompletePlayers(team, query)
+    @$().on 'typeahead:selected', (event, selection, dataset) =>
+      @set 'value', selection.value
 
-  focusOut: (event) ->
-    @$().typeahead 'destroy'
-    @set 'hasTypeahead', false
+  willDestroyElement: (event) -> @$().typeahead 'destroy'
 
 App.NumberField = Ember.TextField.extend
   type: 'number'

@@ -17,4 +17,4 @@ table.table.table-striped.team-standings
   tbody
     resetCounter 'standings'
     each controller.arrangedContent
-      App.TeamStandingsRowView teamBinding=this
+      App.TeamStandingsRowView teamBinding="this"

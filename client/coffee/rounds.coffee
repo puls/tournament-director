@@ -7,10 +7,11 @@ App.RoundsRoute = Ember.Route.extend
       controller.set 'pendingGames', App.PendingGamesList.create()
 
 App.RoundsController = Ember.ArrayController.extend
+  needs: ['round']
   reloadRounds: ->
     @set 'content', App.Store.loadRounds()
     @get('pendingGames').reload()
-    @controllerFor('round').reloadGames()
+    @get('controllers.round').reloadGames()
 
 App.RoundRoute = Ember.Route.extend
   model: (params) ->
@@ -40,24 +41,27 @@ App.EditGameRoute = Ember.Route.extend
     game
 
 App.EditGameController = Ember.ObjectController.extend
+  needs: ['rounds']
   hide: ->
-    @controllerFor('rounds').reloadRounds()
+    @get('controllers.rounds').reloadRounds()
     @transitionToRoute 'round'
 
     # We've removed the modal's element by the time the hidden event triggers, so do its side effects manually.
     $(document.body).removeClass 'modal-open'
   modalDidHide: -> @hide()
-  cancel: -> @hide()
-  save: ->
-    game = @get 'content'
-    game.savePlayers
-      validationError: (message) -> alert message
-      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
-      success: (data, status, xhr) => @hide()
 
-  deleteGame: ->
-    game = @get 'content'
-    game.deleteRecord
-      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
-      success: (data, status, xhr) => @hide()
+  actions:
+    cancel: -> @hide()
+    save: ->
+      game = @get 'content'
+      game.savePlayers
+        validationError: (message) -> alert message
+        error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
+        success: (data, status, xhr) => @hide()
+
+    deleteGame: ->
+      game = @get 'content'
+      game.deleteRecord
+        error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
+        success: (data, status, xhr) => @hide()
 
