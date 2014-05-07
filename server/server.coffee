@@ -8,9 +8,11 @@ module.exports = ddoc =
     {from: '/', to: 'index.html'}
     {from: '/api', to: '../../'}
     {from: '/api/*', to: '../../*'}
+    {from: '/livestat/:file', to: '_list/:file/livestat'}
     {from: '/*', to: 'index.html'}
   ]
   views: require './views'
+  lists: require './lists'
   validate_doc_update: (newDoc, oldDoc, userCtx) ->
     throw 'Only admin can delete documents on this database.'  if newDoc._deleted is true and userCtx.roles.indexOf('_admin') is -1
 

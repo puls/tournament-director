@@ -14,6 +14,8 @@ nav.navbar.navbar-default role="navigation"
         a href=view.href Teams
       link-to "standings" tagName="li" href=false
         a href=view.href Statistics
+      link-to "export" tagName="li" href=false
+        a href=view.href Export
     form.navbar-form.navbar-right role="search"
       .form-group
         input.form-control.main-search type="text" placeholder="Search"
