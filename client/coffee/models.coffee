@@ -1,32 +1,3 @@
-App.Model = Ember.Object.extend
-  init: ->
-    @_super()
-    @setID()
-
-  setID: ->
-    type = @get 'type'
-    if @get('_id')?
-      @set 'id', @get('_id').replace "#{type}_", ''
-
-  url: -> "/api/#{@get '_id'}"
-
-  reload: ->
-    Ember.$.ajax
-      url: @url()
-      type: 'GET'
-      dataType: 'json'
-      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
-      success: (data, status) =>
-        @setProperties data
-        @setID()
-
-  deleteRecord: (options) ->
-    Ember.$.ajax
-      url: @url() + '?rev=' + @get '_rev'
-      type: 'DELETE'
-      success: options.success
-      error: options.error
-
 App.Game = App.Model.extend
   init: ->
     @_super()
@@ -255,7 +226,7 @@ App.PlayerGame = Ember.Object.extend
   points: (-> 10 * @get('tens') + 15 * @get('fifteens') - 5 * @get('negFives')).property 'tens', 'fifteens', 'negFives'
   answered: (-> @get('tens') + @get('fifteens') + @get('negFives')).property 'tens', 'fifteens', 'negFives'
 
-App.Store =
+App.Store = App.ModelStore.extend
   loadTournament: -> @loadObject 'tournament'
 
   loadRounds: ->
@@ -295,15 +266,6 @@ App.Store =
     type = type[0].toUpperCase() + type.substr 1
     App[type]
 
-  loadObject: (id) ->
-    proxy = Ember.ObjectProxy.create content: {}
-    Ember.$.ajax "/api/#{id}",
-      dataType: 'json'
-      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
-      success: (data, status) =>
-        proxy.set 'content', @classForType(data.type).create data
-    proxy
-
   allSchools: Ember.ArrayProxy.create content: []
   allTeams: Ember.ArrayProxy.create content: []
   teamLookup: {}
@@ -318,26 +280,4 @@ App.Store =
 
   loadSchoolsIfEmpty: -> @loadSchools() if @allSchools.get('length') is 0
 
-  loadObjectsOfType: (type, callback) ->
-    objects = Ember.ArrayProxy.create content: []
-
-    @loadView 'by_type',
-      include_docs: true
-      key: ['tournament', type]
-      (data, status) =>
-        objects.set 'content', data.rows.map (row) =>
-          thisType = row.doc.type
-          @classForType(thisType).create row.doc
-        callback objects
-
-    objects
-
-  loadView: (view, options, success) ->
-    for optionKey in 'startkey endkey key'.w()
-      if typeof options[optionKey] == 'object'
-        options[optionKey] = JSON.stringify options[optionKey]
-    Ember.$.ajax "/api/_design/app/_view/#{view}",
-      data: options
-      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
-      success: success
-      dataType: 'json'
+App.Store = new App.Store()
