@@ -1,7 +1,7 @@
 {
   "name": "tournament-director",
   "version": "1.1.0",
-  "devDependencies": {
+  "dependencies": {
     "grunt-contrib-coffee": "~0.6.5",
     "coffee-script": "~1.6.2",
     "grunt-contrib-watch": "~0.3.1",
@@ -10,11 +10,12 @@
     "grunt-couchapp": "~0.1.0",
     "faker2": "~0.5.0",
     "grunt-emblem": "~0.1.0",
-    "grunt-contrib-copy": "^0.5.0"
-  },
-  "dependencies": {
+    "grunt-contrib-copy": "^0.5.0",
     "request": "~2.16.6",
     "csv": "~0.3.0",
     "bower": "~1.2.6"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "^0.4.0"
   }
 }

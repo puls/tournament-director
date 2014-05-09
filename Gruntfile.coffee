@@ -1,4 +1,11 @@
 module.exports = (grunt) ->
+  libs = [
+    'client/js/libs/jquery.js'
+    'client/js/libs/handlebars.runtime.js'
+    'client/js/libs/ember.js'
+    'client/js/libs/bootstrap.js'
+    'client/js/libs/typeahead.jquery.js'
+  ]
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
 
@@ -10,7 +17,20 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'client/js/app.js': 'client/coffee/*'
+          'client/js/app.js': [
+            'client/coffee/app.coffee'
+            'client/coffee/db/couch.coffee'
+            'client/coffee/app/*'
+          ]
+        options:
+          sourceMap: true
+      pouch:
+        files:
+          'client/js/app.js': [
+            'client/coffee/app.coffee'
+            'client/coffee/db/pouch.coffee'
+            'client/coffee/app/*'
+          ]
         options:
           sourceMap: true
 
@@ -26,6 +46,14 @@ module.exports = (grunt) ->
           emblem: 'client/js/libs/emblem.js'
           handlebars: 'bower_components/handlebars/handlebars.js'
 
+    concat:
+      libs:
+        src: libs
+        dest: 'client/js/libs.js'
+      pouch:
+        src: libs.concat 'client/js/libs/pouchdb-nightly.js'
+        dest: 'client/js/libs.js'
+
     copy:
       main:
         cwd: 'bower_components'
@@ -36,6 +64,7 @@ module.exports = (grunt) ->
           'handlebars/handlebars.runtime.*'
           'jquery/dist/*.js'
           'typeahead.js/dist/typeahead.jquery.*'
+          'pouchdb/dist/*.js'
         ]
         dest: 'client/js/libs/'
         flatten: true
@@ -55,8 +84,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-emblem'
   grunt.loadNpmTasks 'grunt-couchapp'
   grunt.registerTask 'generateData', 'Generate fake data', require './scripts/generate.coffee'
-  grunt.registerTask 'default', ['coffee', 'emblem', 'couchapp']
+  grunt.registerTask 'default', ['concat:libs', 'coffee:compile', 'emblem', 'couchapp']
+  grunt.registerTask 'pouch', ['concat:pouch', 'coffee:pouch', 'emblem', 'couchapp']
   grunt.registerTask 'generate', ['generateData', 'default']

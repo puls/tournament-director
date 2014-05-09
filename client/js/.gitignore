@@ -1,4 +1,5 @@
 app.js
 app.map
 app.src.coffee
+libs.js
 templates.js

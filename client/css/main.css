@@ -25,3 +25,7 @@ form.filterForm { margin-bottom: 0; }
 input.team-score { width: 3em; margin-bottom: 10px; }
 a { cursor: pointer; }
 
+.school-name { font-size: 1.4em; line-height: 1.8em; }
+.panel-body.panel-team-boxes { padding-top: 0px; padding-bottom: 0px; }
+.teamBox { padding-top: 1em; padding-bottom: 1em; }
+.teamBox.alt { background-color: #f9f9f9; }

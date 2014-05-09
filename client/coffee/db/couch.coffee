@@ -1,3 +1,5 @@
+console.log 'using CouchDB as database'
+
 App.Model = Ember.Object.extend
   init: ->
     @_super()

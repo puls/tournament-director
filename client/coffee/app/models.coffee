@@ -1,3 +1,6 @@
+App.Utility ?= {}
+App.Utility.to_id = (name) -> name.toLowerCase().replace /[^a-z0-9]+/g,'_'
+
 App.Game = App.Model.extend
   init: ->
     @_super()
@@ -132,9 +135,48 @@ App.Game = App.Model.extend
       error: options.error
       success: options.success
 
-
 App.Tournament = App.Model.extend()
-App.School = App.Model.extend()
+App.School = App.Model.extend
+  init: (contents) ->
+    @_super()
+    @set 'type', 'school'
+    @set 'tournament', 'tournament'
+    unless @get('teams')?.length
+      @set 'teams', []
+      @addTeam()
+
+  addTeam: ->
+    teamName = @get('name')
+    teamCount = @get('teams').length
+    if teamCount > 0
+      teamLetter = String.fromCharCode('A'.charCodeAt(0) + teamCount)
+      teamName = teamName + ' ' + teamLetter
+    newTeam =
+      name: teamName
+      players: [{}, {}, {}, {}]
+    @get('teams').pushObject newTeam
+
+  ensureEmptyPlayerLines: ->
+    for team in @get 'teams'
+      if team.players.every((player) -> player.name?.length > 0)
+        team.players.pushObject {}
+
+  save: (options) ->
+    unless @get('_id')?
+      @set '_id', App.Utility.to_id "School #{@get('name')}"
+    for team in @get 'teams'
+      team._id = App.Utility.to_id team.name unless team._id?
+      Ember.set team, 'players', team.players.filter (player) -> player?.name?.length > 0
+
+    representation = @getProperties 'city', 'id', 'name', 'small', 'teams', 'tournament', 'tournament_id', 'type', '_rev'
+    Ember.$.ajax
+      url: @url()
+      type: 'PUT'
+      data: JSON.stringify representation
+      contentType: 'application/json'
+      error: options.error
+      success: options.success
+
 App.Round = Ember.Object.extend
   pending: false
 

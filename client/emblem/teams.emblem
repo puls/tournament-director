@@ -1,6 +1,47 @@
 each school in controller
-  each team in school.teams
-    h2 = team.name
-    ul
-      each player in team.players
-        li = player.name
+  resetCounter 'school'
+  if school.editing
+    App.SchoolsForm content=school
+      .panel.panel-default
+        .panel-heading
+          .pull-right
+            a.btn click="cancel school" Cancel
+            a.btn.btn-danger click="deleteSchool school" Delete
+            | &nbsp;
+            input.btn.btn-primary type="submit" click="save school" value="Save"
+          .row
+            .col-sm-4: Ember.TextField valueBinding="school.name" placeholder="School Name" class="form-control"
+            .col-sm-4: Ember.TextField valueBinding="school.city" placeholder="City" class="form-control"
+          .clearfix
+        .panel-body.panel-team-boxes: .row
+            each team in school.teams
+              div class="col-sm-4 teamBox {{unbound altClass 'school'}}"
+                p: Ember.TextField valueBinding="team.name" class="form-control"
+                p: each player in team.players
+                  Ember.TextField valueBinding="player.name" class="form-control" style="width: 70%"
+                  App.NumberField valueBinding="player.year" style="width: 30%"
+                  br
+                p style="text-align: center": a click="addPlayer team" Add a player
+            .col-sm-4
+              p style="text-align: center": a click="addTeam school" Add a team
+  else
+    .panel.panel-default
+      .panel-heading
+        .pull-right
+          a.btn.btn-default click="edit school" Edit
+        b.school-name = school.name
+        |, {{school.city}}
+        .clearfix
+      .panel-body.panel-team-boxes
+        .row
+          each team in school.teams
+            div class="col-sm-4 teamBox {{unbound altClass 'school'}}"
+              b = team.name
+              ul
+                each player in team.players
+                  li
+                    = player.name
+                    if player.year
+                      |&nbsp;({{player.year}})
+
+p style="text-align: center": a click="addSchool" Add a school

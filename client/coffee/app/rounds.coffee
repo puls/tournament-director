@@ -64,4 +64,3 @@ App.EditGameController = Ember.ObjectController.extend
       game.deleteRecord
         error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
         success: (data, status, xhr) => @hide()
-

@@ -21,6 +21,15 @@ App.ScoreForm = Ember.View.extend
         controller = @get 'controller'
         controller.reloadRounds()
 
+App.SchoolsForm = Ember.View.extend
+  tagName: 'form'
+  template: '{{ yield }}'
+  classNames: 'form-inline'.w()
+  eventManager: Ember.Object.create
+    focusOut: (event, view) ->
+      school = view.nearestWithProperty('content')?.get 'content'
+      school?.ensureEmptyPlayerLines()
+
 App.PlayersForm = Ember.View.extend
   tagName: 'form'
   templateName: 'playersForm'
@@ -124,6 +133,9 @@ Ember.Handlebars.registerBoundHelper 'fixedDecimal', (value, options) ->
 App.Counters = {}
 Ember.Handlebars.registerBoundHelper 'counter', (key, options) ->
   new Handlebars.SafeString App.Counters[key] += 1
+Ember.Handlebars.registerBoundHelper 'altClass', (key, options) ->
+  App.Counters[key] += 1
+  if App.Counters[key] % 2 == 1 then '' else 'alt'
 Ember.Handlebars.registerBoundHelper 'resetCounter', (key, options) ->
   App.Counters[key] = 0
   ""
