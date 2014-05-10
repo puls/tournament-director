@@ -44,7 +44,7 @@ module.exports = (grunt) ->
           jquery: 'client/js/libs/jquery.js'
           ember: 'client/js/libs/ember.js'
           emblem: 'client/js/libs/emblem.js'
-          handlebars: 'bower_components/handlebars/handlebars.js'
+          handlebars: 'client/js/libs/handlebars.min.js'
 
     concat:
       libs:
@@ -61,7 +61,7 @@ module.exports = (grunt) ->
           'bootstrap/dist/js/*'
           'ember/ember.*'
           'emblem/dist/*'
-          'handlebars/handlebars.runtime.*'
+          'handlebars/handlebars.*.js'
           'jquery/dist/*.js'
           'typeahead.js/dist/typeahead.jquery.*'
           'pouchdb/dist/*.js'
