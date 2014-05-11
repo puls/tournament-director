@@ -1,0 +1,12 @@
+each round in controller.rounds
+  h3 Round {{ round.id }}
+  .row
+    each round.games
+      .col-md-4
+        table.table.table-condensed.table-bordered
+          tr
+            td = 1
+            td = 2
+          tr
+            td = 3
+            td = 4

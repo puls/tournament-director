@@ -172,8 +172,13 @@ App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
     key = player.key
     value = player.value
     counter = App.Counters['standings'] += 1
+    year = player.key[3]
+    if year?
+      yearText = " (#{year})"
+    else
+      yearText = ""
 
-    buffer.push "<td>#{counter}.</td><td>#{key[1]}, #{key[0]}</td>"
+    buffer.push "<td>#{counter}.</td><td>#{key[1]}, #{key[0]}#{yearText}</td>"
     buffer.push "<td>#{value[1].toFixed 2}</td>"
     for index in [2..6]
       buffer.push "<td>#{value[index]}</td>"

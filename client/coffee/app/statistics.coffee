@@ -13,7 +13,7 @@ App.TeamStandingsIndexRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @_super controller, model
     controller.set 'smallSchools', App.Store.rowsFromView 'small_schools'
-  actions: 
+  actions:
     showTeam: (view) ->
       team = view.get 'team'
       teamKey = team.key[1]
@@ -75,22 +75,42 @@ App.PlayerStandingsController = Ember.ArrayController.extend
       spliceIndex = -1
       for row in allYears
         if player.key[0] == row.key[0] and player.key[1] == row.key[1]
-          player.key[2] = row.value
+          player.key[3] = row.value
           allYears.splice index, 1
           break
         index += 1
-  )#.observes 'allYears.content', 'content'
+  ).observes 'allYears.content', 'content'
 
-  actions: 
+  actions:
     showPlayer: (view) ->
       player = view.get 'player'
       teamKey = player.key[2]
       @transitionTo 'teamPerformance', teamKey
 
+App.ScoreboardIndexRoute = Ember.Route.extend
+  redirect: -> @transitionTo 'scoreboardRound', 'all'
+
 App.ScoreboardRoute = Ember.Route.extend
-  model: -> App.Store.rowsFromView 'scoreboard'
+  model: -> App.Store.rowsFromView 'scoreboard', group: false
 
 App.ScoreboardController = Ember.ArrayController.extend
+  roundNumbers: (->
+    min = @get 'content.firstObject.value.min'
+    max = @get 'content.firstObject.value.max'
+    ['all'].concat(num for num in [min..max])
+  ).property 'content.@each'
+
+App.ScoreboardRoundRoute = Ember.Route.extend
+  model: (params) ->
+    options = {}
+    round = parseInt(params.round_id, 10)
+    if round > 0
+      options =
+        startkey: [round]
+        endkey: [round, {}]
+    App.Store.rowsFromView 'scoreboard', options
+
+App.ScoreboardRoundController = Ember.ArrayController.extend
   rounds: (->
     groups = {}
     rounds = []

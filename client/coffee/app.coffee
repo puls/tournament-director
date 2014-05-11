@@ -17,7 +17,8 @@ App.Router.map ->
     @resource 'teamStandings', path: 'teams', ->
       @resource 'teamPerformance', path: ':team_id'
     @resource 'playerStandings', path: 'players'
-    @resource 'scoreboard'
+    @resource 'scoreboard', ->
+      @resource 'scoreboardRound', path: ':round_id'
   @resource 'export'
 
 App.ApplicationRoute = Ember.Route.extend
