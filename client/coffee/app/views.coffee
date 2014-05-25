@@ -164,6 +164,7 @@ App.TeamStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
 App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
   tagName: 'tr'
   action: 'showPlayer'
+  classNameBindings: 'player.key.3'
   click: (event) -> @triggerAction actionContext: this
 
   render: (buffer) ->

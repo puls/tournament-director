@@ -1,1 +1,9 @@
-| Settings
+h2 Settings
+form.form-inline
+  p
+    ' Tournament name:
+    Ember.TextField valueBinding="name" class="form-control"
+  p
+    ' Players per side:
+    App.NumberField valueBinding="playersPerSide" style="width: 4em"
+  input.btn.btn-primary type="button" value="Submit" click="save"

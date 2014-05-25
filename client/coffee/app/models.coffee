@@ -89,12 +89,13 @@ App.Game = App.Model.extend
       success: options.success
 
   validatePlayers: ->
+    tournament = App.Store.get 'tournament'
     gameTossups = @get 'tossups'
     overtimeTossups = @get 'overtimeTossups'
     for teamKey in ['team1', 'team2']
       team = @get teamKey
       players = team.get 'playersWithNames'
-      seatsFilled = Math.min 4, players.length
+      seatsFilled = Math.min tournament.get('playersPerSide'), players.length
       expectedTossups = seatsFilled * gameTossups
       return "#{team.name} players heard more than #{expectedTossups} tossups" if team.get('tossups') > expectedTossups
       return "#{team.name} players heard less than #{expectedTossups} tossups" if team.get('tossups') < expectedTossups
@@ -135,7 +136,22 @@ App.Game = App.Model.extend
       error: options.error
       success: options.success
 
-App.Tournament = App.Model.extend()
+App.Tournament = App.Model.extend
+  init: (contents) ->
+    @_super()
+    unless @get('playersPerSide')?
+      @set 'playersPerSide', 4
+
+  save: (options) ->
+    representation = @getProperties '_rev', 'id', 'type', 'name', 'playersPerSide'
+    Ember.$.ajax
+      url: @url()
+      type: 'PUT'
+      data: JSON.stringify representation
+      contentType: 'application/json'
+      error: options.error
+      success: options.success
+
 App.School = App.Model.extend
   init: (contents) ->
     @_super()
@@ -269,7 +285,10 @@ App.PlayerGame = Ember.Object.extend
   answered: (-> @get('tens') + @get('fifteens') + @get('negFives')).property 'tens', 'fifteens', 'negFives'
 
 App.Store = App.ModelStore.extend
-  loadTournament: -> @loadObject 'tournament'
+  loadTournament: ->
+    tournament = @loadObject 'tournament'
+    @set 'tournament', tournament
+    tournament
 
   loadRounds: ->
     rounds = Ember.ArrayProxy.create content: []

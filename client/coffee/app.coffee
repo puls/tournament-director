@@ -20,6 +20,7 @@ App.Router.map ->
     @resource 'scoreboard', ->
       @resource 'scoreboardRound', path: ':round_id'
   @resource 'export'
+  @resource 'settings'
 
 App.ApplicationRoute = Ember.Route.extend
   model: -> App.Store.loadTournament()
