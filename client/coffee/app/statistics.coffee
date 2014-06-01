@@ -36,6 +36,8 @@ App.TeamStandingsIndexController = Ember.ArrayController.extend
       console.log 'No teams, bailing'
       return
 
+    console.log 'Adding small schools to teams'
+
     smallSchools = @get 'smallSchools.content'
     schoolsMap = {}
     for row in smallSchools
@@ -68,11 +70,14 @@ App.PlayerStandingsController = Ember.ArrayController.extend
       console.log 'No players, bailing'
       return
 
+    console.log 'Adding years to players'
+
     allYears = @get 'allYears.content'
     yearOptions = []
     @forEach (player) ->
       index = 0
       spliceIndex = -1
+      player.hasYear = true
       for row in allYears
         if player.key[0] == row.key[0] and player.key[1] == row.key[1]
           player.key[3] = row.value

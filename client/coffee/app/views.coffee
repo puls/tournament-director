@@ -163,8 +163,15 @@ App.TeamStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
 
 App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
   tagName: 'tr'
+  classNameBindings: ['playerYearClassName']
   action: 'showPlayer'
   click: (event) -> @triggerAction actionContext: this
+
+  playerYearClassName: (-> 'year-' + @get 'player.key.3').property('player.key.3')
+
+  yearWasAdded: (->
+    @rerender()
+  ).observes 'player.hasYear'
 
   render: (buffer) ->
     # Don't dynamically bind anything within the row as a performance optimization
