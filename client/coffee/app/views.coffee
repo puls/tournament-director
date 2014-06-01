@@ -126,6 +126,14 @@ App.FilterForm = Ember.View.extend
     change: (event, view) ->
       view.get('controller').updateFilters()
 
+Ember.Handlebars.registerBoundHelper 'pluralize', (count, options) ->
+  if count == 1
+    options.hash.singular
+  else if typeof options.hash.plural == 'string'
+    options.hash.plural
+  else
+    options.hash.singular + 's'
+
 Ember.Handlebars.registerBoundHelper 'fixedDecimal', (value, options) ->
   new Handlebars.SafeString value.toFixed 2
 

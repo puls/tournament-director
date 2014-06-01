@@ -1,7 +1,7 @@
 if pending
   h3 Pending Games
 else
-  h3 {{ games.length }} games from round {{ id }}
+  h3 {{ games.length }} {{ pluralize games.length singular="game" }} from round {{ id }}
 ul
   each game in controller.games
     li
