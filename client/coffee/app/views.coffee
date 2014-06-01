@@ -84,12 +84,11 @@ App.PlayersForm = Ember.View.extend
     for own name, value of @get(key)
       if (players.every (player) -> player.name isnt name)
         names.push value: name
+    names.sort (a, b) ->
+      aStartsWithQuery = (a.value.toLowerCase().indexOf(query.toLowerCase()) == 0)
+      bStartsWithQuery = (b.value.toLowerCase().indexOf(query.toLowerCase()) == 0)
+      bStartsWithQuery - aStartsWithQuery
     names
-
-  sortAutocomplete: (team, items) ->
-    key = @keyForTeam team
-    nameScores = @get key
-    items.sort (a, b) -> nameScores[a] - nameScores[b]
 
 App.NameField = Ember.TextField.extend
   classNames: 'form-control'.w()
