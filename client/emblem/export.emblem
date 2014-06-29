@@ -1,5 +1,13 @@
-h1 Livestat Export
-ul
-  li: a href="/livestat/teams" Teams
-  li: a href="/livestat/scores" Scores
-  li: a href="/livestat/indstats" Indstats
+h2 QBJ Export
+
+p QBJ is a JSON-based format for representing all of a tournament's data.
+p: a href="http://schema.quizbowl.technology" More information
+p: a class="btn btn-default btn-large" role="button" href="/export/qbj" Export QBJ file
+
+h2 Livestat Export
+
+p Livestat is an obsolete format and you probably shouldn't be using it. It lacks support for many tournament features, and they won't be added. It exists here for backwards compatibility.
+
+p: a class="btn btn-default" role="button" href="/export/livestat/teams" Export Livestat Teams file
+p: a class="btn btn-default" role="button" href="/export/livestat/scores" Export Livestat Scores file
+p: a class="btn btn-default" role="button" href="/export/livestat/indstats" Export Livestat Indstats file

@@ -8,7 +8,8 @@ module.exports = ddoc =
     {from: '/', to: 'index.html'}
     {from: '/api', to: '../../'}
     {from: '/api/*', to: '../../*'}
-    {from: '/livestat/:file', to: '_list/:file/livestat'}
+    {from: '/export/livestat/:file', to: '_list/:file/livestat'}
+    {from: '/export/qbj', to: '_list/qbj/dump_qbj'}
     {from: '/*', to: 'index.html'}
   ]
   views: require './views'
