@@ -8,11 +8,22 @@ nav.navbar.navbar-default role="navigation"
     a.navbar-brand href="#" = name
   .collapse.navbar-collapse.navbar-ex1-collapse
     ul.nav.navbar-nav
-      link-to "rounds" tagName="li" href=false
-        a href=view.href Rounds
-      link-to "teams" tagName="li" href=false
-        a href=view.href Teams
+      if App.Session.loggedIn
+        link-to "rounds" tagName="li" href=false
+          a href=view.href Rounds
+        link-to "teams" tagName="li" href=false
+          a href=view.href Teams
       link-to "standings" tagName="li" href=false
         a href=view.href Statistics
-      link-to "export" tagName="li" href=false
-        a href=view.href Export
+      if App.Session.loggedIn
+        link-to "export" tagName="li" href=false
+          a href=view.href Export
+    ul.nav.navbar-nav.navbar-right
+      if App.Session.loggedIn
+        link-to "account" tagName="li" href=false
+          a href=view.href
+            ' Logged in as
+            b = App.Session.displayName
+      else
+        link-to "login" tagName="li" href=false
+          a href=view.href Log in

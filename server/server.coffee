@@ -14,8 +14,9 @@ module.exports = ddoc =
   ]
   views: require './views'
   lists: require './lists'
-  validate_doc_update: (newDoc, oldDoc, userCtx) ->
-    throw 'Only admin can delete documents on this database.'  if newDoc._deleted is true and userCtx.roles.indexOf('_admin') is -1
+  validate_doc_update: (newDoc, oldDoc, userCtx, secCtx) ->
+    throw {unauthorized: 'Must be logged in'} unless userCtx.name?
+    throw {forbidden: 'No access to this database'} unless secCtx.admins.names.indexOf(userCtx.name) > -1 or userCtx.roles.indexOf('_admin') > -1
 
 attachmentPath = path.join __dirname, '../client'
 couchapp.loadAttachments ddoc, attachmentPath

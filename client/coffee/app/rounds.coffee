@@ -1,4 +1,4 @@
-App.RoundsRoute = Ember.Route.extend
+App.RoundsRoute = App.LoggedInRoute.extend
   model: -> App.Store.loadRounds()
   setupController: (controller, model) ->
     @_super controller, model
@@ -13,7 +13,7 @@ App.RoundsController = Ember.ArrayController.extend
     @get('pendingGames').reload()
     @get('controllers.round').reloadGames()
 
-App.RoundRoute = Ember.Route.extend
+App.RoundRoute = App.LoggedInRoute.extend
   model: (params) ->
     if params.round_id is 'pending'
       list = App.PendingGamesList.create()
@@ -34,7 +34,7 @@ App.RoundController = Ember.ObjectController.extend
     else
       @set 'games', App.Store.loadGamesForRound @get 'id'
 
-App.EditGameRoute = Ember.Route.extend
+App.EditGameRoute = App.LoggedInRoute.extend
   model: (params) ->
     game = App.Game.create _id: "game_#{params.game_id}"
     game.reload()

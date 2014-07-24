@@ -323,3 +323,32 @@ App.Store = App.ModelStore.extend
   loadSchoolsIfEmpty: -> @loadSchools() if @allSchools.get('length') is 0
 
 App.Store = new App.Store()
+
+App.Session = Ember.Object.extend
+  init: ->
+    @_super()
+    @reload()
+
+  loggedIn: false
+
+  displayName: (-> @get('profile.fullName') ? @get('profile.name') ? '??').property 'profile.name', 'profile.fullName'
+
+  reload: (cb) ->
+    wasLoggedIn = @get 'loggedIn'
+    Ember.$.ajax
+      url: '/_session'
+      dataType: 'json'
+      success: (data, response, xhr) =>
+        loggedIn = data.userCtx.name?
+        @set 'profile', data.userCtx
+        @set 'loggedIn', loggedIn
+        if loggedIn and !wasLoggedIn
+          transition = @get 'afterLoginTransition'
+          @set 'afterLoginTransition', null
+          if transition?
+            transition.retry()
+        cb?(loggedIn)
+
+  clear: -> @set 'loggedIn', false
+
+App.Session = new App.Session()

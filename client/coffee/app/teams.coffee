@@ -1,4 +1,4 @@
-App.TeamsRoute = Ember.Route.extend
+App.TeamsRoute = App.LoggedInRoute.extend
   model: -> App.Store.loadSchools()
 
 App.TeamsController = Ember.ArrayController.extend

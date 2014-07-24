@@ -1,3 +1,15 @@
+App.LoginForm = Ember.View.extend
+  tagName: 'form'
+  templateName: 'loginForm'
+  classNames: ['login-form', 'form-horizontal']
+  ariaRole: 'form'
+
+  submit: (event) ->
+    event.preventDefault()
+    @get('controller').send 'submit', @get('username'), @get('password')
+
+  didInsertElement: -> @$('input:first').focus()
+
 App.ScoreForm = Ember.View.extend
   tagName: 'form'
   templateName: 'scoreForm'
