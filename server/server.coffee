@@ -16,7 +16,7 @@ module.exports = ddoc =
   lists: require './lists'
   validate_doc_update: (newDoc, oldDoc, userCtx, secCtx) ->
     throw {unauthorized: 'Must be logged in'} unless userCtx.name?
-    throw {forbidden: 'No access to this database'} unless secCtx.admins.names.indexOf(userCtx.name) > -1 or userCtx.roles.indexOf('_admin') > -1
+    throw {forbidden: 'No access to this database'} unless userCtx.roles.indexOf('_admin') > -1 or secCtx.admins.names.indexOf(userCtx.name) > -1
 
 attachmentPath = path.join __dirname, '../client'
 couchapp.loadAttachments ddoc, attachmentPath

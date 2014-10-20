@@ -13,16 +13,16 @@ module.exports = ->
     .on('end', (count) -> generate())
 
   generate = ->
-    round_count = 2
-    team_count = 4
-    games_per_round = 2
+    round_count = 26
+    team_count = 256
+    games_per_round = 96
     all_teams = {}
     team_ids = []
     schools = []
     games = []
     rooms = faker.random.street_suffix()[0...games_per_round]
 
-    to_id = (name) -> name.toLowerCase().replace /[^a-z0-9]+/g,'_'
+    to_id = (name) -> name.toLowerCase().replace /[^a-z0-9]+/g, '_'
 
     rand = (max) -> Math.floor(Math.random() * max)
 
@@ -58,7 +58,7 @@ module.exports = ->
       for num in [1..teams_from_school]
         break if team_count < 1
         team_name = if teams_from_school == 1 then school.name else "#{school.name} #{['A','B','C','D','E'][num - 1]}"
-        team = {name:team_name, players:[], id: rand(1000000), '_id': to_id team_name}
+        team = {name: team_name, players: [], id: rand(1000000), '_id': to_id team_name}
         school.teams.push team
         team_ids.push team.id
         all_teams[team.id] = team
@@ -152,7 +152,7 @@ module.exports = ->
 
         for question in [1..game.tossups]
           answerTeam = playTossup false
-          game[answerTeam].points += [0,10,20,30][rand 4] if answerTeam
+          game[answerTeam].points += [0, 10, 20, 30][rand 4] if answerTeam
 
         if game.team1.points == game.team2.points
 
