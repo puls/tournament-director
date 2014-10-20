@@ -20,7 +20,7 @@ module.exports = ->
     team_ids = []
     schools = []
     games = []
-    rooms = faker.random.street_suffix()[0...games_per_round]
+    rooms = [0...games_per_round]
 
     to_id = (name) -> name.toLowerCase().replace /[^a-z0-9]+/g, '_'
 
@@ -42,7 +42,7 @@ module.exports = ->
       _id: 'tournament'
 
     while team_count > 0
-      teams_from_school = 1# + rand 5
+      teams_from_school = 1 + rand 5
       city = cities[rand cities.length]
       school =
         tournament: 'tournament'
@@ -91,7 +91,7 @@ module.exports = ->
           scoreEntered: true
           playersEntered: true
           serial: "#{num}-#{gameIndex + 1}"
-          room: rooms[gameIndex]
+          room: "Room #{rooms[gameIndex]}"
           tossups: [17..24][rand 8]
           overtimeTossups: 0
           team1:

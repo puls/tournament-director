@@ -1,0 +1,3 @@
+[submodule "server/qb-mapreduce"]
+	path = server/qb-mapreduce
+	url = git@github.com:puls/qb-mapreduce.git
