@@ -19,9 +19,15 @@ Installation
 
 Tournament Director is a
 [CouchApp](http://docs.couchdb.org/en/latest/couchapp) written in
-[CoffeeScript](http://coffeescript.org) with [Ember](http://emberjs.com)
-and [Bootstrap](http://getbootstrap.com). Its build system is
+[CoffeeScript](http://coffeescript.org) with
+[Ember](http://emberjs.com), [Emblem](http://emblemjs.com), and
+[Bootstrap](http://getbootstrap.com). Its build system is
 [Grunt](http://gruntjs.com).
+
+### In the cloud
+
+You can get a fully-functioning installation of Tournament Director by
+visiting http://www.tournamentdirector.org and signing up. It's free!
 
 ### Mac
 
