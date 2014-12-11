@@ -13,9 +13,9 @@ module.exports = ->
     .on('end', (count) -> generate())
 
   generate = ->
-    round_count = 26
-    team_count = 256
-    games_per_round = 96
+    round_count = 15
+    team_count = 72
+    games_per_round = 24
     all_teams = {}
     team_ids = []
     schools = []
@@ -62,7 +62,8 @@ module.exports = ->
         school.teams.push team
         team_ids.push team.id
         all_teams[team.id] = team
-        for i in [0..3]
+        players_from_team = 4 + rand 3
+        for i in [0..players_from_team]
           player =
             name: "#{faker.Name.firstName()} #{faker.Name.lastName()}"
             year: [9..12][rand 4]
@@ -88,20 +89,28 @@ module.exports = ->
           type: 'game'
           tournament: 'tournament'
           round: num
+          event: 'Test Tournament'
+          packet: num
+          moderator: 'Q. Q*bert Hentzel'
+          scorekeeper: 'Foley, which is an app'
           scoreEntered: true
           playersEntered: true
           serial: "#{num}-#{gameIndex + 1}"
           room: "Room #{rooms[gameIndex]}"
           tossups: [17..24][rand 8]
           overtimeTossups: 0
+          questions: []
+          overtimeQuestions: []
           team1:
             id: effectiveTeamIDs[2 * gameIndex]
             points: 0
             players: []
+            lineups: []
           team2:
             id: effectiveTeamIDs[2 * gameIndex + 1]
             points: 0
             players: []
+            lineups: []
         ['team1', 'team2'].forEach (team_key) ->
           game[team_key].name = all_teams[game[team_key].id].name
           game[team_key]._id = all_teams[game[team_key].id]._id
@@ -109,7 +118,7 @@ module.exports = ->
             player =
               id: player_id
               name: player.name
-              tossups: game.tossups
+              tossups: 0
               fifteens: 0
               tens: 0
               negFives: 0
@@ -117,42 +126,100 @@ module.exports = ->
 
         game._id = "game_#{game.round}_#{game.team1._id}_#{game.team2._id}"
 
+        game.team1.lineups = [{firstQuestion: 1, reason: 'initial', players: game.team1.players[0..3].map (player) -> player.name}]
+        game.team2.lineups = [{firstQuestion: 1, reason: 'initial', players: game.team2.players[0..3].map (player) -> player.name}]
+
         allPlayers = (cb) ->
           for player in game.team1.players
             cb player
           for player in game.team2.players
             cb player
 
+        insertHalf = ->
+          fisherYates game.team1.players
+          fisherYates game.team2.players
+          game.team1.lineups.push {firstQuestion: game.questions.length + 1, reason: 'halftime', players: game.team1.players[0..3].map (player) -> player.name}
+          game.team2.lineups.push {firstQuestion: game.questions.length + 1, reason: 'halftime', players: game.team2.players[0..3].map (player) -> player.name}
+
+        insertTimeout = (isTeam1) ->
+          [team1Reason, team2Reason] = if isTeam1 then ['own_timeout', 'other_timeout'] else ['other_timeout', 'own_timeout']
+          fisherYates game.team1.players
+          fisherYates game.team2.players
+          game.team1.lineups.push {firstQuestion: game.questions.length + 1, reason: team1Reason, players: game.team1.players[0..3].map (player) -> player.name}
+          game.team2.lineups.push {firstQuestion: game.questions.length + 1, reason: team2Reason, players: game.team2.players[0..3].map (player) -> player.name}
+
         playTossup = (incrementOvertime = false) ->
+          lineups =
+            team1: game.team1.lineups[game.team1.lineups.length - 1].players
+            team2: game.team2.lineups[game.team2.lineups.length - 1].players
+          question =
+            bonus_points: 0
+
+          for teamIndex in ['team1', 'team2']
+            for playerName in lineups[teamIndex]
+              playerIndex = game[teamIndex].players.map((player) -> player.name).indexOf playerName
+              game[teamIndex].players[playerIndex].tossups += 1
+              if incrementOvertime
+                game[teamIndex].players[playerIndex].overtime.tossups += 1
+
+          if incrementOvertime
+            game.overtimeQuestions.push question
+          else
+            game.questions.push question
+
           hasNeg = (rand(4) == 1)
           hasFifteen = (rand(5) == 1)
           answerTeam = if rand(2) == 1 then 'team1' else 'team2'
 
           if hasNeg
-            negPlayer = rand 4
+            negPlayerName = lineups[answerTeam][rand 4]
+            negPlayer = game[answerTeam].players.map((player) -> player.name).indexOf negPlayerName
             game[answerTeam].players[negPlayer].negFives += 1
             game[answerTeam].players[negPlayer].overtime.negFives += 1 if incrementOvertime
             game[answerTeam].points -= 5
+            question.neg =
+              team_id: game[answerTeam].id
+              team_name: game[answerTeam].name
+              points: -5
+              player: game[answerTeam].players[negPlayer].name
             answerTeam = if answerTeam is 'team1' then 'team2' else 'team1'
 
           return false if rand(10) == 1 # Question went dead
 
-          answerPlayer = rand 4
+          answerPlayerName = lineups[answerTeam][rand 4]
+          answerPlayer = game[answerTeam].players.map((player) -> player.name).indexOf answerPlayerName
+
+          question.answer =
+            team_id: game[answerTeam].id
+            team_name: game[answerTeam].name
+            player: game[answerTeam].players[answerPlayer].name
 
           if hasFifteen
             game[answerTeam].players[answerPlayer].fifteens += 1
             game[answerTeam].players[answerPlayer].overtime.fifteens += 1 if incrementOvertime
             game[answerTeam].points += 15
+            question.answer.points = 15
           else
             game[answerTeam].players[answerPlayer].tens += 1
             game[answerTeam].players[answerPlayer].overtime.tens += 1 if incrementOvertime
             game[answerTeam].points += 10
+            question.answer.points = 10
+
+          if !incrementOvertime
+            bonusPoints = [0, 10, 20, 30][rand 4]
+            game[answerTeam].points += bonusPoints
+            question.bonus_points = bonusPoints
 
           answerTeam
 
+        halftimeTossup = Math.floor(game.tossups / 2)
+        timeoutTossup = rand game.tossups * 2
+        if timeoutTossup == halftimeTossup
+          timeoutTossup = -1
         for question in [1..game.tossups]
           answerTeam = playTossup false
-          game[answerTeam].points += [0, 10, 20, 30][rand 4] if answerTeam
+          insertHalf() if question == halftimeTossup
+          insertTimeout(0 == rand 2) if question == timeoutTossup
 
         if game.team1.points == game.team2.points
 
@@ -168,9 +235,6 @@ module.exports = ->
             game.overtimeTossups += 1
 
           game.tossups += game.overtimeTossups
-          allPlayers (player) ->
-            player.tossups += game.overtimeTossups
-            player.overtime.tossups += game.overtimeTossups
 
           console.log "Played overtime for #{game.overtimeTossups} tossups in #{game._id}"
 

@@ -55,7 +55,8 @@ Build Tournament Director and generate some test data:
 
 You can follow similar steps to the above by installing
 [CouchDB](http://couchdb.apache.org) and [Node](http://nodejs.org)
-following their own instructions for your platform.
+following their own instructions for your platform. Note that Node also
+depends on Python.
 
 Note that `local-tld` is only available on the Mac, so you'll need to
 make an extra entry in [your system's `hosts`
