@@ -20,6 +20,7 @@
     "emblem": "~0.3.16",
     "bootstrap": "~3.0.0",
     "typeahead.js": "~0.10.2",
-    "pouchdb": "~2.2.0"
+    "pouchdb": "~2.2.0",
+    "jspdf": "~1.0.272"
   }
 }

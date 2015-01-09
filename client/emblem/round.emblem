@@ -6,10 +6,11 @@ ul
   each game in controller.games
     li
       if pending
-        | Round {{ game.round }}: 
+        | Round {{ game.round }}:
       else
-        | {{ game.serial }}: 
+        | {{ game.serial }}:
       link-to "editGame" game
         | {{ game.team1.name }} vs. {{ game.team2.name }}
+      a click="generatePDF game" PDF
       |  in {{ game.room }}
 outlet

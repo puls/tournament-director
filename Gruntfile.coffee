@@ -5,6 +5,7 @@ module.exports = (grunt) ->
     'client/js/libs/ember.js'
     'client/js/libs/bootstrap.js'
     'client/js/libs/typeahead.jquery.js'
+    'client/js/libs/jspdf.debug.js'
   ]
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -65,6 +66,7 @@ module.exports = (grunt) ->
           'jquery/dist/*.js'
           'typeahead.js/dist/typeahead.jquery.*'
           'pouchdb/dist/*.js'
+          'jspdf/dist/*.js'
         ]
         dest: 'client/js/libs/'
         flatten: true

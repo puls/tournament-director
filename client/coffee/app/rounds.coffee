@@ -34,6 +34,10 @@ App.RoundController = Ember.ObjectController.extend
     else
       @set 'games', App.Store.loadGamesForRound @get 'id'
 
+  actions:
+    generatePDF: (game) ->
+      GenerateScoresheetPDF(game)
+
 App.EditGameRoute = App.LoggedInRoute.extend
   model: (params) ->
     game = App.Game.create _id: "game_#{params.game_id}"
