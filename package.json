@@ -12,7 +12,7 @@
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-watch": "~0.3.1",
     "grunt-couchapp": "~0.1.0",
-    "grunt-emblem": "~0.1.0",
+    "grunt-emblem": "puls/grunt-emblem",
     "request": "~2.16.6"
   },
   "devDependencies": {
