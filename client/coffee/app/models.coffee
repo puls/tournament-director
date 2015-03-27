@@ -15,17 +15,20 @@ App.Game = App.Model.extend
       wrappedTeam = App.TeamGame.create @get(team)
       @set team, wrappedTeam
       wrappedTeam.wrapPlayers()
-    @ensureEmptyPlayerGames()
+    @clearOvertime()
 
   teams: (-> [@get('team1'), @get('team2')]).property 'team1', 'team2'
   hasOvertime: (-> @get('overtimeTossups') > 0).property 'overtimeTossups'
+  hasFullQuestionData: (-> @get('questions.length') > 0).property 'questions'
 
   clearOvertime: (->
     if @get('overtimeTossups') == 0
       for team in ['team1', 'team2']
-        for player in @get "#{team}.players"
-          player.set 'overtime', {}
-          player.setDefaultZeroes()
+        players = @get "#{team}.players"
+        if players?
+          for player in players
+            player.set 'overtime', {}
+            player.setDefaultZeroes()
   ).observes 'overtimeTossups'
 
   scoreRepresentation: () ->
@@ -45,12 +48,17 @@ App.Game = App.Model.extend
     representation
 
   ensureEmptyPlayerGames: ->
+    console.log("Adding empty player games", this)
     for team in @get 'teams'
       if team.get('players').every((player) -> player.get('name')?.length > 0)
         team.get('players').pushObject App.PlayerGame.create
           tossups: @get 'tossups'
           overtime:
             tossups: @get 'overtimeTossups'
+
+  clearEmptyPlayerGames: ->
+    for team in @get 'teams'
+      team.set 'players', team.get('players').filter((player) -> player.get('name')?.length > 0)
 
   validateScore: ->
     return 'Round cannot be blank' unless @get 'round'

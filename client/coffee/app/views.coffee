@@ -68,6 +68,11 @@ App.PlayersForm = Ember.View.extend
       game?.ensureEmptyPlayerGames()
 
   keyForTeam: (team) -> "playerNames_#{team.get('id')}"
+  addPlayerOnLoad: (->
+    console.log 'adding players on load'
+    game = @get('content')?.get 'content'
+    game?.ensureEmptyPlayerGames()
+  ).observes('controller.content')
 
   loadPlayerNames: (cb) ->
     for team in @get 'content.teams'

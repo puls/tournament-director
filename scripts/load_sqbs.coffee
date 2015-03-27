@@ -5,7 +5,7 @@ request = require 'request'
 database = require './database'
 
 theWholeEnchilada = fs.readFileSync process.argv.pop(), encoding: 'utf8'
-lines = theWholeEnchilada.split "\n"
+lines = theWholeEnchilada.split /[\r\n]+/
 
 teamCount = parseInt lines.shift(), 10
 tournamentName = process.argv.pop()
@@ -19,7 +19,7 @@ while teamCount > 0
   teamCount -= 1
   lineCount = parseInt lines.shift(), 10
   teamName = lines.shift()
-  match = teamName.match /((.+?)( [A-Z])?)( \(SS\))?( team_id:(\d+))?$/
+  match = teamName.match /^((.+?)( [A-Z])?)( \(SS\))?( team_id:(\d+))?$/
 
   team = name: match[1], players: []
   team._id = to_id(team.name)

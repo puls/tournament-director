@@ -41,12 +41,14 @@ App.RoundController = Ember.ObjectController.extend
 App.EditGameRoute = App.LoggedInRoute.extend
   model: (params) ->
     game = App.Game.create _id: "game_#{params.game_id}"
-    game.reload()
+    game.reload (game) -> game.ensureEmptyPlayerGames()
     game
 
 App.EditGameController = Ember.ObjectController.extend
   needs: ['rounds']
   hide: ->
+    game = @get 'content'
+    game.clearEmptyPlayerGames()
     @get('controllers.rounds').reloadRounds()
     @transitionToRoute 'round'
 
@@ -58,6 +60,7 @@ App.EditGameController = Ember.ObjectController.extend
     cancel: -> @hide()
     save: ->
       game = @get 'content'
+      game.clearEmptyPlayerGames()
       game.savePlayers
         validationError: (message) -> alert message
         error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
@@ -65,6 +68,7 @@ App.EditGameController = Ember.ObjectController.extend
 
     deleteGame: ->
       game = @get 'content'
+      game.clearEmptyPlayerGames()
       game.deleteRecord
         error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
         success: (data, status, xhr) => @hide()

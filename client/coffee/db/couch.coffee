@@ -12,7 +12,7 @@ App.Model = Ember.Object.extend
 
   url: -> "/api/#{@get '_id'}"
 
-  reload: ->
+  reload: (cb) ->
     Ember.$.ajax
       url: @url()
       type: 'GET'
@@ -21,6 +21,7 @@ App.Model = Ember.Object.extend
       success: (data, status) =>
         @setProperties data
         @setID()
+        @cb?(this)
 
   deleteRecord: (options) ->
     Ember.$.ajax
