@@ -54,6 +54,7 @@ App.PlayersForm = Ember.View.extend
       backdrop: 'static'
       keyboard: false
     @$().on 'shown.bs.modal', =>
+      @addPlayersOnLoad()
       @loadPlayerNames ->
         @$('input.player:first').focus()
     @$().on 'hide.bs.modal', =>
@@ -68,11 +69,11 @@ App.PlayersForm = Ember.View.extend
       game?.ensureEmptyPlayerGames()
 
   keyForTeam: (team) -> "playerNames_#{team.get('id')}"
-  addPlayerOnLoad: (->
-    console.log 'adding players on load'
-    game = @get('content')?.get 'content'
+  addPlayersOnLoad: (->
+    game = @get('controller')?.get 'content'
+    console.log 'adding players on load, content is ', game
     game?.ensureEmptyPlayerGames()
-  ).observes('controller.content')
+  ).observes('controller.content', 'context', 'controller')
 
   loadPlayerNames: (cb) ->
     for team in @get 'content.teams'

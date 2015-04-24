@@ -13,9 +13,9 @@ module.exports = ->
     .on('end', (count) -> generate())
 
   generate = ->
-    round_count = 15
-    team_count = 72
-    games_per_round = 24
+    round_count = 8
+    team_count = 24
+    games_per_round = 12
     all_teams = {}
     team_ids = []
     schools = []
