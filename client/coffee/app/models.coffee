@@ -327,6 +327,7 @@ App.Store = App.ModelStore.extend
           team = App.Team.create team
           @allTeams.pushObject team
           @teamLookup[team.id] = team
+      @allTeams.set 'content', @allTeams.sortBy 'name'
 
   loadSchoolsIfEmpty: -> @loadSchools() if @allSchools.get('length') is 0
 
