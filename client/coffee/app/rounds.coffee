@@ -37,6 +37,8 @@ App.RoundController = Ember.ObjectController.extend
   actions:
     generatePDF: (game) ->
       GenerateScoresheetPDF(game)
+    sort: (column) ->
+      @set 'games', @get('content.games').sortBy(column)
 
 App.EditGameRoute = App.LoggedInRoute.extend
   model: (params) ->

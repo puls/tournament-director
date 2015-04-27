@@ -130,7 +130,7 @@ App.ScoreboardRoundController = Ember.ArrayController.extend
 
 App.TeamPerformanceRoute = Ember.Route.extend
   model: (params) ->
-    App.Team.create id: parseInt params.team_id, 10
+    App.Team.create id: params.team_id
   setupController: (controller, model) ->
     @_super controller, model
     model.loadPerformance()

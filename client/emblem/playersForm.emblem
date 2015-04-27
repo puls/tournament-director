@@ -8,6 +8,8 @@
         | OT: {{view App.NumberField valueBinding="overtimeTossups" style="width: 4em;"}}
         | &nbsp; &nbsp; &nbsp;
         | Serial: {{view Ember.TextField class="form-control" valueBinding="serial" style="width: 5em;"}}
+        | &nbsp; &nbsp; &nbsp;
+        | Room: {{view Ember.TextField class="form-control" valueBinding="room" style="width: 5em;"}}
       h3 Edit game
     .modal-body
       each team in teams

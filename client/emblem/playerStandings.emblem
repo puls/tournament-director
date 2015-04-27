@@ -2,7 +2,9 @@ h1.printonly Player Standings
 table.table.table-striped.player-standings
   thead: tr
     th
-    th: a click="sort 'key.1'" Player
+    th
+      a click="sort 'key.1'" Player
+      App.PlayerStandingsFilterView
     th.number: a click="sort 'value.1'" GP
     th.number: a click="sort 'value.2'" TUH
     th.number: a click="sort 'value.3'" 15

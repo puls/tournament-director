@@ -2,17 +2,25 @@ if pending
   h3 Pending Games
 else
   h3 {{ games.length }} {{ pluralize games.length singular="game" }} from round {{ id }}
-table.table.table-condensed: tbody
-  each game in controller.games
-    tr
-      if pending
-        td.text-right Round {{ game.round }}:
-      else
-        td.text-right {{ game.serial }}:
-      td: link-to "editGame" game
-        | {{ game.team1.name }} vs. {{ game.team2.name }}
-      td = game.room
-      td
-        if game.hasFullQuestionData
-          button.btn.btn-xs.btn-default click="generatePDF game" PDF
+table.table.table-condensed
+  thead: tr
+    if pending
+      th.text-right click="sort 'round'" Round
+    else
+      th.text-right click="sort 'serial'" Serial
+    th click="sort 'team1.name'" Teams
+    th click="sort 'room'" Room
+  tbody
+    each game in controller.games
+      tr
+        if pending
+          td.text-right Round {{ game.round }}:
+        else
+          td.text-right {{ game.serial }}:
+        td: link-to "editGame" game
+          | {{ game.team1.name }} vs. {{ game.team2.name }}
+        td Room {{ game.room }}
+        td
+          if game.hasFullQuestionData
+            button.btn.btn-xs.btn-default click="generatePDF game" PDF
 outlet
