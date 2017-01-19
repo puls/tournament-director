@@ -82,7 +82,7 @@ module.exports = lists =
                   players: for player_name in lineup_object.players
                     $ref: player_refs[player_ref_key(team_object.name, player_name)]
               if output_object.overtime_tossups_read > 0
-                output_object.correctTossupsWithoutBonuses = correctTossupsWithoutBonuses
+                output_object.correct_tossups_without_bonuses = correctTossupsWithoutBonuses
               output_object
 
           if row.value.questions?
