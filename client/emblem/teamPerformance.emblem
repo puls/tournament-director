@@ -1,11 +1,17 @@
 h1 = name
 each game in games
   h3
-    | Round {{ game.round }}: 
+    | Round {{ game.round }}:&nbsp;
     if game.win
-      | Win against {{ game.opponent }}, {{ game.points }}&ndash;{{ game.opponentPoints }}
+      if game.forfeit
+        | Forfeit win against {{ game.opponent }}
+      else
+        | Win against {{ game.opponent }}, {{ game.points }}&ndash;{{ game.opponentPoints }}
     else
-      | Loss to {{ game.opponent }}, {{ game.opponentPoints }}&ndash;{{ game.points }}
+      if game.forfeit
+        | Forfeit loss to {{ game.opponent }}
+      else
+        | Loss to {{ game.opponent }}, {{ game.opponentPoints }}&ndash;{{ game.points }}
   table.table.table-striped.team-performance
     thead
       tr
@@ -24,4 +30,3 @@ each game in games
           td = 3
           td = 4
           td = 5
-          

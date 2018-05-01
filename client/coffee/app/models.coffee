@@ -37,11 +37,12 @@ App.Game = App.Model.extend
       representation[team] = @get(team).getProperties 'id', 'points'
       representation[team].points = parseInt representation[team].points, 10
       representation[team].name = App.Store.teamLookup[representation[team].id].get 'name'
-    for key in ['round', 'tossups']
+      representation[team].players = []
+    for key in ['round', 'tossups', 'overtimeTossups']
       representation[key] = parseInt representation[key], 10
     representation.overtimeTossups = 0 unless representation.overtimeTossups
     representation.scoreEntered = true
-    representation.playersEntered = false
+    representation.playersEntered = representation.tossups == 0
     representation.type = 'game'
     representation.tournament = 'tournament'
     representation._id = "game_#{@get 'round'}_#{@get 'team1.id'}_#{@get 'team2.id'}"
@@ -73,15 +74,18 @@ App.Game = App.Model.extend
     return 'Round must be greater than 0'  if @get('round') <= 0
     return 'Round must be less than 30'  if @get('round') > 30
 
+    leftScore = parseInt @get('team1.points'), 10
+    rightScore = parseInt @get('team2.points'), 10
     tossups = parseInt @get('tossups'), 10
+
+    if (leftScore is 1 or rightScore is 1) and tossups is 0
+      return null
+
     overtimeTossups = parseInt @get('overtimeTossups'), 10
     return 'Tossups must be more than 10' if tossups < 10
     return 'Regulation tossups must be less than 27' if tossups - overtimeTossups > 26
 
-    leftScore = parseInt @get('team1.points'), 10
     return 'Left team points must be a multiple of 5' if leftScore % 5 isnt 0
-
-    rightScore = parseInt @get('team2.points'), 10
     return 'Right team points must be a multiple of 5' if rightScore % 5 isnt 0
 
   saveScore: (options) ->
@@ -104,12 +108,14 @@ App.Game = App.Model.extend
       players = team.get 'playersWithNames'
       seatsFilled = Math.min 4, players.length
       expectedTossups = seatsFilled * gameTossups
-      return "#{team.name} players heard more than #{expectedTossups} tossups" if team.get('tossups') > expectedTossups
-      return "#{team.name} players heard less than #{expectedTossups} tossups" if team.get('tossups') < expectedTossups
+      return "#{team.name} players heard more than #{expectedTossups} tossups" if team.get('playerTossups') > expectedTossups
+      return "#{team.name} players heard less than #{expectedTossups} tossups" if team.get('playerTossups') < expectedTossups
 
-      return "#{team.name} had less than zero bonus points" if team.get('bonusPoints') < 0
+      bonusPoints = team.get('bonusPoints')
+      return "#{team.name} had less than zero bonus points" if bonusPoints < 0
+      return "#{team.name} had #{bonusPoints} bonus points, which totally isn't a thing anymore. Go back to the year 2014, you heathen." if bonusPoints % 10 != 0
 
-      pointsPerBonus = team.get('bonusPoints') / team.get('bonusesHeard')
+      pointsPerBonus = bonusPoints / team.get('bonusesHeard')
       return "#{team.name} averaged #{pointsPerBonus} points per bonus" if pointsPerBonus > 30
 
       for player in players
@@ -172,11 +178,16 @@ App.School = App.Model.extend
   save: (options) ->
     unless @get('_id')?
       @set '_id', App.Utility.to_id "School #{@get('name')}"
+    unless @get('id')?
+      @set 'id', App.Utility.to_id "School #{@get('name')}"
     for team in @get 'teams'
       team._id = App.Utility.to_id team.name unless team._id?
+      team.id = App.Utility.to_id team.name unless team.id?
       Ember.set team, 'players', team.players.filter (player) -> player?.name?.length > 0
 
-    representation = @getProperties 'city', 'id', 'name', 'small', 'teams', 'tournament', 'tournament_id', 'type', '_rev'
+    representation = @getProperties 'city', 'location', 'id', 'name', 'small', 'teams', 'tournament', 'tournament_id', 'type', '_rev'
+    unless representation.location?
+      representation.location = ""
     Ember.$.ajax
       url: @url()
       type: 'PUT'
@@ -203,6 +214,16 @@ App.PendingGamesList = App.Round.extend
         @set 'games', data.rows.map (row) -> App.Game.create row.doc
 
 App.Team = Ember.Object.extend
+  nameWithLocation: (->
+    location = @get('location')
+    if location?
+      [city, state] = location.split(', ')
+    else
+      city = null
+      state = null
+    name = @get 'name'
+    if state? then "#{name} (#{state})" else name
+  ).property('name', 'location')
   loadPerformance: ->
     id = @get 'id'
     @set 'performanceData', App.Store.rowsFromView 'by_team',
@@ -226,6 +247,7 @@ App.Team = Ember.Object.extend
         lastGame.tossups = row.value[3]
         lastGame.win = row.value[1] > row.value[2]
         lastGame.loss = row.value[1] < row.value[2]
+        lastGame.forfeit = lastGame.tossups == 0
       else
         player = row.value[1..]
         player.unshift row.key[3]
@@ -309,7 +331,9 @@ App.Store = App.ModelStore.extend
   rowsFromView: (view, options) ->
     lines = Ember.ArrayProxy.create content: []
     options = $.extend {group: true}, options unless options?.group
-    @loadView view, options, (data, status) -> lines.set 'content', data.rows
+    @loadView view, options, (data, status) ->
+      console.log "Fetched view #{view}"
+      lines.set 'content', data.rows
     lines
 
   classForType: (type) ->
@@ -322,9 +346,12 @@ App.Store = App.ModelStore.extend
   loadSchools: ->
     @allSchools = @loadObjectsOfType 'school', (objects) =>
       @allTeams.set 'content', []
-      for teamList in objects.mapProperty 'teams'
-        for team in teamList
+      objects.forEach (school) =>
+        location = school.get 'location'
+        for team in school.get 'teams'
+          console.log "setting location #{location} on #{team.name} from #{school.get('name')}"
           team = App.Team.create team
+          team.set 'location', location
           @allTeams.pushObject team
           @teamLookup[team.id] = team
       @allTeams.set 'content', @allTeams.sortBy 'name'

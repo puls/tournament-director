@@ -79,7 +79,7 @@ App.PlayerStandingsController = Ember.ArrayController.extend
       spliceIndex = -1
       player.hasYear = true
       for row in allYears
-        if player.key[0] == row.key[0] and player.key[1] == row.key[1]
+        if player.key[0] == row.key[0] and player.key[1] == row.key[1] and row.value > 0
           player.key[3] = row.value
           allYears.splice index, 1
           break

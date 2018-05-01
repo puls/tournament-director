@@ -11,6 +11,7 @@ table.table.table-striped.team-standings
       th.number: a click="sort 'value.4'" (per game)
       th.number: a click="sort 'value.5'" PA
       th.number: a click="sort 'value.6'" (per game)
+      th.number: a click="sort 'value.3 - value.5'" (PF-PA)/20H
       th.number: a click="sort 'value.7'" TUH
       th.number: a click="sort 'value.8'" P/20H
       th.number: a click="sort 'value.11'" P/bonus

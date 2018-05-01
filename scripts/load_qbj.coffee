@@ -7,7 +7,7 @@ database = require './database'
 theWholeEnchilada = fs.readFileSync process.argv.pop(), encoding: 'utf8'
 rootObject = JSON.parse theWholeEnchilada
 
-if rootObject.version != '1.1'
+if rootObject.version != '1.2'
   console.log "Unsupported QBJ version #{rootObject.version}"
   return
 
@@ -19,7 +19,9 @@ for object in rootObject.objects
       type: 'school'
       tournament: 'tournament'
       name: object.name
+      location: object.location
       small: false
+      org_id: object.org_id
       teams: object.teams
 
   else if object.type == 'Tournament'

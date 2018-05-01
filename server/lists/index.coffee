@@ -26,7 +26,7 @@ module.exports = lists =
       'headers':
         'Content-Type': 'application/vnd.quizbowl.qbj+json'
         'Content-Disposition': 'attachment; filename="tournament.qbj"'
-    send '{ "version":"1.1", "objects":['
+    send '{ "version":"1.2", "objects":['
     tournament = {}
     registrations = []
     rounds = []
@@ -61,9 +61,9 @@ module.exports = lists =
               correctTossupsWithoutBonuses = 0
               output_object =
                 team:
-                  $ref: "team_#{team_object.id}"
+                  $ref: "#{team_object.id}"
                 points: team_object.points
-                match_players: for player_object in team_object.players
+                match_players: (for player_object in team_object.players
                   output_object =
                     player:
                       $ref: player_refs[player_ref_key(team_object.name, player_object.name)]
@@ -75,14 +75,17 @@ module.exports = lists =
                     ]
                   if player_object.overtime?
                     correctTossupsWithoutBonuses += player_object.overtime.tens + player_object.overtime.fifteens
-                  output_object
-                lineups: for lineup_object in team_object.lineups
+                  output_object).filter (player_object) -> player_object.tossups_heard > 0
+                lineups: for lineup_object in (team_object.lineups ? [])
                   first_question: lineup_object.firstQuestion
                   reason: lineup_object.reason
                   players: for player_name in lineup_object.players
                     $ref: player_refs[player_ref_key(team_object.name, player_name)]
               if output_object.overtime_tossups_read > 0
-                output_object.correctTossupsWithoutBonuses = correctTossupsWithoutBonuses
+                output_object.correct_tossups_without_bonuses = correctTossupsWithoutBonuses
+              if row.value.tossups == 0
+                delete output_object.points
+                output_object.forfeit_loss = (team_object.points == 0)
               output_object
 
           if row.value.questions?
@@ -96,7 +99,7 @@ module.exports = lists =
               if question_object.neg?
                 output_object.buzzes.push
                   team:
-                    $ref: "team_#{question_object.neg.team_id}"
+                    $ref: "#{question_object.neg.team_id}"
                   player:
                     $ref: player_refs[player_ref_key(question_object.neg.team_name, question_object.neg.player)]
                   result:
@@ -104,7 +107,7 @@ module.exports = lists =
               if question_object.answer?
                 output_object.buzzes.push
                   team:
-                    $ref: "team_#{question_object.answer.team_id}"
+                    $ref: "#{question_object.answer.team_id}"
                   player:
                     $ref: player_refs[player_ref_key(question_object.answer.team_name, question_object.answer.player)]
                   result:
@@ -122,14 +125,17 @@ module.exports = lists =
         when 'registration'
           registration =
             id: row.value._id
+            org_id: parseInt row.value._id.replace('registration_', ''), 10
             type: 'Registration'
             name: row.value.name
             teams: for team_object in row.value.teams
-              id: "team_#{team_object.id}"
+              id: "#{team_object.id}"
+              team_id: team_object.team_id
               name: team_object.name
               players: for player_object in team_object.players
                 output_object =
-                  id: "player_#{player_object.id}"
+                  id: "#{player_object.id}"
+                  team_member_id: player_object.team_member_id
                   name: player_object.name
                 output_object.year = player_object.year if player_object.year?
                 player_refs[player_ref_key(team_object.name, player_object.name)] = output_object.id

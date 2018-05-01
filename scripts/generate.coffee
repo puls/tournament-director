@@ -1,24 +1,35 @@
-module.exports = ->
-  done = @async()
-  request = require 'request'
+request = require 'request'
+database = require './database'
+
+generateEverythingWithSchools = (existingTournament, existingSchools, done) ->
   faker = require 'faker'
   to_id = require './to_id'
 
-  database = require './database'
-  csv = require 'csv'
+  csv_parse = require 'csv-parse'
+  fs = require 'fs'
 
   cities = []
-  csv().from.path(__dirname + '/cities.csv')
-    .on('record', (row) -> cities.push row)
-    .on('end', (count) -> generate())
+  
+  parser = csv_parse()
+  parser.on('readable', -> cities.push record while record = parser.read())
+  parser.on('finish', -> generate())
+  parser.write(fs.readFileSync(__dirname + '/cities.csv', 'utf8'))
+  parser.end()
 
   generate = ->
-    round_count = 8
-    team_count = 24
-    games_per_round = 12
+    round_count = 15
+    team_count = 66
+    games_per_round = 22
+
+    schools = existingSchools
     all_teams = {}
     team_ids = []
-    schools = []
+
+    for school in schools
+      for team in school.teams
+        all_teams[team.id] = team
+        team_ids.push team.id
+
     games = []
     rooms = [0...games_per_round]
 
@@ -35,13 +46,14 @@ module.exports = ->
         [arr[i], arr[j]] = [arr[j], arr[i]]
 
     tournament_id = rand 1000000
-    tournament =
+    tournament = existingTournament ?
       type: 'tournament'
       name: 'Test Tournament'
       id: tournament_id
       _id: 'tournament'
 
-    while team_count > 0
+    teams_to_generate = team_count - team_ids.length
+    while teams_to_generate > 0
       teams_from_school = 1 + rand 5
       city = cities[rand cities.length]
       school =
@@ -50,13 +62,13 @@ module.exports = ->
         id: rand 1000000
         type: 'school'
         name: "#{city[2]}"
-        city: "#{city[2]}, #{city[1]}"
+        location: "#{city[2]}, #{city[1]}"
         small: teams_from_school == 1 && rand(5) > 3
         teams: []
       school._id = "school_#{to_id school.name}"
       schools.push school
       for num in [1..teams_from_school]
-        break if team_count < 1
+        break if teams_to_generate < 1
         team_name = if teams_from_school == 1 then school.name else "#{school.name} #{['A','B','C','D','E'][num - 1]}"
         team = {name: team_name, players: [], id: rand(1000000), '_id': to_id team_name}
         school.teams.push team
@@ -65,26 +77,31 @@ module.exports = ->
         players_from_team = 4 + rand 3
         for i in [0..players_from_team]
           player =
-            name: "#{faker.Name.firstName()} #{faker.Name.lastName()}"
+            name: "#{faker.name.firstName()} #{faker.name.lastName()}"
             year: [9..12][rand 4]
             id: rand 1000000
           team.players.push player
-        team_count--
+        teams_to_generate--
 
     for num in [1..round_count]
       if team_count >= 3 * games_per_round
         if num % 3 == 1
           fisherYates team_ids
+          console.log "First third of teams"
           effectiveTeamIDs = team_ids[0...games_per_round * 2]
         else if num % 3 == 2
+          console.log "Second third of teams"
           effectiveTeamIDs = team_ids[games_per_round...games_per_round * 3]
         else
+          console.log "Third third of teams"
           effectiveTeamIDs = team_ids.filter (element, index) -> index < games_per_round || index >= 2 * games_per_round
       else
+        console.log "Using all teams"
         effectiveTeamIDs = team_ids
       fisherYates effectiveTeamIDs
       fisherYates rooms
       for gameIndex in [0...games_per_round]
+        console.log "Game index #{gameIndex}"
         game =
           type: 'game'
           tournament: 'tournament'
@@ -92,7 +109,7 @@ module.exports = ->
           event: 'Test Tournament'
           packet: num
           moderator: 'Q. Q*bert Hentzel'
-          scorekeeper: 'Foley, which is an app'
+          scorekeeper: 'Skip Jumppes'
           scoreEntered: true
           playersEntered: true
           serial: "#{num}-#{gameIndex + 1}"
@@ -240,6 +257,7 @@ module.exports = ->
 
         games.push game
 
+    console.log "Generated #{games.length} games"
     docs = schools.concat games
     docs.push tournament
     request.del database, (error, response, body) ->
@@ -249,3 +267,21 @@ module.exports = ->
           method: 'POST'
           json: {docs: docs}
           (error, response, body) -> done()
+
+module.exports = 
+  generateGames: ->
+    done = @async()
+    request.get "#{database}/tournament", (error, response, body) =>
+      tournament = JSON.parse body
+      request
+        url: "#{database}/_design/app/_view/by_type?key=[\"tournament\", \"school\"]&include_docs=true"
+        method: 'GET'
+        (error, response, body) =>
+          docs = JSON.parse body
+          schools = docs.rows.map (row) -> row.doc
+          generateEverythingWithSchools tournament, schools, done
+  
+  generateEverything: ->
+    done = @async()
+    generateEverythingWithSchools null, [], done
+

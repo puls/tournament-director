@@ -83,9 +83,11 @@ App.PlayersForm = Ember.View.extend
           cb()
         else
           @set key, []
+          viewKey = team.get('name') + ' ' + team.get('id')
+          console.log("viewKey is #{viewKey}")
           ((key) => App.Store.loadView 'player_names',
-            startkey: JSON.stringify [team.get 'name']
-            endkey: JSON.stringify [team.get('name'), 'zzzzz']
+            startkey: JSON.stringify [viewKey]
+            endkey: JSON.stringify [viewKey, 'zzzzz']
             group: true
             (data, status) =>
               players = {}
@@ -184,6 +186,8 @@ App.TeamStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
         buffer.push "<td>#{value[index].toFixed 2}</td>"
       else
         buffer.push "<td>#{value[index]}</td>"
+      if index is 6
+        buffer.push "<td>#{(20 * (value[3] - value[5]) / value[7]).toFixed 2}</td>"
     buffer.push "<td>#{value[11].toFixed 2}</td>"
 
 App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
@@ -215,4 +219,7 @@ App.PlayerStandingsRowView = Ember.View.extend Ember.ViewTargetActionSupport,
     for index in [2..6]
       buffer.push "<td>#{value[index]}</td>"
     for index in [7..9]
-      buffer.push "<td>#{value[index].toFixed 2}</td>"
+      if index is 8 and value[5] is 0
+        buffer.push "<td>&infin;</td>"
+      else
+        buffer.push "<td>#{value[index].toFixed 2}</td>"

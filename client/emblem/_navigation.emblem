@@ -17,7 +17,7 @@ nav.navbar.navbar-default role="navigation"
         a href=view.href Statistics
       if App.Session.loggedIn
         link-to "export" tagName="li" href=false
-          a href=view.href Export
+          a href=view.href Import/Export
     ul.nav.navbar-nav.navbar-right
       if App.Session.loggedIn
         link-to "account" tagName="li" href=false

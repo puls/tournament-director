@@ -89,7 +89,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-emblem'
   grunt.loadNpmTasks 'grunt-couchapp'
-  grunt.registerTask 'generateData', 'Generate fake data', require './scripts/generate.coffee'
+  grunt.registerTask 'generateGamesData', 'Generate fake data', require('./scripts/generate.coffee').generateGames
+  grunt.registerTask 'generateData', 'Generate fake data', require('./scripts/generate.coffee').generateEverything
   grunt.registerTask 'default', ['concat:libs', 'coffee:compile', 'emblem', 'couchapp']
   grunt.registerTask 'pouch', ['concat:pouch', 'coffee:pouch', 'emblem', 'couchapp']
   grunt.registerTask 'generate', ['generateData', 'default']
+  grunt.registerTask 'generateGames', ['generateGamesData', 'default']

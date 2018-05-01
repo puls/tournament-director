@@ -63,3 +63,13 @@ App.ModelStore = Ember.Object.extend
       error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
       success: success
       dataType: 'json'
+
+  saveBulkDocs: (docs, success) ->
+    Ember.$.ajax 
+      url: "/api/_bulk_docs"
+      type: 'POST'
+      data: JSON.stringify {docs:docs}
+      contentType: 'application/json'
+      error: (xhr, status, error) -> alert JSON.parse(xhr.responseText).reason
+      success: success
+      dataType: 'json'

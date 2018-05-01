@@ -30,7 +30,7 @@ each school in controller
         .pull-right
           a.btn.btn-default click="edit school" Edit
         b.school-name = school.name
-        |, {{school.city}}
+        |, {{school.location}}
         .clearfix
       .panel-body.panel-team-boxes
         .row
